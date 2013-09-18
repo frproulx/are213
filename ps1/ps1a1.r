@@ -4,6 +4,7 @@
 library(foreign) #this is to read in Stata data
 library(Hmisc)
 library(psych)
+library(stargazer)
 data <- read.dta("ps1.dta")
 
 print(nrow(data))
@@ -30,9 +31,10 @@ data <- subset (data, (cardiac != 9) & (lung != 9) & (diabetes !=9) & (herpes !=
 
 print(nrow(data)) #number of records remaining after cleaning
 
-summarytable<-print(describe(data, skew=FALSE, ranges=FALSE))
+summarytable<-describe(data, skew=FALSE, ranges=FALSE)
+print(summarytable)
 
-latex(summarytable)
+stargazer(data, title = "Summary of Cleaned Dataset", out="summarytable.tex")
 
 write.csv(data, file = "ps1dataclean.csv")
 
@@ -49,10 +51,10 @@ meandif <- nonsmokerstats - smokerstats
 
 smoketable <- matrix(c(smokerstats, nonsmokerstats, meandif), ncol=3, byrow=FALSE)
 colnames(smoketable) <- c("Mean Value (Infants with Smoker Mothers)", "Mean Value (Infants with Non-Smoker Mothers)", "Mean Difference between control and treatment")
-rownames(smoketable) <- c("one minute APGAR score", "five munute APGAR score", "birthweight")
+rownames(smoketable) <- c("one minute APGAR score", "five minute APGAR score", "birthweight")
 smoketable <- as.table(smoketable)
-print(smoketable)
-latex.default(smoketable)
+
+stargazer(smoketable, title = "Mean values of health figures in Infants with Smoker and Non-Smoker Mothers")
 
 
 

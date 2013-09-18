@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.9.9)  10 SEP 2013 18:43
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=latex 2013.9.9)  17 SEP 2013 23:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -48,51 +48,22 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 25.
 
 
-LaTeX Warning: Float too large for page by 134.69923pt on input line 75.
-
-
-Overfull \hbox (164.6699pt too wide) in paragraph at lines 86--95
- [] 
- []
+LaTeX Warning: Float too large for page by 133.32117pt on input line 81.
 
 [1
 
-] [2]
-Overfull \hbox (122.52525pt too wide) in paragraph at lines 161--161
-[]\OT1/cmtt/m/n/12 ## The following are the error codes for each of the 15 vari
-ables that need fixing:[] 
- []
-
-
-Overfull \hbox (1166.10077pt too wide) in paragraph at lines 161--161
-[]\OT1/cmtt/m/n/12 data <- subset (data, (cardiac != 9) & (lung != 9) & (diabet
-es !=9) & (herpes !=9) & (chyper !=9) & (phyper !=9) & (pre4000 !=9) & (preterm
- !=9) & (tobacco !=9) & (cigar !=99) & (cigar6 !=6) & (alcohol !=9) & (drink !=
-99) & (drink5 !=5) & (wgain !=99))[] 
- []
-
-[3]
-Overfull \hbox (97.82524pt too wide) in paragraph at lines 161--161
-[]\OT1/cmtt/m/n/12 smokerstats <- c(mean(smokers$omaps), mean(smokers$fmaps), m
-ean(smokers$dbrwt))[] 
- []
-
-
-Overfull \hbox (171.92528pt too wide) in paragraph at lines 161--161
-[]\OT1/cmtt/m/n/12 nonsmokerstats <- c(mean(nonsmokers$omaps), mean(nonsmokers$
-fmaps), mean(nonsmokers$dbrwt))[] 
- []
-
-[4] (./ps1.aux) ) 
+] [2] (./ps1.aux) ) 
 Here is how much of TeX's memory you used:
- 233 strings out of 495060
- 2487 string characters out of 3182054
- 65157 words of memory out of 3000000
- 3492 multiletter control sequences out of 15000+200000
- 8363 words of font info for 30 fonts, out of 3000000 for 9000
+ 237 strings out of 495060
+ 2545 string characters out of 3182054
+ 59157 words of memory out of 3000000
+ 3497 multiletter control sequences out of 15000+200000
+ 9110 words of font info for 32 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 22i,9n,19p,262b,250s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 22i,8n,19p,242b,229s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on ps1.dvi (4 pages, 7968 bytes).
+Output written on ps1.dvi (2 pages, 4608 bytes).
