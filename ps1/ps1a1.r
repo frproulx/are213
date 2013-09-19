@@ -19,7 +19,7 @@ ps1.data <- read.dta(file="ps1.dta")
 print(nrow(ps1.data))
 
 
-## Problem 1a: Fix missing values
+## Problem 1a: Fix missing values --------
 ## The following are the error codes for each of the 15 variables that need fixing:
 # cardiac: 9
 # lung: 9
@@ -75,12 +75,11 @@ unclean.cig <- lm(full.record ~ cigar, ps1.data)
 unclean.cig.om <- lm(full.record ~ omaps + cigar, ps1.data)
 unclean.cig.om.fm <- lm(full.record ~ omaps + fmaps + cigar, ps1.data)
 
-stargazer(unclean.cig, unclean.cig.om, unclean.cig.om.fm)
+# The models seem to indicate you can predict whether there is a full record based on apgar and cigarette use....unfortunate.  
+stargazer(unclean.cig, unclean.cig.om, unclean.cig.om.fm, type="text")
 
 ps1.data.clean <- subset (ps1.data, full.record == TRUE)
 ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
-
-
 
 
 print(nrow(ps1.data.clean)) #number of records remaining after cleaning
