@@ -70,7 +70,12 @@ pdf(file="img/cigar-by-record-type.pdf", width = 7, height = 6)
 ggplot(ps1.data, aes(cigar)) + geom_density() + facet_grid(full.record~.) + xlab("Number of daily cigarettes") + ylab("Density of responses") + ggtitle("TRUE = Full Records Available, FALSE = Missing Records")
 dev.off()
 
+# Linear model to see if you can predict whether the data have a full record based on cigar, omaps, fmaps
+unclean.cig <- lm(full.record ~ cigar, ps1.data)
+unclean.cig.om <- lm(full.record ~ omaps + cigar, ps1.data)
+unclean.cig.om.fm <- lm(full.record ~ omaps + fmaps + cigar, ps1.data)
 
+stargazer(unclean.cig, unclean.cig.om, unclean.cig.om.fm)
 
 ps1.data.clean <- subset (ps1.data, full.record == TRUE)
 ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
