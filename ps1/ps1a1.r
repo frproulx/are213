@@ -4,9 +4,11 @@
 library(foreign) #this is to read in Stata data
 library(Hmisc)
 library(psych)
-data <- read.dta("ps1.dta")
+library(ggplot2) # for neato plotting tools
+library(plyr) # for nice data tools
+ps1.data <- read.dta("ps1.dta") #changed name of object from "data" to avoid ambiguity issues since "data" is often embedded in functions as a general object
 
-print(nrow(data))
+print(nrow(ps1.data))
 
 ## Problem 1a: Fix missing values
 ## The following are the error codes for each of the 15 variables that need fixing:
@@ -26,22 +28,63 @@ print(nrow(data))
 # drink5: 5
 # wgain: 99
 
-data <- subset (data, (cardiac != 9) & (lung != 9) & (diabetes !=9) & (herpes !=9) & (chyper !=9) & (phyper !=9) & (pre4000 !=9) & (preterm !=9) & (tobacco !=9) & (cigar !=99) & (cigar6 !=6) & (alcohol !=9) & (drink !=99) & (drink5 !=5) & (wgain !=99))
+# Identify which records have full data, then add a column to indicate full records or not.
 
-print(nrow(data)) #number of records remaining after cleaning
+full.record.flag <- which(ps1.data$cardiac != 9 & ps1.data$lung != 9 & ps1.data$diabetes !=9 & ps1.data$herpes != 9 & ps1.data$chyper != 9 & ps1.data$phyper != 9 & ps1.data$pre4000 !=9 & ps1.data$preterm != 9 & ps1.data$tobacco != 9 & ps1.data$cigar != 99 & ps1.data$cigar6 !=6 & ps1.data$alcohol != 9 & ps1.data$drink != 99 & ps1.data$drink5 !=5 & ps1.data$wgain !=99)
 
-summarytable<-print(describe(data, skew=FALSE, ranges=FALSE))
+ps1.data$full.record <- FALSE # initialize column as F
+
+ps1.data$full.record[full.record.flag] <- TRUE #reassign level to T for full records
+
+# replace error rows in cigar with NA so they don't interfere with other calcs.
+error.cigar <- which(ps1.data$cigar == 99)
+ps1.data$cigar[error.cigar] <- NA
+
+# compare records on things that matter for this analysis...apgar, smoking, etc.
+ps1.compare.records <- ddply(ps1.data, .(full.record), summarize,
+                             mean.omaps = mean(omaps),
+                             sd.omaps = sd(omaps), 
+                             mean.fmaps = mean(fmaps),
+                             sd.fmaps = sd(fmaps),
+                             median.cigar = median(cigar, na.rm = TRUE),
+                             per25.cigar = quantile(cigar,.25, na.rm = TRUE),
+                             per75.cigar = quantile(cigar,.75, na.rm = TRUE),
+                             per90.cigar = quantile(cigar,.90, na.rm = TRUE), 
+                             mean.cigar = mean(cigar, na.rm = TRUE), 
+                             sd.cigar = sd(cigar, na.rm = TRUE)
+                             )
+
+# There appears to be a variation in the mean cigarette use between groups, but with large standard deviation.
+
+# Plot to explore if missing value people smoke more cigarettes
+pdf(file="img/cigar-by-record-type.pdf", width = 7, height = 6)
+ggplot(ps1.data, aes(cigar)) + geom_density() + facet_grid(full.record~.) + xlab("Number of daily cigarettes") + ylab("Density of responses") + ggtitle("TRUE = Full Records Available, FALSE = Missing Records")
+dev.off()
+
+
+
+ps1.data.clean <- subset (ps1.data, full.record == TRUE)
+ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
+
+
+
+
+print(nrow(ps1.data.clean)) #number of records remaining after cleaning
+
+# Summary table of clean data, write a new csv
+
+summarytable<-print(describe(ps1.data.clean, skew=FALSE, ranges=FALSE))
 
 latex(summarytable)
 
-write.csv(data, file = "ps1dataclean.csv")
+write.csv(ps1.data.clean, file = "ps1dataclean.csv")
 
 #'omaps' and 'fmaps' are the APGAR scores
 #'dbrwt' is the birth weight in grams
 # 'tobacco' is smoker status (1=yes, 2=no)
 
-smokers <- subset(data, tobacco==1)
-nonsmokers <- subset(data, tobacco==2)
+smokers <- subset(ps1.data, tobacco==1)
+nonsmokers <- subset(ps1.data, tobacco==2)
 
 smokerstats <- c(mean(smokers$omaps), mean(smokers$fmaps), mean(smokers$dbrwt))
 nonsmokerstats <- c(mean(nonsmokers$omaps), mean(nonsmokers$fmaps), mean(nonsmokers$dbrwt))
@@ -56,6 +99,6 @@ latex.default(smoketable)
 
 
 
-print(t.test(data$omaps~data$tobacco))
-print(t.test(data$fmaps~data$tobacco))
-print(t.test(data$dbrwt~data$tobacco))
+print(t.test(ps1.data$omaps~ps1.data$tobacco))
+print(t.test(ps1.data$fmaps~ps1.data$tobacco))
+print(t.test(ps1.data$dbrwt~ps1.data$tobacco))
