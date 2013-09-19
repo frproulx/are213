@@ -1,18 +1,39 @@
 
 \documentclass[a4paper, 12pt]{article}
+
+\usepackage{graphicx}
+
 \begin{document}
 \title{ARE213 Problem Set \#1A}
 \author{Peter Alstone \& Frank Proulx}
 \maketitle
 
 \section{Problem \#1}
-\(a\) Data records are excluded from the dataset based whether the following variables take the noted values \(as found in the data manual\):
+\subsection{Part A}
 
-\(b\) One easy way that the data cleaning process could be improved would be to only remove records based on the variables of interest. Missing values in fields that are not actually being used in the analysis do not pose a problem.
+Data records are excluded from the dataset based whether the following variables take the noted values \(as found in the data manual\):
+
+\subsection{Part B}
+We dropped all rows where any data were missing in that row.  One way that the data cleaning process could be improved would be to only remove records based on the variables of interest (as are determined in subsequent analysis) since missing values in fields that are not eventually used in the analysis do not pose a problem..  This would result in a more iterative approach, however, and increase workload on the researcher.
+
+We used some exploratory analysis to understand if the records that were dropped due to missing data \textit{somewhere} in the record were representative.  First we compared a few simple summary statistics between the "full record" and "partial record" data on variables of interest for this analysis.  These are summarized in Table \ref{tab:compareMissingData}.  Better APGAR scores and lower incidence of smoking may be correlated with having full datasets, which indicates the people who have missing data may bias the sample.  We also used agnostic linear regression to understand the relationship between the presence of full records and three key variables: one-minute apgar (omaps), five-minute apgar (fmaps), and number of cigarettes smoked each day (cigar).  The results summarized in Table \ref{tab:lmMissingData} indicate there is statistical significance in each of the factors (i.e. all three are useful predictors for whether a person has a full data record) but also that the influence of the factors is small.  Figure \ref{fig:cigarFullData} shows the distribution in the number of cigarettes smoked by those with and without full records.  The distribution of values is basically the same (clusters around multiples of five up to 20, or, a "pack a day") between the two datasets.  
+
+Overall, in spite of the bias from removing heavier smokers with lower apgar scores from the data, the overall number removed is relatively small and the size of the bias (indicated by the coefficients in the linear model) is relatively small.  
+
+% Table created by stargazer v.4.0 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu% Date and time: Thu, Sep 19, 2013 - 16:27:57\begin{table}[!htbp] \centering   \caption{Comparison of data with full records to those with missing data across key variables}   \label{tab:compareMissingData} \begin{tabular}{@{\extracolsep{5pt}} ccccccc} \\[-1.8ex]\hline \hline \\[-1.8ex] full.record & mean.omaps & sd.omaps & mean.fmaps & sd.fmaps & mean.cigar & sd.cigar \\ \hline \\[-1.8ex] FALSE & $7.905$ & $1.572$ & $8.880$ & $1.030$ & $3.945$ & $7.422$ \\ TRUE & $8.117$ & $1.260$ & $9.009$ & $0.707$ & $1.907$ & $5.297$ \\ \hline \\[-1.8ex] \normalsize \end{tabular} \end{table} 
+
+% Table created by stargazer v.4.0 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu% Date and time: Thu, Sep 19, 2013 - 16:32:14\begin{table}[!htbp] \centering   \caption{Linear model results for predicting whether full records are present based on }   \label{tab:lmMissingData} \begin{tabular}{@{\extracolsep{5pt}}lc} \\[-1.8ex]\hline \hline \\[-1.8ex]  & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ \cline{2-2} \\[-1.8ex] & full.record \\ \hline \\[-1.8ex]  omaps & 0.002$^{***}$ \\   & (0.001) \\   & \\  fmaps & 0.007$^{***}$ \\   & (0.001) \\   & \\  cigar & $-$0.003$^{***}$ \\   & (0.0001) \\   & \\  Constant & 0.882$^{***}$ \\   & (0.007) \\   & \\ \hline \\[-1.8ex] Observations & 119,384 \\ R$^{2}$ & 0.007 \\ Adjusted R$^{2}$ & 0.007 \\ Residual Std. Error & 0.195 \\ F Statistic & 276.305 \\ \hline \hline \\[-1.8ex] \textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ \normalsize \end{tabular} \end{table}
 
 
+\begin{figure}[!h] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{img/cigar-by-record-type.pdf} 
+   \caption{Cigarette use rate by presence of full data record.}
+   \label{fig:cigarFullData}
+\end{figure}
 
-\(c\) Summary table:
+\subsection{Part C}
+The summary table for the remaining data after cleaning is below.
 % Code for the summary table from file summarytable.tex starts here...
 % latex.default(summarytable) 
 %

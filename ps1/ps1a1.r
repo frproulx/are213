@@ -55,15 +55,13 @@ ps1.compare.records <- ddply(ps1.data, .(full.record), summarize,
                              sd.omaps = sd(omaps), 
                              mean.fmaps = mean(fmaps),
                              sd.fmaps = sd(fmaps),
-                             median.cigar = median(cigar, na.rm = TRUE),
-                             per25.cigar = quantile(cigar,.25, na.rm = TRUE),
-                             per75.cigar = quantile(cigar,.75, na.rm = TRUE),
-                             per90.cigar = quantile(cigar,.90, na.rm = TRUE), 
                              mean.cigar = mean(cigar, na.rm = TRUE), 
                              sd.cigar = sd(cigar, na.rm = TRUE)
                              )
 
 # There appears to be a variation in the mean cigarette use between groups, but with large standard deviation.
+
+stargazer(ps1.compare.records, summary=FALSE)
 
 # Plot to explore if missing value people smoke more cigarettes
 pdf(file="img/cigar-by-record-type.pdf", width = 7, height = 6)
@@ -76,7 +74,7 @@ unclean.cig.om <- lm(full.record ~ omaps + cigar, ps1.data)
 unclean.cig.om.fm <- lm(full.record ~ omaps + fmaps + cigar, ps1.data)
 
 # The models seem to indicate you can predict whether there is a full record based on apgar and cigarette use....unfortunate.  
-stargazer(unclean.cig, unclean.cig.om, unclean.cig.om.fm, type="text")
+stargazer(unclean.cig.om.fm)
 
 ps1.data.clean <- subset (ps1.data, full.record == TRUE)
 ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
