@@ -7,9 +7,13 @@ library(foreign) #this is to read in Stata data
 library(Hmisc)
 library(psych)
 library(stargazer)
-
 library(ggplot2) # for neato plotting tools
-library(plyr) # for nice data tools
+library(plyr) # for nice data tools like ddply
+
+## working directories
+
+# Peter
+setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps1")
 
 ## DATA -------------
 
@@ -18,9 +22,9 @@ ps1.data <- read.dta(file="ps1.dta")
 
 print(nrow(ps1.data))
 
-
 ## Problem 1a: Fix missing values --------
 ## The following are the error codes for each of the 15 variables that need fixing:
+# For cardiac - alcohol: "8" means missing record
 # cardiac: 9
 # lung: 9
 # diabetes: 9
@@ -37,19 +41,43 @@ print(nrow(ps1.data))
 # drink5: 5
 # wgain: 99
 
-# Identify which records have full data, then add a column to indicate full records or not.
+# Identify which records have full data, then add a column to indicate full records or not
+full.record.flag <- which(ps1.data$cardiac != 9 &
+                            ps1.data$cardiac != 8 &
+                            ps1.data$lung != 9 &
+                            ps1.data$lung != 8 &
+                            ps1.data$diabetes !=9 &
+                            ps1.data$diabetes !=8 &
+                            ps1.data$herpes != 9 &
+                            ps1.data$herpes != 8 &
+                            ps1.data$chyper != 9 &
+                            ps1.data$chyper != 8 &
+                            ps1.data$phyper != 9 &
+                            ps1.data$phyper != 8 &
+                            ps1.data$pre4000 !=9 &
+                            ps1.data$pre4000 !=8 &
+                            ps1.data$preterm != 9 &
+                            ps1.data$preterm != 8 &
+                            ps1.data$tobacco != 9 &
+                            ps1.data$cigar != 99 &
+                            ps1.data$cigar6 !=6 &
+                            ps1.data$alcohol != 9 &
+                            ps1.data$drink != 99 &
+                            ps1.data$drink5 !=5 &
+                            ps1.data$wgain !=99
+                          )
 
-full.record.flag <- which(ps1.data$cardiac != 9 & ps1.data$lung != 9 & ps1.data$diabetes !=9 & ps1.data$herpes != 9 & ps1.data$chyper != 9 & ps1.data$phyper != 9 & ps1.data$pre4000 !=9 & ps1.data$preterm != 9 & ps1.data$tobacco != 9 & ps1.data$cigar != 99 & ps1.data$cigar6 !=6 & ps1.data$alcohol != 9 & ps1.data$drink != 99 & ps1.data$drink5 !=5 & ps1.data$wgain !=99)
-
+# Column with flags for full records
 ps1.data$full.record <- FALSE # initialize column as F
-
 ps1.data$full.record[full.record.flag] <- TRUE #reassign level to T for full records
 
-# replace error rows in cigar with NA so they don't interfere with other calcs.
+# Problem 1b: Describe dropped levels --------
+
+# replace error rows in cigar with NA so they don't interfere with other calcs on influence of dropped values.
 error.cigar <- which(ps1.data$cigar == 99)
 ps1.data$cigar[error.cigar] <- NA
 
-# compare records on things that matter for this analysis...apgar, smoking, etc.
+# compare records on things that (might) matter for this analysis...apgar, smoking, etc.
 ps1.compare.records <- ddply(ps1.data, .(full.record), summarize,
                              mean.omaps = mean(omaps),
                              sd.omaps = sd(omaps), 
@@ -59,8 +87,9 @@ ps1.compare.records <- ddply(ps1.data, .(full.record), summarize,
                              sd.cigar = sd(cigar, na.rm = TRUE)
                              )
 
-# There appears to be a variation in the mean cigarette use between groups, but with large standard deviation.
+#--> RESULT: There appears to be a variation in the mean cigarette use between groups, but with large standard deviation.
 
+# Print result table for comparison
 stargazer(ps1.compare.records, summary=FALSE)
 
 # Plot to explore if missing value people smoke more cigarettes
@@ -82,11 +111,13 @@ ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
 
 print(nrow(ps1.data.clean)) #number of records remaining after cleaning
 
-# Summary table of clean data, write a new csv
+# Problem 1c: Summary table of clean data, write a new csv-------
 
 summarytable<-print(describe(ps1.data.clean, skew=FALSE, ranges=FALSE))
 
 latex(summarytable)
+
+stargazer(ps1.data.clean)
 
 write.csv(ps1.data.clean, file = "ps1dataclean.csv")
 
