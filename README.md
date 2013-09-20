@@ -3,4 +3,7 @@ Econo-metrics work - ARE 213
 
 Note: This is a working repo for problem sets.  If you shouldn't be here because it would break your university honor code, it is up to you to go away :)
 
+CHECKOUT
+--------
 
+Peter working on .R file -- clean up missing values code. (Friday 11 AM - Noon)
