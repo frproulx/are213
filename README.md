@@ -6,4 +6,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 CHECKOUT
 --------
 
-Peter working on .R file -- clean up missing values code. (Friday 11 AM - Noon)
+None currently.
