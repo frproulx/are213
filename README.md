@@ -6,4 +6,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 CHECKOUT
 --------
 
-None currently.
+Peter - ps1.r - work on problem 2.
