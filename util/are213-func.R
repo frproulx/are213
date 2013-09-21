@@ -20,4 +20,3 @@ adjr2 <- function(y,resid){
 
 
 # Category: Plots and Graphics -------------
-

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  20 SEP 2013 11:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 SEP 2013 00:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -161,18 +161,6 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 15.
 
-
-LaTeX Warning: Reference `tab:compareMissingData' on page 1 undefined on input 
-line 20.
-
-
-LaTeX Warning: Reference `tab:lmMissingData' on page 1 undefined on input line 
-20.
-
-
-LaTeX Warning: Reference `fig:cigarFullData' on page 1 undefined on input line 
-20.
-
 [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
@@ -190,19 +178,34 @@ Package pdftex.def Info: img/cigar-by-record-type.pdf used on input line 82.
 
 LaTeX Warning: Float too large for page by 178.66571pt on input line 154.
 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 162.
 
-Overfull \hbox (164.6699pt too wide) in paragraph at lines 165--174
- [] 
+Overfull \hbox (4.34047pt too wide) in paragraph at lines 162--163
+\OT1/cmr/m/n/12 smoking moth-ers for one-minute AP-GAR scores (om-pas), five-mi
+nute (fmaps),
  []
 
-[2 <./img/cigar-by-record-type.pdf>] [3] [4] [5]
-Overfull \hbox (122.52525pt too wide) in paragraph at lines 240--240
+[2 <./img/cigar-by-record-type.pdf>] [3] [4]
+Overfull \hbox (25.43655pt too wide) in paragraph at lines 169--180
+ [][] 
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 191.
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 191.
+ [5]
+Overfull \hbox (122.52525pt too wide) in paragraph at lines 255--255
 []\OT1/cmtt/m/n/12 ## The following are the error codes for each of the 15 vari
 ables that need fixing:[] 
  []
 
 
-Overfull \hbox (1166.10077pt too wide) in paragraph at lines 240--240
+Overfull \hbox (1166.10077pt too wide) in paragraph at lines 255--255
 []\OT1/cmtt/m/n/12 data <- subset (data, (cardiac != 9) & (lung != 9) & (diabet
 es !=9) & (herpes !=9) & (chyper !=9) & (phyper !=9) & (pre4000 !=9) & (preterm
  !=9) & (tobacco !=9) & (cigar !=99) & (cigar6 !=6) & (alcohol !=9) & (drink !=
@@ -210,46 +213,41 @@ es !=9) & (herpes !=9) & (chyper !=9) & (phyper !=9) & (pre4000 !=9) & (preterm
  []
 
 [6]
-Overfull \hbox (97.82524pt too wide) in paragraph at lines 240--240
+Overfull \hbox (97.82524pt too wide) in paragraph at lines 255--255
 []\OT1/cmtt/m/n/12 smokerstats <- c(mean(smokers$omaps), mean(smokers$fmaps), m
 ean(smokers$dbrwt))[] 
  []
 
 
-Overfull \hbox (171.92528pt too wide) in paragraph at lines 240--240
+Overfull \hbox (171.92528pt too wide) in paragraph at lines 255--255
 []\OT1/cmtt/m/n/12 nonsmokerstats <- c(mean(nonsmokers$omaps), mean(nonsmokers$
 fmaps), mean(nonsmokers$dbrwt))[] 
  []
 
-[7] (./ps1.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+[7] (./ps1.aux) ) 
 Here is how much of TeX's memory you used:
- 1594 strings out of 493315
- 22776 string characters out of 6137904
- 96882 words of memory out of 5000000
- 5050 multiletter control sequences out of 15000+600000
+ 1613 strings out of 493315
+ 23094 string characters out of 6137904
+ 96922 words of memory out of 5000000
+ 5066 multiletter control sequences out of 15000+600000
  9324 words of font info for 33 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 37i,9n,23p,1331b,248s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></
-usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></us
-r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
-ocal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
-cal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loca
-l/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local
-/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on ps1.pdf (7 pages, 117112 bytes).
+ 37i,9n,23p,1331b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.p
+fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
+b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><
+/usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on ps1.pdf (7 pages, 141756 bytes).
 PDF statistics:
- 70 PDF objects out of 1000 (max. 8388607)
- 49 compressed objects within 1 object stream
+ 78 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -9,6 +9,12 @@ library(psych)
 library(stargazer)
 library(ggplot2) # for neato plotting tools
 library(plyr) # for nice data tools like ddply
+library(car) # "companion for applied regression" - recode fxn, etc.
+library(gmodels) #for Crosstabs
+
+# custom functions
+source("../util/are213-func.R")
+source("../util/watercolor.R") # for watercolor plots
 
 ## working directories
 
@@ -128,7 +134,9 @@ write.csv(ps1.data.clean, file = "ps1dataclean.csv")
 #'dbrwt' is the birth weight in grams
 # 'tobacco' is smoker status (1=yes, 2=no)
 
-
+#change tobacco to factor and label values
+ps1.data.clean$tobacco <- as.factor(ps1.data.clean$tobacco)
+ps1.data.clean$tobacco <- revalue(ps1.data.clean$tobacco, c( "1" = "smoker", "2" = "nonsmoker" ))
 
 smoke.impact <- ddply(ps1.data.clean, .(tobacco), summarize, 
                     mean.omaps = mean(omaps),
@@ -136,23 +144,50 @@ smoke.impact <- ddply(ps1.data.clean, .(tobacco), summarize,
                     mean.dbrwt = mean(dbrwt)
                     )
 
-smokers <- subset(ps1.data.clean, tobacco==1)
-nonsmokers <- subset(ps1.data.clean, tobacco==2)
+# conversion to character class for tobacco
+smoke.impact$tobacco <- as.character(smoke.impact$tobacco)
+# Add difference row
+smoke.impact <- rbind(smoke.impact, c("difference", apply(smoke.impact[,2:4], 2, diff)))
 
-smokerstats <- c(mean(smokers$omaps), mean(smokers$fmaps), mean(smokers$dbrwt))
-nonsmokerstats <- c(mean(nonsmokers$omaps), mean(nonsmokers$fmaps), mean(nonsmokers$dbrwt))
-meandif <- nonsmokerstats - smokerstats
+stargazer(smoke.impact, summary=FALSE, digits = 2)
 
-smoketable <- matrix(c(smokerstats, nonsmokerstats, meandif), ncol=3, byrow=FALSE)
-colnames(smoketable) <- c("Mean Value (Infants with Smoker Mothers)", "Mean Value (Infants with Non-Smoker Mothers)", "Mean Difference between control and treatment")
-rownames(smoketable) <- c("one minute APGAR score", "five munute APGAR score", "birthweight")
-smoketable <- as.data.frame(smoketable)
+# # alt version 1c-------
+# 
+# smokers <- subset(ps1.data.clean, tobacco==1)
+# nonsmokers <- subset(ps1.data.clean, tobacco==2)
+# 
+# smokerstats <- c(mean(smokers$omaps), mean(smokers$fmaps), mean(smokers$dbrwt))
+# nonsmokerstats <- c(mean(nonsmokers$omaps), mean(nonsmokers$fmaps), mean(nonsmokers$dbrwt))
+# meandif <- nonsmokerstats - smokerstats
+# 
+# smoketable <- matrix(c(smokerstats, nonsmokerstats, meandif), ncol=3, byrow=FALSE)
+# colnames(smoketable) <- c("Mean Value (Infants with Smoker Mothers)", "Mean Value (Infants with Non-Smoker Mothers)", "Mean Difference between control and treatment")
+# rownames(smoketable) <- c("one minute APGAR score", "five munute APGAR score", "birthweight")
+# smoketable <- as.data.frame(smoketable)
+# 
+# 
+# stargazer(smoketable, title = "Mean values of health figures in Infants with Smoker and Non-Smoker Mothers", type="latex")
+
+# Problem 2b -------
+
+print( t.test( omaps ~ tobacco, data = ps1.data.clean))
+print( t.test( fmaps ~ tobacco, data = ps1.data.clean))
+print( t.test( dbrwt ~ tobacco, data = ps1.data.clean))
+
+#visual representation of relationship:
+
+# Relationships between variables
+
+#recode variables
+
+ps1.data.clean$mrace3 <- as.factor(ps1.data.clean$mrace3)
+ps1.data.clean$mrace3 <- revalue(ps1.data.clean$mrace3, c( "1" = "White", "2" = "Other", "3" = "Black" ))
+
+# CrossTabs
+
+# race of mother
+x.tobacco.rectype <- CrossTable(ps1.data.clean$tobacco, ps1.data.clean$mrace3)
 
 
-stargazer(smoketable, title = "Mean values of health figures in Infants with Smoker and Non-Smoker Mothers", type="text")
 
 
-
-print(t.test(ps1.data$omaps~ps1.data$tobacco))
-print(t.test(ps1.data$fmaps~ps1.data$tobacco))
-print(t.test(ps1.data$dbrwt~ps1.data$tobacco))
