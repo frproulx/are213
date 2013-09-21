@@ -1,6 +1,13 @@
 ### This is Frank Proulx's solution to ARE213 PS1a, problem 1
 ## Data is in the file "ps1.dta"
 
+
+## working directories --------
+
+# Peter
+setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps1")
+
+
 ## PACKAGES -------------
 
 library(foreign) #this is to read in Stata data
@@ -16,10 +23,6 @@ library(gmodels) #for Crosstabs
 source("../util/are213-func.R")
 source("../util/watercolor.R") # for watercolor plots
 
-## working directories
-
-# Peter
-setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps1")
 
 ## DATA -------------
 
@@ -151,7 +154,7 @@ smoke.impact <- rbind(smoke.impact, c("difference", apply(smoke.impact[,2:4], 2,
 
 stargazer(smoke.impact, summary=FALSE, digits = 2)
 
-# # alt version 1c-------
+# # alt version 2a-------
 # 
 # smokers <- subset(ps1.data.clean, tobacco==1)
 # nonsmokers <- subset(ps1.data.clean, tobacco==2)
@@ -185,8 +188,37 @@ ps1.data.clean$mrace3 <- revalue(ps1.data.clean$mrace3, c( "1" = "White", "2" = 
 
 # CrossTabs
 
-# race of mother
-x.tobacco.rectype <- CrossTable(ps1.data.clean$tobacco, ps1.data.clean$mrace3)
+xtab.list <- c("mrace3",
+               "pldel3")
+
+
+xtab.create <- function(data, const.col, cross.col, counts = FALSE){
+# returns a data frame with percentiles of each cross column holding const column consant
+# 
+# data = a data frame
+# const.col = column to be held constant (usually treatment)
+# cross col = columns to vary (a concatenated list of character strings or indicies
+
+# ERRORS
+# TODO: Error handling
+  # race of mother
+xtab.out <- list()
+
+for(factor in cross.col){
+  xtab.factor <- CrossTable(data[[factor]],data[[const.col]])
+  store.ver <- reshape(data=as.data.frame(xtab.factor$prop.row),idvar="x",direction="wide",timevar="y")
+  if(counts){
+    
+    
+  }
+  xtab.out[[factor]] <- store.ver
+}
+return(xtab.out)
+}
+
+x.tobacco.rectype <- CrossTable(ps1.data.clean$mrace3, ps1.data.clean$tobacco)
+
+# Grouped crosstabs
 
 
 
