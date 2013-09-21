@@ -122,12 +122,22 @@ stargazer(ps1.data.clean)
 write.csv(ps1.data.clean, file = "ps1dataclean.csv")
 
 
+#Problem 2a Simple difference in APGAR and birth weight -------
+
 #'omaps' and 'fmaps' are the APGAR scores
 #'dbrwt' is the birth weight in grams
 # 'tobacco' is smoker status (1=yes, 2=no)
 
-smokers <- subset(ps1.data, tobacco==1)
-nonsmokers <- subset(ps1.data, tobacco==2)
+
+
+smoke.impact <- ddply(ps1.data.clean, .(tobacco), summarize, 
+                    mean.omaps = mean(omaps),
+                    mean.fmaps = mean(fmaps),
+                    mean.dbrwt = mean(dbrwt)
+                    )
+
+smokers <- subset(ps1.data.clean, tobacco==1)
+nonsmokers <- subset(ps1.data.clean, tobacco==2)
 
 smokerstats <- c(mean(smokers$omaps), mean(smokers$fmaps), mean(smokers$dbrwt))
 nonsmokerstats <- c(mean(nonsmokers$omaps), mean(nonsmokers$fmaps), mean(nonsmokers$dbrwt))
@@ -136,10 +146,10 @@ meandif <- nonsmokerstats - smokerstats
 smoketable <- matrix(c(smokerstats, nonsmokerstats, meandif), ncol=3, byrow=FALSE)
 colnames(smoketable) <- c("Mean Value (Infants with Smoker Mothers)", "Mean Value (Infants with Non-Smoker Mothers)", "Mean Difference between control and treatment")
 rownames(smoketable) <- c("one minute APGAR score", "five munute APGAR score", "birthweight")
-smoketable <- as.table(smoketable)
+smoketable <- as.data.frame(smoketable)
 
 
-stargazer(smoketable, title = "Mean values of health figures in Infants with Smoker and Non-Smoker Mothers")
+stargazer(smoketable, title = "Mean values of health figures in Infants with Smoker and Non-Smoker Mothers", type="text")
 
 
 
