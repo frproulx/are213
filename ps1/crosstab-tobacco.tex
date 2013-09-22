@@ -1,0 +1,28 @@
+% latex.default(cstats, title = title, caption = caption, rowlabel = rowlabel,      col.just = col.just, numeric.dollar = FALSE, insert.bottom = legend,      rowname = lab, dcolumn = dcolumn, extracolheads = extracolheads,      extracolsize = Nsize, ...) 
+%
+\begin{table}[!tbp]
+\caption{Descriptive Statistics by tobacco\label{crosstab-tobacco}} 
+\begin{center}
+\begin{tabular}{lccc}
+\hline\hline
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{smoker}&\multicolumn{1}{c}{nonsmoker}&\multicolumn{1}{c}{Combined}\tabularnewline
+&\multicolumn{1}{c}{{\scriptsize $N=18266$}}&\multicolumn{1}{c}{{\scriptsize $N=96344$}}&\multicolumn{1}{c}{{\scriptsize $N=114610$}}\tabularnewline
+\hline
+mrace3~:~White&87\%~{\scriptsize~(15876)}&86\%~{\scriptsize~(82748)}&86\%~{\scriptsize~(98624)}\tabularnewline
+~~~~Other&~0\%~{\scriptsize~(~~~69)}&~2\%~{\scriptsize~(~2202)}&~2\%~{\scriptsize~(~2271)}\tabularnewline
+~~~~Black&13\%~{\scriptsize~(~2321)}&12\%~{\scriptsize~(11394)}&12\%~{\scriptsize~(13715)}\tabularnewline
+csex~:~Male&52\%~{\scriptsize~(~9462)}&51\%~{\scriptsize~(49505)}&51\%~{\scriptsize~(58967)}\tabularnewline
+~~~~Female&48\%~{\scriptsize~(~8804)}&49\%~{\scriptsize~(46839)}&49\%~{\scriptsize~(55643)}\tabularnewline
+dplural~:~Singleton&98\%~{\scriptsize~(~17860)}&97\%~{\scriptsize~(~93694)}&97\%~{\scriptsize~(111554)}\tabularnewline
+~~~~Twin&~2\%~{\scriptsize~(~~~400)}&~3\%~{\scriptsize~(~~2503)}&~3\%~{\scriptsize~(~~2903)}\tabularnewline
+~~~~Triplet&~0\%~{\scriptsize~(~~~~~6)}&~0\%~{\scriptsize~(~~~135)}&~0\%~{\scriptsize~(~~~141)}\tabularnewline
+~~~~Quadruplet&~0\%~{\scriptsize~(~~~~~0)}&~0\%~{\scriptsize~(~~~~12)}&~0\%~{\scriptsize~(~~~~12)}\tabularnewline
+clingest&{\scriptsize 38~}{40 }{\scriptsize 40} &{\scriptsize 38~}{40 }{\scriptsize 40} &{\scriptsize 38~}{40 }{\scriptsize 40} \tabularnewline
+alcohol~:~Drinker&~~3\%~{\scriptsize~(~~~639)}&~~0\%~{\scriptsize~(~~~472)}&~~1\%~{\scriptsize~(~~1111)}\tabularnewline
+~~~~Nondrinker&~97\%~{\scriptsize~(~17627)}&100\%~{\scriptsize~(~95872)}&~99\%~{\scriptsize~(113499)}\tabularnewline
+dmage&{\scriptsize 22~}{26 }{\scriptsize 30} &{\scriptsize 24~}{28 }{\scriptsize 32} &{\scriptsize 24~}{28 }{\scriptsize 32} \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\noindent {\scriptsize $a$\ }{$b$\ }{\scriptsize $c$\ } represent the lower quartile $a$, the median $b$, and the upper quartile $c$\ for continuous variables.\\Numbers after percents are frequencies.\end{table}
+
