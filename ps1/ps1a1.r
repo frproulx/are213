@@ -123,10 +123,16 @@ ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
 print(nrow(ps1.data.clean)) #number of records remaining after cleaning
 
 # Problem 1c: Summary table of clean data, write a new csv-------
+var.labels <- attr(ps1.data, "var.labels")
+var.labels[length(var.labels)+1] <- "full record present"
+
+ps1.names <- data.frame("labels" = as.data.frame(var.labels))
+colnames(ps1.names)[1] <- "labels" 
 
 summarytable<-print(describe(ps1.data.clean, skew=FALSE, ranges=FALSE))
 
-latex(summarytable)
+
+latex(cbind(var.labels,summarytable))
 
 stargazer(ps1.data.clean)
 
