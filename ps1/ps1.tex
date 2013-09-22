@@ -159,28 +159,39 @@ wgain & 114,610 & 30.356 & 11.884 & 0 & 98 \\
 
 \subsection{Part A}
 
-The table below shows the mean differences between smoking and non-smoking mothers for one-minute APGAR scores (ompas), five-minute (fmaps), and birth weight in grams (dbrwt).  Unconditioned on the other variables, there is no statistically significant difference in APGAR score but a significant difference is present in birth weight\footnote{Welch Two Sample t-test, alternative hypothesis: true difference in means is not equal to 0; p-value less than 2.2e-16, 95 percent confidence interval: -249.5463 to -231.4093}.   Infants whose mother smoked had a  7\% lower birth weight than those who did not.
+The table below shows the mean differences between smoking and non-smoking mothers for one-minute APGAR scores (ompas), five-minute (fmaps), and birth weight in grams (dbrwt).  Unconditioned on the other variables, there is no statistically significant difference in APGAR score but a significant difference is present in birth weight\footnote{Welch Two Sample t-test, alternative hypothesis: true difference in means is not equal to 0; p-value less than 2.2e-16, 95 percent confidence interval: -249.5463 to -231.4093}.   
 
-% Table created by stargazer v.4.0 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu% Date and time: Sat, Sep 21, 2013 - 00:11:19\begin{table}[!htbp] \centering   \caption{Comparison of key birthing infant health indicators for different maternal smoking status}   \label{} \begin{tabular}{@{\extracolsep{5pt}} cccc} \\[-1.8ex]\hline \hline \\[-1.8ex] tobacco & mean.omaps & mean.fmaps & mean.dbrwt \\ \hline \\[-1.8ex] smoker & 8.10275922478923 & 9.00908792291689 & 3171.13916566298 \\ nonsmoker & 8.12019430374491 & 9.00923773146226 & 3411.61697666694 \\ difference & 0.0174350789556872 & 0.00014980854536617 & 240.477811003963 \\ \hline \\[-1.8ex] \normalsize \end{tabular} \end{table} 
+% Table created by stargazer v.4.0 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Sat, Sep 21, 2013 - 00:11:19
+\begin{table}[!htbp] \centering 
+  \caption{Comparison of key birthing infant health indicators for different maternal smoking status} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+tobacco & mean.omaps & mean.fmaps & mean.dbrwt \\ 
+\hline \\[-1.8ex] 
+smoker & 8.10275922478923 & 9.00908792291689 & 3171.13916566298 \\ 
+nonsmoker & 8.12019430374491 & 9.00923773146226 & 3411.61697666694 \\ 
+difference & 0.0174350789556872 & 0.00014980854536617 & 240.477811003963 \\ 
+\hline \\[-1.8ex] 
+\normalsize 
+\end{tabular} 
+\end{table} 
 
 
 \subsection{Part B}
 
-The average treatment effect (ATE) of maternal smoking can be determined definitively by comparing the unadjusted difference in mean birth weight of infants whose mothers were randomly assigned into treatment (a smoking habit).  This is obviously not possible or even palatable for a variety of ethical reasons to verify with RCT so an alternative approach to identifying the ATE that "controls for observables" effectively is the next-best option.  
-\paragraph{}
-If ATE is to be accurate (i.e., close to the result from a good RCT) then the other observable variables need to be accounted for and accurately measured  the key assumptions that need to hold are:
-
-\begin{itemize}
-
-\item The treatment
-\item 
-
-\end{itemize}
+The average treatment effect (ATE) of maternal smoking can be determined definitively by comparing the unadjusted difference in mean birth weight of infants if their mothers were randomly assigned into treatment (a smoking habit during pregnancy).  This is obviously not possible or even palatable for a variety of practical and ethical reasons to verify with RCT so an alternative approach to identifying the ATE that controls for observables is the next-best option.  If we assume that smoking habits are randomly assigned among pregnant mothers, it can be "safe" to use the unadjusted difference in weight as a predictor of ATE without conditioning on observables.  
+\paragraph{ATE using unadjusted differences:}
+Assuming that smoking is in fact randomly assigned (or as good as random since an RCT is impractical / unethical in this case), the mean difference in birth weight between infants whose mothers smoke and those who do not is 240 grams (with a 95\% confidence interval of 230 - 250 grams). Infants whose mother smoked have about  7\% lower birth weight than those who did not. \newline{}
+Unfortunately the assumption that smoking is randomly assigned in the population is not tenable. Based on data in \ref{tab:xtabsTobacco} there appears to be very little variation in the other characteristics of mothers and infants between smoking and non-smoking status except for in one area: maternal age.  The median pregnant smoker is two years younger than the median non-smoker.  
+\input{crosstab-tobacco.tex} %Table with sample cross tabs for smoking status and a variety of factors.
 
 
 \pagebreak
 \section{Appendix}
-R code for problem \#1:
+R code for problem \#1: % REPLACE / UPDATE WHEN DONE.....
 \begin{verbatim}
 ### This is Frank Proulx's solution to ARE213 PS1a, problem 1
 ## Data is in the file "ps1.dta"

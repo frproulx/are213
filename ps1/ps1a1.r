@@ -31,6 +31,8 @@ ps1.data <- read.dta(file="ps1.dta")
 
 print(nrow(ps1.data))
 
+
+
 ## Problem 1a: Fix missing values --------
 ## The following are the error codes for each of the 15 variables that need fixing:
 # For cardiac - alcohol: "8" means missing record
@@ -80,6 +82,7 @@ full.record.flag <- which(ps1.data$cardiac != 9 &
 ps1.data$full.record <- FALSE # initialize column as F
 ps1.data$full.record[full.record.flag] <- TRUE #reassign level to T for full records
 
+
 # Problem 1b: Describe dropped levels --------
 
 # replace error rows in cigar with NA so they don't interfere with other calcs on influence of dropped values.
@@ -116,7 +119,6 @@ stargazer(unclean.cig.om.fm)
 
 ps1.data.clean <- subset (ps1.data, full.record == TRUE)
 ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
-
 
 print(nrow(ps1.data.clean)) #number of records remaining after cleaning
 
@@ -186,12 +188,24 @@ print( t.test( dbrwt ~ tobacco, data = ps1.data.clean))
 ps1.data.clean$mrace3 <- as.factor(ps1.data.clean$mrace3)
 ps1.data.clean$mrace3 <- revalue(ps1.data.clean$mrace3, c( "1" = "White", "2" = "Other", "3" = "Black" ))
 
-# CrossTabs
+ps1.data.clean$csex <- as.factor(ps1.data.clean$csex)
+ps1.data.clean$csex <- revalue(ps1.data.clean$csex, c( "1" = "Male", "2" = "Female"))
 
-xtab.list <- c("mrace3",
-               "pldel3")
+ps1.data.clean$dplural <- as.factor(ps1.data.clean$dplural)
+ps1.data.clean$dplural <- revalue(ps1.data.clean$dplural, c("1" = "Singleton", "2" = "Twin", "3"= "Triplet", "4" = "Quadruplet", "5" = "Quintuplet+"))
+
+ps1.data.clean$alcohol <- as.factor(ps1.data.clean$alcohol)
+ps1.data.clean$alcohol <- revalue(ps1.data.clean$alcohol, c("1" = "Drinker", "2" = "Nondrinker", "9" = "Unk."))
 
 
+## CrossTabs
+ps1.xtab.data <- ps1.data.clean
+# Add labels from ps1.data
+for(i in 1:length(names(ps1.data))){
+  label(ps1.xtab.data[[i]]) <- attr(ps1.data, "var.labels")[i]
+}
+
+# not-that-useful function for generating a list of crosstabs...
 xtab.create <- function(data, const.col, cross.col, counts = FALSE){
 # returns a data frame with percentiles of each cross column holding const column consant
 # 
@@ -216,10 +230,39 @@ for(factor in cross.col){
 return(xtab.out)
 }
 
-x.tobacco.rectype <- CrossTable(ps1.data.clean$mrace3, ps1.data.clean$tobacco)
 
-# Grouped crosstabs
 
+# # Improved labels for table (optional)
+# label(ps1.data.clean$dmage) <- "Maternal Age (yr)"
+# label(ps1.data.clean$tobacco) <- "Tobacco Use Status"
+# label(ps1.data.clean$mrace3) <- "Maternal Race"
+# label(ps1.data.clean$csex) <- "Infant Sex"
+# label(ps1.data.clean$dplural) <- "Infant Plurality"
+# label(ps1.data.clean$clingest) <- "Gestational Age (weeks)"
+# label(ps1.data.clean$alcohol) <- "Alcohol Use Status"
+# label(ps1.data.clean$phyper) <- "Preg. Hypertension"
+
+# Grouped crosstabs using Hmisc
+
+latex(summary( tobacco  ~ 
+                 mrace3 + 
+                 csex + 
+                 dplural + 
+                 alcohol + 
+                 phyper + 
+                 chyper +
+                 cardiac +
+                 diabetes +
+                 pre4000 +
+                 dmage +
+                 clingest, 
+               data=ps1.xtab.data,  
+               method="reverse", 
+               overall=TRUE, long=TRUE
+               ),
+      title = "crosstab-tobacco",
+      exclude1=F
+      )
 
 
 

@@ -1,26 +1,36 @@
 % latex.default(cstats, title = title, caption = caption, rowlabel = rowlabel,      col.just = col.just, numeric.dollar = FALSE, insert.bottom = legend,      rowname = lab, dcolumn = dcolumn, extracolheads = extracolheads,      extracolsize = Nsize, ...) 
 %
 \begin{table}[!tbp]
-\caption{Descriptive Statistics by tobacco\label{crosstab-tobacco}} 
+\caption{Contingency table for a range of factors by tobacco use status\label{tab:xtabTobacco}} 
 \begin{center}
 \begin{tabular}{lccc}
 \hline\hline
-\multicolumn{1}{l}{}&\multicolumn{1}{c}{smoker}&\multicolumn{1}{c}{nonsmoker}&\multicolumn{1}{c}{Combined}\tabularnewline
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{1}&\multicolumn{1}{c}{2}&\multicolumn{1}{c}{Combined}\tabularnewline
 &\multicolumn{1}{c}{{\scriptsize $N=18266$}}&\multicolumn{1}{c}{{\scriptsize $N=96344$}}&\multicolumn{1}{c}{{\scriptsize $N=114610$}}\tabularnewline
 \hline
-mrace3~:~White&87\%~{\scriptsize~(15876)}&86\%~{\scriptsize~(82748)}&86\%~{\scriptsize~(98624)}\tabularnewline
-~~~~Other&~0\%~{\scriptsize~(~~~69)}&~2\%~{\scriptsize~(~2202)}&~2\%~{\scriptsize~(~2271)}\tabularnewline
-~~~~Black&13\%~{\scriptsize~(~2321)}&12\%~{\scriptsize~(11394)}&12\%~{\scriptsize~(13715)}\tabularnewline
-csex~:~Male&52\%~{\scriptsize~(~9462)}&51\%~{\scriptsize~(49505)}&51\%~{\scriptsize~(58967)}\tabularnewline
-~~~~Female&48\%~{\scriptsize~(~8804)}&49\%~{\scriptsize~(46839)}&49\%~{\scriptsize~(55643)}\tabularnewline
-dplural~:~Singleton&98\%~{\scriptsize~(~17860)}&97\%~{\scriptsize~(~93694)}&97\%~{\scriptsize~(111554)}\tabularnewline
-~~~~Twin&~2\%~{\scriptsize~(~~~400)}&~3\%~{\scriptsize~(~~2503)}&~3\%~{\scriptsize~(~~2903)}\tabularnewline
-~~~~Triplet&~0\%~{\scriptsize~(~~~~~6)}&~0\%~{\scriptsize~(~~~135)}&~0\%~{\scriptsize~(~~~141)}\tabularnewline
-~~~~Quadruplet&~0\%~{\scriptsize~(~~~~~0)}&~0\%~{\scriptsize~(~~~~12)}&~0\%~{\scriptsize~(~~~~12)}\tabularnewline
-clingest&{\scriptsize 38~}{40 }{\scriptsize 40} &{\scriptsize 38~}{40 }{\scriptsize 40} &{\scriptsize 38~}{40 }{\scriptsize 40} \tabularnewline
-alcohol~:~Drinker&~~3\%~{\scriptsize~(~~~639)}&~~0\%~{\scriptsize~(~~~472)}&~~1\%~{\scriptsize~(~~1111)}\tabularnewline
-~~~~Nondrinker&~97\%~{\scriptsize~(~17627)}&100\%~{\scriptsize~(~95872)}&~99\%~{\scriptsize~(113499)}\tabularnewline
-dmage&{\scriptsize 22~}{26 }{\scriptsize 30} &{\scriptsize 24~}{28 }{\scriptsize 32} &{\scriptsize 24~}{28 }{\scriptsize 32} \tabularnewline
+race~of~mother~recode~:~1&87\%~{\scriptsize~(15876)}&86\%~{\scriptsize~(82748)}&86\%~{\scriptsize~(98624)}\tabularnewline
+~~~~2&~0\%~{\scriptsize~(~~~69)}&~2\%~{\scriptsize~(~2202)}&~2\%~{\scriptsize~(~2271)}\tabularnewline
+~~~~3&13\%~{\scriptsize~(~2321)}&12\%~{\scriptsize~(11394)}&12\%~{\scriptsize~(13715)}\tabularnewline
+sex~of~child~:~1&52\%~{\scriptsize~(~9462)}&51\%~{\scriptsize~(49505)}&51\%~{\scriptsize~(58967)}\tabularnewline
+~~~~2&48\%~{\scriptsize~(~8804)}&49\%~{\scriptsize~(46839)}&49\%~{\scriptsize~(55643)}\tabularnewline
+plurality~:~1&98\%~{\scriptsize~(~17860)}&97\%~{\scriptsize~(~93694)}&97\%~{\scriptsize~(111554)}\tabularnewline
+~~~~2&~2\%~{\scriptsize~(~~~400)}&~3\%~{\scriptsize~(~~2503)}&~3\%~{\scriptsize~(~~2903)}\tabularnewline
+~~~~3&~0\%~{\scriptsize~(~~~~~6)}&~0\%~{\scriptsize~(~~~135)}&~0\%~{\scriptsize~(~~~141)}\tabularnewline
+~~~~4&~0\%~{\scriptsize~(~~~~~0)}&~0\%~{\scriptsize~(~~~~12)}&~0\%~{\scriptsize~(~~~~12)}\tabularnewline
+alcohol~use~during~pregnancy~:~1&~~3\%~{\scriptsize~(~~~639)}&~~0\%~{\scriptsize~(~~~472)}&~~1\%~{\scriptsize~(~~1111)}\tabularnewline
+~~~~2&~97\%~{\scriptsize~(~17627)}&100\%~{\scriptsize~(~95872)}&~99\%~{\scriptsize~(113499)}\tabularnewline
+pregnancy~related~hypertension~:~1&~2\%~{\scriptsize~(~~~369)}&~3\%~{\scriptsize~(~~3149)}&~3\%~{\scriptsize~(~~3518)}\tabularnewline
+~~~~2&98\%~{\scriptsize~(~17897)}&97\%~{\scriptsize~(~93195)}&97\%~{\scriptsize~(111092)}\tabularnewline
+chronic~hypertension~:~1&~1\%~{\scriptsize~(~~~120)}&~1\%~{\scriptsize~(~~~764)}&~1\%~{\scriptsize~(~~~884)}\tabularnewline
+~~~~2&99\%~{\scriptsize~(~18146)}&99\%~{\scriptsize~(~95580)}&99\%~{\scriptsize~(113726)}\tabularnewline
+cardiac~disease~mother~:~1&~1\%~{\scriptsize~(~~~111)}&~1\%~{\scriptsize~(~~~677)}&~1\%~{\scriptsize~(~~~788)}\tabularnewline
+~~~~2&99\%~{\scriptsize~(~18155)}&99\%~{\scriptsize~(~95667)}&99\%~{\scriptsize~(113822)}\tabularnewline
+diabetes~mother~:~1&~3\%~{\scriptsize~(~~~490)}&~3\%~{\scriptsize~(~~2587)}&~3\%~{\scriptsize~(~~3077)}\tabularnewline
+~~~~2&97\%~{\scriptsize~(~17776)}&97\%~{\scriptsize~(~93757)}&97\%~{\scriptsize~(111533)}\tabularnewline
+previous~infant~4000~or~more~grams~:~1&~1\%~{\scriptsize~(~~~154)}&~2\%~{\scriptsize~(~~1506)}&~1\%~{\scriptsize~(~~1660)}\tabularnewline
+~~~~2&99\%~{\scriptsize~(~18112)}&98\%~{\scriptsize~(~94838)}&99\%~{\scriptsize~(112950)}\tabularnewline
+age~of~mother&{\scriptsize 22~}{26 }{\scriptsize 30} &{\scriptsize 24~}{28 }{\scriptsize 32} &{\scriptsize 24~}{28 }{\scriptsize 32} \tabularnewline
+clinical~estimate~of~gestation&{\scriptsize 38~}{40 }{\scriptsize 40} &{\scriptsize 38~}{40 }{\scriptsize 40} &{\scriptsize 38~}{40 }{\scriptsize 40} \tabularnewline
 \hline
 \end{tabular}
 \end{center}
