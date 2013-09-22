@@ -261,6 +261,8 @@ latex(summary( tobacco  ~
                overall=TRUE, long=TRUE
                ),
       title = "crosstab-tobacco",
+      label = "tab:xtabTobacco",
+      caption = "Contingency table for a range of factors by tobacco use status",
       exclude1=F
       )
 
