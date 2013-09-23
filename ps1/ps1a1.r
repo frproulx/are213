@@ -205,6 +205,8 @@ print( t.test( dbrwt ~ tobacco, data = ps1.data.clean))
 
 #visual representation of relationship:
 
+ps1.data.clean$all <- "all records" # flag for facets with all the same.
+
 # birth weight - age
 pdf(file="img/bw-age.pdf", width=5, height=7)
 bw.age <- ggplot(ps1.data.clean, aes(dmage, dbrwt))
@@ -213,7 +215,7 @@ bw.age <- bw.age +
   theme_bw() + 
   xlab("Maternal Age (years)") + 
   ylab("Birth Weight (grams)") + 
-  facet_grid(full.record~.)
+  facet_grid(all~.)
 
 split.age <- ggplot(ps1.data.clean, aes(x=dmage))
 split.age <- split.age +
@@ -228,16 +230,25 @@ dev.off()
   
 
 # birth weight - marriage
-pdf(file="img/bw-mar.pdf", width=5, height=4)
+pdf(file="img/bw-mar.pdf", width=5, height=7)
 
 bw.mar <- ggplot(ps1.data.clean, aes(factor(dmar),dbrwt))
 bw.mar <- bw.mar +
   geom_boxplot() +
   theme_bw() +
   xlab("Marital Status") +
-  ylab("Birth Weight (grams)")
+  ylab("Birth Weight (grams)") +
+  facet_grid(all~.)
 
-print(bw.mar)
+split.mar <- ggplot(ps1.data.clean, aes(x=dmage))
+split.mar <- split.age +
+  geom_density() + 
+  theme_bw() + 
+  xlab("Maternal Age (years)") +
+  ylab("Density in Sub-sample") +
+  facet_grid(dmar~.)
+
+arrange_ggplot2(bw.mar, split.mar, ncol=1)
 
 dev.off()
 
@@ -250,7 +261,7 @@ bw.gain <- bw.gain +
   theme_bw() + 
   xlab("Maternal Weight Gain (lbs)") + 
   ylab("Birth Weight (grams)") + 
-  facet_grid(full.record~.)
+  facet_grid(all~.)
 
 split.gain <- ggplot(ps1.data.clean, aes(x=wgain))
 split.gain <- split.gain +
@@ -320,6 +331,7 @@ latex(summary( tobacco  ~
                  cardiac +
                  diabetes +
                  pre4000 +
+                 dmeduc +
                  monpre +
                  dmage +
                  clingest + 
@@ -334,5 +346,47 @@ latex(summary( tobacco  ~
       exclude1=F
       )
 
+# Problem 2c --------
+# This one is all in latex doc.  Just describing things.
+
+# Problem 2d ---------
+
+sm.age <- lm(dbrwt ~ dmage, ps1.data.clean)
+
+sm.age.mar <- lm(dbrwt ~ dmage + dmar, ps1.data.clean)
+
+sm.a.m.w <- lm(dbrwt ~ dmage + dmar + wgain, ps1.data.clean)
+
+sm.a.m.w.t <- lm(dbrwt ~ dmage + dmar + wgain + tobacco, ps1.data.clean)
+
+sm.a.m.t <- lm(dbrwt ~ dmage + dmar + tobacco, ps1.data.clean)
+
+sm.a.t <- lm(dbrwt ~ dmage + tobacco, ps1.data.clean)
+
+sm.axm.t <- lm(dbrwt ~ dmage * dmar + tobacco, ps1.data.clean) #not used - look for cross of age:mar
+
+# table without tobacco
+stargazer(sm.age, sm.age.mar, sm.a.m.w, 
+          type="latex",
+          covariate.labels = c("Maternal Age", "Marital Status (unmarried)", "Weight Gain"),
+          align = TRUE,
+          style="qje", 
+          single.row = FALSE,
+          font.size="footnotesize",
+          dep.var.labels = "Birth Weight",
+          out = "combinedReg-noTob.tex"
+          )
+
+# table with tobacco
+stargazer(sm.a.m.w.t, sm.a.m.t, sm.a.t, 
+          type="latex",
+          covariate.labels = c("Maternal Age", "Marital Status (unmarried)", "Weight Gain", "Tobacco (nonsmoker)"),
+          align = TRUE,
+          style="qje", 
+          single.row = FALSE,
+          font.size="footnotesize",
+          dep.var.labels = "Birth Weight",
+          out = "combinedReg-withTob.tex"
+)
 
 

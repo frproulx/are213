@@ -5,5 +5,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 
 Checkout
 --------
-
-Peter - working on 2c and d
+Note - First draft of ps1a done.

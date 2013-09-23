@@ -3,6 +3,8 @@
 
 \usepackage{graphicx}
 \usepackage{longtable}
+\usepackage{rotating}
+\usepackage{dcolumn}
 
 \begin{document}
 \title{ARE213 Problem Set \#1A}
@@ -125,10 +127,13 @@ The average treatment effect (ATE) of maternal smoking can only be determined by
 \paragraph{ATE using unadjusted differences:}
 If we were to assume that smoking is in fact randomly assigned, the mean difference in birth weight caused by smoking between infants whose mothers smoke and those who do not is 240 grams (with a 95\% confidence interval of 230 - 250 grams). Infants whose mother smoked have about  7\% lower birth weight than those who did not. \newline{}
 
+
 \paragraph{Identifying potential confounding factors:}
 We used deductive logic and graphical exploration to understand factors that may influence birth weight and should be controlled for if the tobacco users / non-users have distributions that are not identical (or very similar) between them.  Several (bot not all) of the factors that we identified as potential candidates are summarized in the Table \ref{tab:xtabsTobacco}.  We omitted many that did not show a relationship between the factor and birth weight for brevity.  The results show that most of the potential factors related to birth weight do not appear likely to be also related to smoking status.  \newline
 
 \input{crosstab-tobacco.tex} %Table with sample cross tabs for smoking status and a variety of factors.
+
+
 
 The factors we identify as having an impact on birth weight AND being related to smoking status are:
 
@@ -136,7 +141,7 @@ The factors we identify as having an impact on birth weight AND being related to
 
 \item \textbf{Maternal Age} is different between the smoking / non-smoking group and is related to birth weight.  The median pregnant smoker is two years younger than the median non-smoker.  There is also a relationship between age and birth weight (where older mothers up to age 31-32 or so tend to have heavier babies).  The relationship between maternal age and birth weight along with the distributions in age for smokers and non-smokers is shown in Figure \ref{fig:bwAge}
 
-\item \textbf{Marital Status} is quite different between the smoking and non-smoking groups: single mothers are more likely to smoke in pregnancy.  In the whole sample the fraction of women who are married is 75\% but in the "smoker" subsample it is only 52\%.  There is also a relationship between marital status and birth weight whereby married mothers tend to have slightly heavier babies.  These relationships are shown in Figure \ref{fig:bwMar}.
+\item \textbf{Marital Status} is also different between the smoking and non-smoking groups: single mothers are more likely to smoke in pregnancy.  In the whole sample the fraction of women who are married is 75\% but in the "smoker" subsample it is only 52\%.  There is also a relationship between marital status and birth weight whereby married mothers tend to have slightly heavier babies.  These relationships are shown in Figure \ref{fig:bwMar}.  If one believes that being married leads to less stress for mothers and/or better resources and support it is possible that marital status is a proxy for other determinants of infant weight.  However, as is also shown in the Figure (bottom panel) there are different distributions in maternal age between married and unmarried women, with a relationship that suggests age may be a stronger determining factor since single mothers are typically younger than married mothers.   
 
 \item \textbf{Maternal weight gain (less certain)} is related to infant weight at birth but as we note is not as certain in terms of being related strongly with smoking status.  The median weight gain is quite similar between the two smoking status groups (29 lbs for smokers vs. 30 lbs for non-smokers) but there is a larger difference in the 25th percentile weight (20 vs. 24 lbs.).  The relationship between maternal weight gain and infant weight gain along with the distribution in maternal gain by smoking status is summarized in Figure \ref{fig:bwGain}
 
@@ -151,7 +156,7 @@ The factors we identify as having an impact on birth weight AND being related to
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics{img/bw-mar.pdf}
-\caption{Boxplots for birth weight by marital status of the mother.}
+\caption{(Top) Boxplots for birth weight by marital status of the mother. (Bottom) Distribution in maternal age between married and unmarried women.}
 \label{fig:bwMar}
 \end{center}
 \end{figure}
@@ -167,6 +172,45 @@ The factors we identify as having an impact on birth weight AND being related to
 \end{itemize}
 Because of the factors we identified the assumption that smoking is randomly assigned in the pop ulation(and using unadjusted mean differences) is not tenable for obtaining an accurate prediction of ATE. 
 
+
+\subsection{Part C}
+The position that smoking status is randomly assigned may have some rational basis, but it is not possible to rationalize complete randomness.  Consider the following:
+
+\begin{itemize}
+\item This study was conducted in 1993, decades after the link between smoking and poor infant health was established and widely publicized in both the scientific literature and (more importantly) the popular media.  While there is a link between maternal educational attainment (smokers tend to have less education, slightly), this can largely be explained by the age of the mothers (many of whom are simply too young to have graduated college, etc.).  This education gap could potentially explain a difference in awareness but we posit it is probably a poor proxy.  It is reasonable to expect that the vast majority of mothers in the sample know about the link between smoking during pregnancy and poor infant health outcomes, and that the smoking and non-smoking mothers both have the same maternal drive to protect their unborn infants.
+
+\item Furthermore, even if the popular exposure were different between smokers and non-smokers, it is standard practice during neonatal care to receive messages about the value of not smoking.  Both smokers and non-smokers received basically the same level of neonatal care (as measured by the month at which care began).  
+
+\item If one accepts that awareness about smoking risk and the level of maternal protection drive is the same in both groups, perhaps the only remaining factors are those that underly addiction: genetic predisposition and environmental factors.  It is possible, but by no means certain, that the genetic factors (at least) are essentially randomly distributed between people.  However, the underlying environmental factors that lead to addiction are not likely randomly distributed and may be correlated with both smoking and other maternal behavior that could lead to lower birth weight.  
+
+\item Base on the above we posit that there is an element of randomness (genetic factors) associated with smoking but that environmental factors (education, upbringing, social pressures) also contribute strongly to both smoking status and other factors that could cause low birth weight (like pregnancies earlier in life).  
+
+\end{itemize}
+
+Based on our analysis and reasoning, there are two key factors that are predetermined, contribute to birth weight, and also are biased by the "smoking" treatment: Maternal Age and Marital Status.  Other factors that are predetermined but do not meet the other two criteria (contributing to weight AND biased by smoking treatment comported to the larger sample) include the sex of the baby, level of prenatal care, age of the father (to the extent that there are genetic causes), gestational time, state of residence, infant plurality, etc.  There are also factors that are not predetermined and seem to be (potentially) closely linked with treatment status, such as alcohol use in utero (which was a small fraction of the whole population), maternal weight gain, pregnancy related hypertension, and incidences of lung disease.  \newline
+
+In general the predetermined factors are those that can be completely extricated from the treatment, i.e., those that could be changed for a particular individual without changing the treatment category.  Factors that are not predetermined, and therefore cannot be pulled apart from treatment effects, are those that derive at least partly from the smoking status of the mother or underlying factors of smoking status.  The ultimate goal is to identify predetermined factors so they can be controlled in the regression to capture only factors that can be effected by the treatment.  \newline
+
+The policy relevance of the analysis is identifying what the potential positive outcomes can be from targeted smoking cessation programs on pregnant (or soon to be pregnant) mothers, so one must assume that we cannot change other parts of her life leading up to the pregnancy.  
+
+\subsection{Part D}
+
+Selection on observables strategies for teasing out causality guide us to identify all the observable factors (except for the treatment--smoking in this case) that could lead to the outcome (birth weight) and to "correct" for these using statistical techniques before the test for smoking.  We identified three additional key factors above that we will use in a set of simple linear models to understand how different factors influence birth weight: Maternal Age, Marital Status, and Maternal Weight Gain.  We include maternal weight gain with prejudice on how to interpret it because it too could be linked with smoking status (anecdotal evidence indicates that smoking tends to suppress weight gain and that smoking cessation could lead to temporary weight gain).  Table \ref{bwLMNoTob} and \ref{bwLMWithTob} below summarize the suite of linear models we used to explore the relationships between various potential causal factors and birth weight\newline
+
+The outcome of the models indicates that each of the three additional factors (in addition to tobacco use) is statistically significant in terms of predicting birth weight.  However, because maternal weight gain is not a clearly predetermined factor we choose to ignore models that include it (although it is interesting to examine them).  The "best" model that only includes Maternal Age and Marital Status as conditioning variables along with tobacco use.  \newline
+
+By introducing conditioning variables in a linear regression we downgrade the estimate for average treatment effect from 240 grams to about 200 grams because smokers tended to be younger and unmarried (both significantly decrease birth weight).  
+
+
+
+% TABLE Birthweight without tobacco.
+% Table created by stargazer v.4.0 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu% Date and time: Mon, Sep 23, 2013 - 11:24:05% Requires LaTeX packages: dcolumn \begin{sidewaystable}[!htbp] \centering   \caption{Birth weight linear models without including Tobacco factors}   \label{tab:bwLMNoTab} \footnotesize \begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } \\[-1.8ex]\hline \hline \\[-1.8ex] \\[-1.8ex] & \multicolumn{3}{c}{Birth Weight} \\ \\[-1.8ex] & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)}\\ \hline \\[-1.8ex]  Maternal Age & 9.536^{***} & 2.888^{***} & 4.246^{***} \\   & (0.302) & (0.341) & (0.334) \\   & & & \\  Marital Status (unmarried) &  & -183.626^{***} & -175.893^{***} \\   &  & (4.479) & (4.384) \\   & & & \\  Weight Gain &  &  & 10.042^{***} \\   &  &  & (0.141) \\   & & & \\  Constant & 3,108.613^{***} & 3,339.251^{***} & 2,994.784^{***} \\   & (8.558) & (10.190) & (11.081) \\   & & & \\ \textit{N} & \multicolumn{1}{c}{114,610} & \multicolumn{1}{c}{114,610} & \multicolumn{1}{c}{114,610} \\ R$^{2}$ & \multicolumn{1}{c}{0.009} & \multicolumn{1}{c}{0.023} & \multicolumn{1}{c}{0.064} \\ Adjusted R$^{2}$ & \multicolumn{1}{c}{0.009} & \multicolumn{1}{c}{0.023} & \multicolumn{1}{c}{0.064} \\ Residual Std. Error & \multicolumn{1}{c}{582.649 (df = 114608)} & \multicolumn{1}{c}{578.426 (df = 114607)} & \multicolumn{1}{c}{566.024 (df = 114606)} \\ F Statistic & \multicolumn{1}{c}{996.918$^{***}$ (df = 1; 114608)} & \multicolumn{1}{c}{1,346.077$^{***}$ (df = 2; 114607)} & \multicolumn{1}{c}{2,629.910$^{***}$ (df = 3; 114606)} \\ \hline \hline \\[-1.8ex] \textit{Notes:} & \multicolumn{3}{r}{$^{***}$Significant at the 1 percent level.} \\  & \multicolumn{3}{r}{$^{**}$Significant at the 5 percent level.} \\  & \multicolumn{3}{r}{$^{*}$Significant at the 10 percent level.} \\ \normalsize \end{tabular} 
+\end{sidewaystable} 
+
+
+
+%TABLE Birthweight WITH tobacco
+% Table created by stargazer v.4.0 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu% Date and time: Mon, Sep 23, 2013 - 11:35:16% Requires LaTeX packages: dcolumn \begin{sidewaystable}[!htbp] \centering   \caption{Birth weight linear models including Tobacco factors}   \label{tab:bwLMWithTob} \footnotesize \begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } \\[-1.8ex]\hline \hline \\[-1.8ex] \\[-1.8ex] & \multicolumn{3}{c}{Birth Weight} \\ \\[-1.8ex] & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)}\\ \hline \\[-1.8ex]  Maternal Age & 4.058^{***} & 2.716^{***} & 7.781^{***} \\   & (0.332) & (0.338) & (0.301) \\   & & & \\  Marital Status (unmarried) & -141.095^{***} & -146.507^{***} &  \\   & (4.444) & (4.538) &  \\   & & & \\  Weight Gain & 9.850^{***} &  &  \\   & (0.140) &  &  \\   & & & \\  Tobacco (nonsmoker) & 183.678^{***} & 195.101^{***} & 225.823^{***} \\   & (4.668) & (4.764) & (4.690) \\   & & & \\  Constant & 2,842.679^{***} & 3,170.698^{***} & 2,967.483^{***} \\   & (11.666) & (10.921) & (8.965) \\   & & & \\ \textit{N} & \multicolumn{1}{c}{114,610} & \multicolumn{1}{c}{114,610} & \multicolumn{1}{c}{114,610} \\ R$^{2}$ & \multicolumn{1}{c}{0.077} & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{0.028} \\ Adjusted R$^{2}$ & \multicolumn{1}{c}{0.077} & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{0.028} \\ Residual Std. Error & \multicolumn{1}{c}{562.240 (df = 114605)} & \multicolumn{1}{c}{574.242 (df = 114606)} & \multicolumn{1}{c}{576.845 (df = 114607)} \\ F Statistic & \multicolumn{1}{c}{2,386.185$^{***}$ (df = 4; 114605)} & \multicolumn{1}{c}{1,469.452$^{***}$ (df = 3; 114606)} & \multicolumn{1}{c}{1,667.935$^{***}$ (df = 2; 114607)} \\ \hline \hline \\[-1.8ex] \textit{Notes:} & \multicolumn{3}{r}{$^{***}$Significant at the 1 percent level.} \\  & \multicolumn{3}{r}{$^{**}$Significant at the 5 percent level.} \\  & \multicolumn{3}{r}{$^{*}$Significant at the 10 percent level.} \\ \normalsize \end{tabular} \end{sidewaystable}
 
 \pagebreak
 \section{Appendix}
