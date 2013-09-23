@@ -6,4 +6,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 Checkout
 --------
 
-None.
+Peter - work on 2c-d
