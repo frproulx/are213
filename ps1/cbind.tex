@@ -1,11 +1,16 @@
-% latex.default(cbind(var.labels, summarytable)) 
+% latex.default(cbind(var.labels, summarytable), longtable = TRUE) 
 %
-\begin{table}[!tbp]
-\begin{center}
-\begin{tabular}{llrrrrr}
+
+\setlongtables
+
+
+\begin{longtable}{llrrrrr}
 \hline\hline
 \multicolumn{1}{l}{cbind}&\multicolumn{1}{c}{var.labels}&\multicolumn{1}{c}{var}&\multicolumn{1}{c}{n}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{sd}&\multicolumn{1}{c}{se}\tabularnewline
 \hline
+\endhead
+\hline
+\endfoot
 rectype&record type&$ 1$&$114610$&$   1.26$&$  0.44$&$0.00$\tabularnewline
 pldel3&facility of birth recode&$ 2$&$114610$&$   1.02$&$  0.13$&$0.00$\tabularnewline
 birattnd&attendant at birth&$ 3$&$114610$&$   1.20$&$  0.56$&$0.00$\tabularnewline
@@ -46,6 +51,7 @@ herpes&genital herpes mother&$37$&$114610$&$   1.99$&$  0.08$&$0.00$\tabularnewl
 chyper&chronic hypertension&$38$&$114610$&$   1.99$&$  0.09$&$0.00$\tabularnewline
 phyper&pregnancy related hypertension&$39$&$114610$&$   1.97$&$  0.17$&$0.00$\tabularnewline
 pre4000&previous infant 4000 or more grams&$40$&$114610$&$   1.99$&$  0.12$&$0.00$\tabularnewline
+\newpage
 preterm&previous preterm infant&$41$&$114610$&$   1.99$&$  0.12$&$0.00$\tabularnewline
 tobacco&tobacco use during pregnancy&$42$&$114610$&$   1.84$&$  0.37$&$0.00$\tabularnewline
 cigar&average number of cigarettes per day&$43$&$114610$&$   1.91$&$  5.30$&$0.02$\tabularnewline
@@ -56,7 +62,5 @@ drink5&average number of drinks recode&$47$&$114610$&$   0.02$&$  0.23$&$0.00$\t
 wgain&weight gain&$48$&$114610$&$  30.36$&$ 11.88$&$0.04$\tabularnewline
 full.record*&full record present&$49$&$114610$&$   1.00$&$  0.00$&$0.00$\tabularnewline
 \hline
-\end{tabular}
-\end{center}
-\end{table}
+\end{longtable}
 

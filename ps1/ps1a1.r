@@ -131,10 +131,9 @@ colnames(ps1.names)[1] <- "labels"
 
 summarytable<-print(describe(ps1.data.clean, skew=FALSE, ranges=FALSE))
 
+latex(title="variable", file="clean-summary.tex" , cbind(var.labels,summarytable), caption="Summary of clean Data", vbar=TRUE, size="footnotesize")
 
-latex(cbind(var.labels,summarytable))
-
-stargazer(ps1.data.clean)
+# stargazer(ps1.data.clean) # Doesn't work as well as the Hmisc version for this long table.
 
 write.csv(ps1.data.clean, file = "ps1dataclean.csv")
 
@@ -181,14 +180,6 @@ stargazer(smoke.impact, summary=FALSE, digits = 2)
 
 # Problem 2b -------
 
-print( t.test( omaps ~ tobacco, data = ps1.data.clean))
-print( t.test( fmaps ~ tobacco, data = ps1.data.clean))
-print( t.test( dbrwt ~ tobacco, data = ps1.data.clean))
-
-#visual representation of relationship:
-
-# Relationships between variables
-
 #recode variables
 
 ps1.data.clean$mrace3 <- as.factor(ps1.data.clean$mrace3)
@@ -203,6 +194,74 @@ ps1.data.clean$dplural <- revalue(ps1.data.clean$dplural, c("1" = "Singleton", "
 ps1.data.clean$alcohol <- as.factor(ps1.data.clean$alcohol)
 ps1.data.clean$alcohol <- revalue(ps1.data.clean$alcohol, c("1" = "Drinker", "2" = "Nondrinker", "9" = "Unk."))
 
+ps1.data.clean$dmar <- as.factor(ps1.data.clean$dmar)
+ps1.data.clean$dmar <- revalue(ps1.data.clean$dmar, c("1" = "Married", "2" = "Unmarried"))
+
+# T-tests for relationships.
+
+print( t.test( omaps ~ tobacco, data = ps1.data.clean))
+print( t.test( fmaps ~ tobacco, data = ps1.data.clean))
+print( t.test( dbrwt ~ tobacco, data = ps1.data.clean))
+
+#visual representation of relationship:
+
+# birth weight - age
+pdf(file="img/bw-age.pdf", width=5, height=7)
+bw.age <- ggplot(ps1.data.clean, aes(dmage, dbrwt))
+bw.age <- bw.age + 
+  stat_smooth() +
+  theme_bw() + 
+  xlab("Maternal Age (years)") + 
+  ylab("Birth Weight (grams)") + 
+  facet_grid(full.record~.)
+
+split.age <- ggplot(ps1.data.clean, aes(x=dmage))
+split.age <- split.age +
+  geom_density() + 
+  theme_bw() + 
+  xlab("Maternal Age (years)") +
+  ylab("Density in Sub-sample") +
+  facet_grid(tobacco~.)
+
+arrange_ggplot2(bw.age, split.age, ncol=1)
+dev.off()
+  
+
+# birth weight - marriage
+pdf(file="img/bw-mar.pdf", width=5, height=4)
+
+bw.mar <- ggplot(ps1.data.clean, aes(factor(dmar),dbrwt))
+bw.mar <- bw.mar +
+  geom_boxplot() +
+  theme_bw() +
+  xlab("Marital Status") +
+  ylab("Birth Weight (grams)")
+
+print(bw.mar)
+
+dev.off()
+
+
+# birth weight - maternal weight gain
+pdf(file="img/bw-gain.pdf", width=5, height=7)
+bw.gain <- ggplot(ps1.data.clean, aes(wgain, dbrwt))
+bw.gain <- bw.gain + 
+  stat_smooth() +
+  theme_bw() + 
+  xlab("Maternal Weight Gain (lbs)") + 
+  ylab("Birth Weight (grams)") + 
+  facet_grid(full.record~.)
+
+split.gain <- ggplot(ps1.data.clean, aes(x=wgain))
+split.gain <- split.gain +
+  geom_density() + 
+  theme_bw() + 
+  xlab("Maternal Weight Gain (lbs)") +
+  ylab("Density in Sub-sample") +
+  facet_grid(tobacco~.)
+
+arrange_ggplot2(bw.gain, split.gain, ncol=1)
+dev.off()
 
 ## CrossTabs
 ps1.xtab.data <- ps1.data.clean
@@ -253,6 +312,7 @@ return(xtab.out)
 latex(summary( tobacco  ~ 
                  mrace3 + 
                  csex + 
+                 dmar +
                  dplural + 
                  alcohol + 
                  phyper + 
@@ -260,8 +320,10 @@ latex(summary( tobacco  ~
                  cardiac +
                  diabetes +
                  pre4000 +
+                 monpre +
                  dmage +
-                 clingest, 
+                 clingest + 
+                 wgain, 
                data=ps1.xtab.data,  
                method="reverse", 
                overall=TRUE, long=TRUE
