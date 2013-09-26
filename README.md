@@ -5,4 +5,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 
 Checkout
 --------
-Peter checkout - will read through and compile tex.
+Done with review - tex compiled....ok to turn in if reads OK.
