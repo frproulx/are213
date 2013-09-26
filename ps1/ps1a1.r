@@ -1,14 +1,12 @@
-### This is Peter Alstone & Frank Proulx's solution to ARE213 PS1a
+### This is Frank Proulx's solution to ARE213 PS1a, problem 1
 ## Data is in the file "ps1.dta"
 
 
 ## working directories --------
 
 # Peter
-# setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps1")
+setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps1")
 
-# Frank
-setwd("~/media/frank/Data1/documents/School/Berkeley/Fall13/ARE213/are213/ps1")
 
 ## PACKAGES -------------
 
