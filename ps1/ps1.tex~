@@ -152,7 +152,7 @@ If we were to assume that smoking is in fact randomly assigned, the mean differe
 
 
 \paragraph{Identifying potential confounding factors:}
-We used deductive logic and graphical exploration to understand factors that may influence birth weight and should be controlled for if the tobacco users / non-users have distributions that are not identical (or very similar) between them.  Several (but not all) of the factors that we identified as potential candidates are summarized in the Table \ref{tab:xtabTobacco}.  We omitted many that did not show a relationship between the factor and birth weight for brevity.  The results show that most of the potential factors related to birth weight do not appear likely to be also related to smoking status.  \newline
+We used deductive logic and graphical exploration to understand factors that may influence birth weight and should be controlled for if the tobacco users / non-users have distributions that are not identical (or very similar) between them.  Several (but not all) of the factors that we identified as potential candidates are summarized in the Table \ref{tab:xtabsTobacco}.  We omitted many that did not show a relationship between the factor and birth weight for brevity.  The results show that most of the potential factors related to birth weight do not appear likely to be also related to smoking status.  \newline
 
 \input{crosstab-tobacco.tex} %Table with sample cross tabs for smoking status and a variety of factors.
 
@@ -226,7 +226,7 @@ Based on our analysis and reasoning, there are two key factors that are predeter
 
 \subsection{Part D}
 
-Selection on observables strategies for teasing out causality guide us to identify all the observable factors (except for the treatment--smoking in this case) that could lead to the outcome (birth weight) and to "correct" for these using statistical techniques before the test for smoking.  We identified three additional key factors above that we will use in a set of simple linear models to understand how different factors influence birth weight: Maternal Age, Marital Status, and Maternal Weight Gain.  We include maternal weight gain with prejudice on how to interpret it because it too could be linked with smoking status (anecdotal evidence indicates that smoking tends to suppress weight gain and that smoking cessation could lead to temporary weight gain).  Table \ref{tab:bwLMNoTob} and \ref{tab:bwLMWithTob} below summarize the suite of linear models we used to explore the relationships between various potential causal factors and birth weight\newline
+Selection on observables strategies for teasing out causality guide us to identify all the observable factors (except for the treatment--smoking in this case) that could lead to the outcome (birth weight) and to "correct" for these using statistical techniques before the test for smoking.  We identified three additional key factors above that we will use in a set of simple linear models to understand how different factors influence birth weight: Maternal Age, Marital Status, and Maternal Weight Gain.  We include maternal weight gain with prejudice on how to interpret it because it too could be linked with smoking status (anecdotal evidence indicates that smoking tends to suppress weight gain and that smoking cessation could lead to temporary weight gain).  Table \ref{bwLMNoTob} and \ref{bwLMWithTob} below summarize the suite of linear models we used to explore the relationships between various potential causal factors and birth weight\newline
 
 The outcome of the models indicates that each of the three additional factors (in addition to tobacco use) is statistically significant in terms of predicting birth weight.  However, because maternal weight gain is not a clearly predetermined factor we choose to ignore models that include it (although it is interesting to examine them).  The "best" model that only includes Maternal Age and Marital Status as conditioning variables along with tobacco use.  \newline
 
@@ -240,7 +240,7 @@ By introducing conditioning variables in a linear regression we downgrade the es
 % Requires LaTeX packages: dcolumn 
 \begin{sidewaystable}[!htbp] \centering 
   \caption{Birth weight linear models without including Tobacco factors} 
-  \label{tab:bwLMNoTob} 
+  \label{tab:bwLMNoTab} 
 \footnotesize 
 \begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } 
 \\[-1.8ex]\hline 
