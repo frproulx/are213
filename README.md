@@ -5,4 +5,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 
 Checkout
 --------
-Note - First draft of ps1a done.
+Done with review - tex compiled....ok to turn in if reads OK.
