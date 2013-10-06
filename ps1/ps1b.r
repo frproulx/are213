@@ -1,4 +1,4 @@
-setwd("~/Documents/School/are213/are213/ps1")
+setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps1")
 
 # Packages
 library(foreign) #this is to read in Stata data
@@ -52,4 +52,18 @@ ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
 
 # Problem 1a is only in ps1b.tex
 # Problem 1b
-                      
+# This is using a series estimator. I think smooth.spline() is the right function to use, but let me know if you think we should be doing kernel regression instead.
+
+
+sm.flex <- with(ps1.data.clean, smooth.spline(cigar, y=dbrwt, nknots=10, spar = 0.7, tol = 0.0001)) # Fits a smooth line to the data
+sm.flex.df <- data.frame(sm.flex$x, sm.flex$y) #converts the fitted values into a data frame for ggplot
+
+splineplot <- ggplot(sm.flex.df, aes(x = sm.flex.x, y=sm.flex.y))
+splineplot <- splineplot +
+  geom_point(data=ps1.data.clean, aes(x = cigar, y = dbrwt), pch = 1) +
+  geom_line(color='red') +
+  labs(x = 'Cigarettes smoked per day by mother', y= 'Birthweight')
+splineplot
+
+ggsave(filename = 'img/splineplot.pdf')
+
