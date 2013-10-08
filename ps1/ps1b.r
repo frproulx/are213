@@ -100,4 +100,20 @@ lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two sco
 #Problem 2b - Estimating a model using propensity scores
 
 with(ps1.data.clean, lm(dbrwt ~ tobacco.rescale + propensityreduced))
+sm.propensity <- with(ps1.data.clean, nls(dbrwt ~ tobacco.rescale + (propensityreduced * tobacco.rescale) + propensityreduced))
+
+stargazer(smoke.propensity.all, smoke.propensity.reduced,
+           type = "latex",
+           covariate.labels = c(),
+           style ="qje",
+           align = TRUE,
+           font.size="footnotesize",
+          label = "tab:propensitymodel",
+          title = "Model of effects of tobacco use on birthweight using propensity score as a control",
+           dep.var.labels = "Mother Tobacco-Use Status",
+           out = "propensityscoremodel.tex"
+           )
+
+
+
 
