@@ -7,9 +7,11 @@ library(psych)
 library(stargazer)
 library(ggplot2) # for neato plotting tools
 library(plyr) # for nice data tools like ddply
+library(epicalc) # For likelihood ratio test
 library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(splines) # for series regression
+
 
 # Homebrewed functions
 source("../util/are213-func.R")
@@ -66,4 +68,32 @@ splineplot <- splineplot +
 splineplot
 
 ggsave(filename = 'img/splineplot.pdf')
+
+
+# Problem 2a
+ps1.data.clean$tobacco.rescale <- with(ps1.data.clean, recode(tobacco, "2='0'", as.numeric.result=TRUE)) #rescales the tobacco use variable to be 0/1, where 0=no and 1 = yes
+ps1.data.clean$dmar.rescale <- with(ps1.data.clean, recode(dmar, "2='0'"))
+
+smoke.propensity.all <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath) + dplural + csex + dmage, data=ps1.data.clean, family = binomial()) ## Did I miss any predetermined covariates here?
+
+smoke.propensity.reduced <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath), data=ps1.data.clean, family = binomial())
+
+
+stargazer(smoke.propensity.all, smoke.propensity.reduced,
+           type = "latex",
+           covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
+           style ="qje",
+           align = TRUE,
+           font.size="footnotesize",
+          label = "tab:propensities",
+          title = "Propensity scores calculated for mother's smoking status",
+           dep.var.labels = "Mother Tobacco-Use Status",
+           out = "propensityscores.tex"
+           )
+
+ps1.data.clean$propensityfull <- predict(smoke.propensity.all)
+ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced)
+
+lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
+
 
