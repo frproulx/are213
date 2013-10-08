@@ -97,14 +97,17 @@ ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "re
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
 
 
-#Problem 2b - Estimating a model using propensity scores
+#Problem 2b - Estimating a regression model using propensity scores
 
-with(ps1.data.clean, lm(dbrwt ~ tobacco.rescale + propensityreduced))
-sm.propensity <- with(ps1.data.clean, nls(dbrwt ~ tobacco.rescale + (propensityreduced * tobacco.rescale) + propensityreduced))
+sm.propensityregression <- lm(dbrwt ~ tobacco.rescale + (propensityreduced * tobacco.rescale) + propensityreduced, ps1.data.clean)
 
-stargazer(smoke.propensity.all, smoke.propensity.reduced,
+#calculation of average treatment effect:
+coefficients(sm.propensityregression)[2] + coefficients(sm.propensityregression)[4]*mean(ps1.data.clean$propensityreduced)
+
+
+stargazer(sm.propensityregression,
            type = "latex",
-           covariate.labels = c(),
+           covariate.labels = c("Delta1", "Beta", "Delta2", "Constant"),
            style ="qje",
            align = TRUE,
            font.size="footnotesize",
@@ -113,6 +116,14 @@ stargazer(smoke.propensity.all, smoke.propensity.reduced,
            dep.var.labels = "Mother Tobacco-Use Status",
            out = "propensityscoremodel.tex"
            )
+
+#Problem 2c - Using reweighting with propensity scores
+
+term1 <- with(ps1.data.clean, sum((tobacco.rescale*dbrwt)/propensityreduced)/sum(tobacco.rescale/propensityreduced))
+term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale)/(1-propensityreduced)))
+
+weightingestimator <- term1-term2 #This should be the average treatment effect
+
 
 
 
