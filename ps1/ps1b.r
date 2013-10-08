@@ -91,9 +91,13 @@ stargazer(smoke.propensity.all, smoke.propensity.reduced,
            out = "propensityscores.tex"
            )
 
-ps1.data.clean$propensityfull <- predict(smoke.propensity.all)
-ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced)
+ps1.data.clean$propensityfull <- predict(smoke.propensity.all, type = "response")
+ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "response")
 
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
 
+
+#Problem 2b - Estimating a model using propensity scores
+
+with(ps1.data.clean, lm(dbrwt ~ tobacco.rescale + propensityreduced))
 
