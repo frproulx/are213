@@ -1,4 +1,5 @@
-setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps1")
+#setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps1")
+
 
 # Packages
 library(foreign) #this is to read in Stata data
@@ -11,7 +12,7 @@ library(epicalc) # For likelihood ratio test
 library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(splines) # for series regression
-
+library(KernSmooth) #for kernel regression
 
 # Homebrewed functions
 source("../util/are213-func.R")
@@ -54,7 +55,8 @@ ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
 
 # Problem 1a is only in ps1b.tex
 # Problem 1b
-# This is using a series estimator. I think smooth.spline() is the right function to use, but let me know if you think we should be doing kernel regression instead.
+# This is using a series estimator. I think smooth.spline() is the right function to use, but let me know if you think we should be doing kernel regression instead. I'm also not sure how to go about adding interaction terms
+
 
 
 sm.flex <- with(ps1.data.clean, smooth.spline(cigar, y=dbrwt, nknots=10, spar = 0.7, tol = 0.0001)) # Fits a smooth line to the data
@@ -124,7 +126,11 @@ term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduc
 
 weightingestimator <- term1-term2 #This should be the average treatment effect
 
+term1.T <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum((tobacco.rescale*dbrwt)/propensityreduced)/sum(tobacco.rescale/propensityreduced))
+term2.T <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale)/(1-propensityreduced)))
 
+weightingestimator.T <- term1.T-term2.T #This should be the average treatment on the treated
 
+# Problem 2d
 
 
