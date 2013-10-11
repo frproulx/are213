@@ -85,9 +85,10 @@ stargazer(smoke.propensity.all, smoke.propensity.reduced,
            covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
            style ="qje",
            align = TRUE,
-           font.size="footnotesize",
+          font.size = "scriptsize",
           label = "tab:propensities",
-          title = "Propensity scores calculated for mother's smoking status",
+          title = "Propensity scores calculated for mother's smoking status \n
+logit model specification",
            dep.var.labels = "Mother Tobacco-Use Status",
            out = "propensityscores.tex"
            )
@@ -95,8 +96,9 @@ stargazer(smoke.propensity.all, smoke.propensity.reduced,
 ps1.data.clean$propensityfull <- predict(smoke.propensity.all, type = "response")
 ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "response")
 
+sink(file = "lrtest.tex", append = FALSE)
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
-
+sink()
 
 #Problem 2b - Estimating a regression model using propensity scores
 
@@ -158,28 +160,30 @@ kerndensity.plot <- kerndensity.plot +
   
 kerndensity.plot
 
+ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
+
 #2d - calculating kernel value by 'hand' at dbrwt = 3000
 # y_pred = sum_onj(K(pi-pj/h)*yj)/sum_onj(K(pi-pj/h))
 
-h <- 30
-kernel.epa <- function(u){
-return(if (abs(u) < 1){0.75*(1-u*u))}
-}
-propensity3000 <- # I'm not sure how we get the estimated propensity score at dbrwt = 3000
+#h <- 30
+#kernel.epa <- function(u){
+#return(if (abs(u) < 1){0.75*(1-u*u))}
+#}
+#propensity3000 <- # I'm not sure how we get the estimated propensity score at dbrwt = 3000
 
 
 #Problem 2e
 ## This is in progress
-kerndensity.plot.bws <- ggplot()
-for(h in seq(from = 15, to = 40, by = 5)) {
-paste0('kerndensity.sm.', h) <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
-        kernel = "epanechnikov",
-        bw = h,
-        weights = propensityreduced/tot.propensity.sm))
-paste0('kerndensity.sm.df.', h) <- data.frame(paste0('kerndensity.sm.', h,'[1]'), paste0('kerndensity.sm.', h, '[2]'))
-kerndensity.plot.bws <- kerndensity.plot.bws +
-  geom_line(data = paste0('kerndensity.sm.df.', h), aes(x, y)) +
-  labs(title = "Density of birthweights estimated using \n propensity score-weighted kernel regression", x = "Birthweight (grams)", y = "Density")
-}
+#kerndensity.plot.bws <- ggplot()
+#for(h in seq(from = 15, to = 40, by = 5)) {
+#paste0('kerndensity.sm.', h) <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
+#        kernel = "epanechnikov",
+#        bw = h,
+#        weights = propensityreduced/tot.propensity.sm))
+#paste0('kerndensity.sm.df.', h) <- data.frame(paste0('kerndensity.sm.', h,'[1]'), paste0('kerndensity.sm.', h, '[2]'))
+#kerndensity.plot.bws <- kerndensity.plot.bws +
+#  geom_line(data = paste0('kerndensity.sm.df.', h), aes(x, y)) +
+#  labs(title = "Density of birthweights estimated using \n propensity score-weighted kernel regression", x = "Birthweight (grams)", y = "Density")
+#}
 
-kerndensity.plot.bws
+#kerndensity.plot.bws

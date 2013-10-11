@@ -48,11 +48,14 @@ I think this is referring to the covariance between smoking and age.
 \section{Problem \#2}
 \subsection{Part A}
 
-To calculate the propensity score, we estimated a logit model of mother's tobacco use (0=non-smoker, 1=smoker) as determined by the predetermined covariates shown in Table %\ref{tab:propensities}.
+To calculate the propensity score, we estimated a logit model of mother's tobacco use (0=non-smoker, 1=smoker) as determined by the predetermined covariates shown in Table \ref{tab:propensities}. Model \#1 shows the full model using all of the covariates suspected to be predetermined. Model \#2 is a reduced form of the same model, preserving just those covariates that were significant at the 1\% level in Model \#1. 
 
+\let\clearpage\relax
 \input{propensityscores.tex}
 
-To test whether the propensity scores are comparable we perform a likelihood ratio test between the full and reduced model. This test yielded 
+To test whether the propensity scores predicted by these two models are significantly different  we perform a likelihood ratio test between  the full and reduced model. This test yields the following output:
+
+\include{lrtest.tex}
 
 NOTE from class: including insignificant terms can be beneficial in terms of getting better fit (by reducing 
 
