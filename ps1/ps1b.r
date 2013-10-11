@@ -130,18 +130,56 @@ term1.T <- with(subset(ps1.data.clean, tobacco.rescale=1), sum((tobacco.rescale*
 
 weightingestimator.T <- term1.T#-term2.T #This should be the average treatment on treated
 
+
+
 # Problem 2d - Kernel Density Estimator
-kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale = 0), density(brwt, #if nobody smoked
-        bw = 0.5 * var(brwt),
-        kernel = "gaussian",
-        weights = propensityreduced))
+tot.propensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), sum(propensityreduced))
+tot.propensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum(propensityreduced))
+h <- 35 # This is to play with the bandwidth
 
-kerndensity.sm <- with(subset(ps1.data.clean, tobacco.rescale = 1), density(brwt, #if everybody smoked
-        bw = 0.5 * var(brwt),
-        kernel = "gaussian",
-        weights = propensityreduced))
+kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), density(dbrwt, #if nobody smoked
+        kernel = "epanechnikov",
+        bw = h,
+        weights = propensityreduced/tot.propensity.nosm))
+kerndensity.nosm.df <- data.frame(kerndensity.nosm[1], kerndensity.nosm[2])
 
-#kerndensity.plot <- ggplot(aes(kerndensity
+kerndensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
+        kernel = "epanechnikov",
+        bw = h,
+        weights = propensityreduced/tot.propensity.sm))
+kerndensity.sm.df <- data.frame(kerndensity.sm[1], kerndensity.sm[2])
+
+kerndensity.plot <- ggplot(kerndensity.nosm.df, aes(x, y))
+kerndensity.plot <- kerndensity.plot +
+  geom_line(linetype = 'dotted') + 
+  geom_line(data = kerndensity.sm.df, aes(x, y)) +
+  labs(title = paste("Density of birthweights estimated using \n propensity score-weighted kernel regression \n Bandwidth=", as.factor(h)), x = "Birthweight (grams)", y = "Density") + 
+  guides(linetype = "Legend") # Having trouble getting a legend.
+  
+kerndensity.plot
+
+#2d - calculating kernel value by 'hand' at dbrwt = 3000
+# y_pred = sum_onj(K(pi-pj/h)*yj)/sum_onj(K(pi-pj/h))
+
+h <- 30
+kernel.epa <- function(u){
+return(if (abs(u) < 1){0.75*(1-u*u))}
+}
+propensity3000 <- # I'm not sure how we get the estimated propensity score at dbrwt = 3000
 
 
+#Problem 2e
+## This is in progress
+kerndensity.plot.bws <- ggplot()
+for(h in seq(from = 15, to = 40, by = 5)) {
+paste0('kerndensity.sm.', h) <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
+        kernel = "epanechnikov",
+        bw = h,
+        weights = propensityreduced/tot.propensity.sm))
+paste0('kerndensity.sm.df.', h) <- data.frame(paste0('kerndensity.sm.', h,'[1]'), paste0('kerndensity.sm.', h, '[2]'))
+kerndensity.plot.bws <- kerndensity.plot.bws +
+  geom_line(data = paste0('kerndensity.sm.df.', h), aes(x, y)) +
+  labs(title = "Density of birthweights estimated using \n propensity score-weighted kernel regression", x = "Birthweight (grams)", y = "Density")
+}
 
+kerndensity.plot.bws
