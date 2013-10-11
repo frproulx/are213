@@ -12,7 +12,6 @@ library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(splines) # for series regression
 
-
 # Homebrewed functions
 source("../util/are213-func.R")
 source("../util/watercolor.R") # for watercolor plots
@@ -125,6 +124,22 @@ term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduc
 weightingestimator <- term1-term2 #This should be the average treatment effect
 
 
+term1.T <- with(subset(ps1.data.clean, tobacco.rescale=1), sum((tobacco.rescale*dbrwt)/propensityreduced)/sum(tobacco.rescale/propensityreduced))
+#term2.T <- with(subset(ps1.data.clean, tobacco.rescale=1), sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale)/(1-propensityreduced)))
 
+weightingestimator.T <- term1.T#-term2.T #This should be the average treatment on treated
+
+# Problem 2d - Kernel Density Estimator
+kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale = 0), density(brwt, #if nobody smoked
+        bw = 0.5 * var(brwt),
+        kernel = "gaussian",
+        weights = propensityreduced))
+
+kerndensity.sm <- with(subset(ps1.data.clean, tobacco.rescale = 1), density(brwt, #if everybody smoked
+        bw = 0.5 * var(brwt),
+        kernel = "gaussian",
+        weights = propensityreduced))
+
+#kerndensity.plot <- ggplot(aes(kerndensity
 
 
