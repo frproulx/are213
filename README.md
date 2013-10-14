@@ -5,4 +5,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 
 Checkout
 --------
-Done with review - tex compiled....ok to turn in if reads OK.
+ps1b: Peter working on it Sunday Night (Oct 13)
