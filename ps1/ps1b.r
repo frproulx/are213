@@ -21,6 +21,7 @@ library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(splines) # for series regression
 library(np) #nonparametric regression
+library(rms) #regression modeling tools
 
 # Homebrewed functions
 source("../util/are213-func.R")
@@ -28,6 +29,8 @@ source("../util/watercolor.R") # for watercolor plots
 
 # Data -------
 ps1.data <- read.dta(file="ps1.dta")
+
+var.labels <- attr(ps1.data, "var.labels")
 
 # Data Cleaning Step
 full.record.flag <- which(ps1.data$cardiac != 9 &
@@ -79,13 +82,23 @@ splineplot
 
 ggsave(filename = 'img/splineplot.pdf')
 
-# Using Kernel Regression:
+# Using Series estimator with splines on maternal age.
 
-# too many cycles required by this code...
-baby.bw <- npregbw( dbrwt ~ factor(tobacco) + dmage + factor(dmar), 
-                    data = ps1.data.clean,
-                    bwtype = "fixed"
-  )
+ps1.data.clean$tobacco <- as.factor(ps1.data.clean$tobacco)
+ps1.data.clean$dmar <- as.factor(ps1.data.clean$dmar)
+
+wsp.ps1a <- lm(dbrwt ~ tobacco + dmage + dmar, data=ps1.data.clean)
+wsp <- lm(dbrwt ~ tobacco + ns(dmage, df=3) + dmar, data=ps1.data.clean)
+wsp.int <- lm(dbrwt ~ tobacco * ns(dmage, df=3) * dmar, data=ps1.data.clean)
+
+stargazer(wsp.ps1a, wsp, wsp.int, type="text")
+
+# This is the ATE with a splines regression on Age
+summary(effect("tobacco", wsp))
+
+# This is the ATE with a complex, interacting splines regression on AGe
+summary(effect("tobacco", wsp.int))
+
 
 # Problem 2a --------
 ps1.data.clean$tobacco.rescale <- with(ps1.data.clean, recode(tobacco, "2='0'", as.numeric.result=TRUE)) #rescales the tobacco use variable to be 0/1, where 0=no and 1 = yes
