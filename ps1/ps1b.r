@@ -82,10 +82,10 @@ ggsave(filename = 'img/splineplot.pdf')
 # Using Kernel Regression:
 
 # too many cycles required by this code...
-baby.bw <- npregbw( dbrwt ~ factor(tobacco) + dmage + factor(dmar), 
-                    data = ps1.data.clean,
-                    bwtype = "fixed"
-  )
+#baby.bw <- npregbw( dbrwt ~ factor(tobacco) + dmage + factor(dmar), 
+#                    data = ps1.data.clean,
+#                    bwtype = "fixed"
+#  )
 
 # Problem 2a --------
 ps1.data.clean$tobacco.rescale <- with(ps1.data.clean, recode(tobacco, "2='0'", as.numeric.result=TRUE)) #rescales the tobacco use variable to be 0/1, where 0=no and 1 = yes
@@ -115,7 +115,7 @@ ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "re
 sink(file = "lrtest.tex", append = FALSE)
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
 sink()
-
+printf("Works through 2a")
 #Problem 2b - Estimating a regression model using propensity scores --------
 
 sm.propensityregression <- lm(dbrwt ~ tobacco.rescale + (propensityreduced * tobacco.rescale) + propensityreduced, ps1.data.clean)
@@ -190,16 +190,19 @@ ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
 
 #Problem 2e --------
 ## This is in progress
-#kerndensity.plot.bws <- ggplot()
-#for(h in seq(from = 15, to = 40, by = 5)) {
-#paste0('kerndensity.sm.', h) <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
-#        kernel = "epanechnikov",
-#        bw = h,
-#        weights = propensityreduced/tot.propensity.sm))
+printf("Works as far as through 2d")
+kerndensity.plot.bws <- ggplot() # Kernel density plot at varied bandwidths
+i = 1
+for(h in seq(from = 15, to = 40, by = 5)) {
+  kerndensity.by.bw[i] <- list(h, with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
+        kernel = "epanechnikov",
+        bw = h,
+        weights = propensityreduced/tot.propensity.sm)))
 #paste0('kerndensity.sm.df.', h) <- data.frame(paste0('kerndensity.sm.', h,'[1]'), paste0('kerndensity.sm.', h, '[2]'))
 #kerndensity.plot.bws <- kerndensity.plot.bws +
 #  geom_line(data = paste0('kerndensity.sm.df.', h), aes(x, y)) +
 #  labs(title = "Density of birthweights estimated using \n propensity score-weighted kernel regression", x = "Birthweight (grams)", y = "Density")
-#}
+i = i + 1
+}
 
 #kerndensity.plot.bws
