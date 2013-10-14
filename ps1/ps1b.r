@@ -1,7 +1,15 @@
+# PROBLEM SET 1B
+# ARE 213 Fall 2013
+
+
+# Frank's Directory
 #setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps1")
 
+# Peter's Directory
+#setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps1")
 
-# Packages
+
+# Packages --------
 library(foreign) #this is to read in Stata data
 library(Hmisc)
 library(psych)
@@ -12,12 +20,13 @@ library(epicalc) # For likelihood ratio test
 library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(splines) # for series regression
+library(np) #nonparametric regression
 
 # Homebrewed functions
 source("../util/are213-func.R")
 source("../util/watercolor.R") # for watercolor plots
 
-# Data
+# Data -------
 ps1.data <- read.dta(file="ps1.dta")
 
 # Data Cleaning Step
@@ -52,11 +61,11 @@ ps1.data$full.record[full.record.flag] <- TRUE #reassign level to T for full rec
 ps1.data.clean <- subset (ps1.data, full.record == TRUE)
 ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
 
-# Problem 1a is only in ps1b.tex
-# Problem 1b
-# This is using a series estimator. I think smooth.spline() is the right function to use, but let me know if you think we should be doing kernel regression instead. I'm also not sure how to go about adding interaction terms
+# Problem 1a : Describes PS1a results. -------
+# Problem 1b --------------
+# This is using a series estimator. I think smooth.spline() is the right function to use, but let me know if you think we should be doing kernel regression instead. I'm also not sure how to go about adding interaction terms.  I think a kernel regression is more appropriate here...mostly because I don't know the spline function and there seems to be a good package ("np") for running kernel regression.  
 
-
+# SPLINE FIT FOR # CIGS
 
 sm.flex <- with(ps1.data.clean, smooth.spline(cigar, y=dbrwt, nknots=10, spar = 0.7, tol = 0.0001)) # Fits a smooth line to the data
 sm.flex.df <- data.frame(sm.flex$x, sm.flex$y) #converts the fitted values into a data frame for ggplot
@@ -70,8 +79,15 @@ splineplot
 
 ggsave(filename = 'img/splineplot.pdf')
 
+# Using Kernel Regression:
 
-# Problem 2a
+# too many cycles required by this code...
+baby.bw <- npregbw( dbrwt ~ factor(tobacco) + dmage + factor(dmar), 
+                    data = ps1.data.clean,
+                    bwtype = "fixed"
+  )
+
+# Problem 2a --------
 ps1.data.clean$tobacco.rescale <- with(ps1.data.clean, recode(tobacco, "2='0'", as.numeric.result=TRUE)) #rescales the tobacco use variable to be 0/1, where 0=no and 1 = yes
 ps1.data.clean$dmar.rescale <- with(ps1.data.clean, recode(dmar, "2='0'"))
 
@@ -100,7 +116,7 @@ sink(file = "lrtest.tex", append = FALSE)
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
 sink()
 
-#Problem 2b - Estimating a regression model using propensity scores
+#Problem 2b - Estimating a regression model using propensity scores --------
 
 sm.propensityregression <- lm(dbrwt ~ tobacco.rescale + (propensityreduced * tobacco.rescale) + propensityreduced, ps1.data.clean)
 
@@ -120,7 +136,7 @@ stargazer(sm.propensityregression,
            out = "propensityscoremodel.tex"
            )
 
-#Problem 2c - Using reweighting with propensity scores
+#Problem 2c - Using reweighting with propensity scores --------
 
 term1 <- with(ps1.data.clean, sum((tobacco.rescale*dbrwt)/propensityreduced)/sum(tobacco.rescale/propensityreduced))
 term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale)/(1-propensityreduced)))
@@ -162,7 +178,7 @@ kerndensity.plot
 
 ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
 
-#2d - calculating kernel value by 'hand' at dbrwt = 3000
+#Problem 2d - calculating kernel value by 'hand' at dbrwt = 3000 --------
 # y_pred = sum_onj(K(pi-pj/h)*yj)/sum_onj(K(pi-pj/h))
 
 #h <- 30
@@ -172,7 +188,7 @@ ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
 #propensity3000 <- # I'm not sure how we get the estimated propensity score at dbrwt = 3000
 
 
-#Problem 2e
+#Problem 2e --------
 ## This is in progress
 #kerndensity.plot.bws <- ggplot()
 #for(h in seq(from = 15, to = 40, by = 5)) {
