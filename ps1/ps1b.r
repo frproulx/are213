@@ -22,7 +22,11 @@ library(gmodels) #for Crosstabs
 library(splines) # for series regression
 library(np) #nonparametric regression
 library(rms) #regression modeling tools
+<<<<<<< HEAD
 library(Zelig)
+=======
+library(effects)
+>>>>>>> 020f997907c59b7fa9259703a55feab356f6f87d
 
 # Homebrewed functions
 source("../util/are213-func.R")
@@ -100,7 +104,6 @@ summary(effect("tobacco", wsp))
 # This is the ATE with a complex, interacting splines regression on AGe
 summary(effect("tobacco", wsp.int))
 
-
 # Problem 2a --------
 ps1.data.clean$tobacco.rescale <- with(ps1.data.clean, recode(tobacco, "2='0'", as.numeric.result=TRUE)) #rescales the tobacco use variable to be 0/1, where 0=no and 1 = yes
 ps1.data.clean$dmar.rescale <- with(ps1.data.clean, recode(dmar, "2='0'"))
@@ -110,18 +113,18 @@ smoke.propensity.all <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.
 smoke.propensity.reduced <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath), data=ps1.data.clean, family = binomial())
 
 
-stargazer(smoke.propensity.all, smoke.propensity.reduced,
-           type = "latex",
-           covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
-           style ="qje",
-           align = TRUE,
-          font.size = "scriptsize",
-          label = "tab:propensities",
-          title = "Propensity scores calculated for mother's smoking status \n
-logit model specification",
-           dep.var.labels = "Mother Tobacco-Use Status",
-           out = "propensityscores.tex"
-           )
+### THIS TABLE IS PROBLEMATIC AND I'M NOT SURE WHY
+#stargazer(smoke.propensity.all, smoke.propensity.reduced,
+#           type = "latex",
+#           covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
+#           style ="qje",
+#           align = TRUE,
+#          label = "tab:propensities",
+#          title = "Propensity scores calculated for mother's smoking status \n
+#logit model specification",
+#           dep.var.labels = "Mother Tobacco-Use Status",
+#           out = "propensityscores.tex"
+#           )
 
 ps1.data.clean$propensityfull <- predict(smoke.propensity.all, type = "response")
 ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "response")
@@ -129,6 +132,7 @@ ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "re
 sink(file = "lrtest.tex", append = FALSE)
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
 sink()
+print("Works through 2a")
 
 #Problem 2b - Estimating a regression model using propensity scores --------
 
@@ -204,16 +208,44 @@ ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
 
 #Problem 2e --------
 ## This is in progress
-#kerndensity.plot.bws <- ggplot()
+#print("Works as far as through 2d")
+#kerndensity.plot.bws <- ggplot() # Kernel density plot at varied bandwidths
+# = 1
 #for(h in seq(from = 15, to = 40, by = 5)) {
-#paste0('kerndensity.sm.', h) <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
+#  kerndensity.by.bw[i] <- list(h, with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
 #        kernel = "epanechnikov",
 #        bw = h,
-#        weights = propensityreduced/tot.propensity.sm))
+#        weights = propensityreduced/tot.propensity.sm)))
 #paste0('kerndensity.sm.df.', h) <- data.frame(paste0('kerndensity.sm.', h,'[1]'), paste0('kerndensity.sm.', h, '[2]'))
 #kerndensity.plot.bws <- kerndensity.plot.bws +
 #  geom_line(data = paste0('kerndensity.sm.df.', h), aes(x, y)) +
 #  labs(title = "Density of birthweights estimated using \n propensity score-weighted kernel regression", x = "Birthweight (grams)", y = "Density")
+#i = i + 1
 #}
 
 #kerndensity.plot.bws
+
+
+
+### Problem 3
+## Using blocking estimator
+# Divide smokers into ~100 equally spaced blocks
+prop.max <- with(ps1.data.clean, max(propensityreduced))
+prop.min <- with(ps1.data.clean, min(propensityreduced))
+prop.binsize <- (prop.max - prop.min)/99
+
+ps1.data.clean$blocknumber <- with(ps1.data.clean,
+                                   round(propensityreduced/prop.binsize, digits = 0) + 1)
+
+blocktreatmenteffects <- ddply(ps1.data.clean, .(blocknumber), summarize, smokers = sum(tobacco.rescale == 1), nonsmokers = sum(tobacco.rescale == 0), smokerdbrwt = mean(dbrwt[tobacco.rescale == 1]), nonsmokerdbrwt = mean(dbrwt[tobacco.rescale == 0]))
+
+blocktreatmenteffects$badbin <- with(blocktreatmenteffects, as.numeric(smokers == 0 | nonsmokers == 0))
+
+cleaned.blocks <- subset(blocktreatmenteffects, badbin == 0)
+cleaned.blocks$avgtreatmenteffect <- with(cleaned.blocks, smokerdbrwt - nonsmokerdbrwt)
+cleaned.blocks$weight <- with(cleaned.blocks, (smokers + nonsmokers)/sum(smokers + nonsmokers))
+cleaned.blocks$weightedTE <- with(cleaned.blocks, weight * avgtreatmenteffect)
+
+blocksATE <- sum(cleaned.blocks$weightedTE)
+print(paste("The Average Treatment Effect predicted by the blocking method is", blocksATE))
+
