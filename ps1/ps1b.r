@@ -109,18 +109,16 @@ smoke.propensity.all <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.
 smoke.propensity.reduced <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath), data=ps1.data.clean, family = binomial())
 
 
-### THIS TABLE IS PROBLEMATIC AND I'M NOT SURE WHY
-#stargazer(smoke.propensity.all, smoke.propensity.reduced,
-#           type = "latex",
-#           covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
-#           style ="qje",
-#           align = TRUE,
-#          label = "tab:propensities",
-#          title = "Propensity scores calculated for mother's smoking status \n
-#logit model specification",
-#           dep.var.labels = "Mother Tobacco-Use Status",
-#           out = "propensityscores.tex"
-#           )
+stargazer(smoke.propensity.all, smoke.propensity.reduced,
+           type = "latex",
+           covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
+          style ="qje",
+          align = TRUE,
+          label = "tab:propensities",
+          title = "Logistic function coefficients for propensity score models",
+          dep.var.labels = "Mother Tobacco-Use Status",
+          out = "propensityscores.tex"
+           )
 
 ps1.data.clean$propensityfull <- predict(smoke.propensity.all, type = "response")
 ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "response")
@@ -128,7 +126,6 @@ ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "re
 sink(file = "lrtest.tex", append = FALSE)
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
 sink()
-print("Works through 2a")
 
 #Problem 2b - Estimating a regression model using propensity scores --------
 
@@ -190,7 +187,7 @@ kerndensity.plot <- kerndensity.plot +
 
 kerndensity.plot
 
-ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
+ggsave(file = paste0('img/kerndensity', h,'.pdf'), plot = kerndensity.plot)
 
 #Problem 2d - calculating kernel value by 'hand' at dbrwt = 3000 --------
 # y_pred = sum_onj(K(pi-pj/h)*yj)/sum_onj(K(pi-pj/h))
@@ -199,7 +196,8 @@ ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
 #kernel.epa <- function(u){
 #return(if (abs(u) < 1){0.75*(1-u*u))}
 #}
-#propensity3000 <- # I'm not sure how we get the estimated propensity score at dbrwt = 3000
+#propensity3000.sm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 1)]))
+# I'm not sure how we get the estimated propensity score at dbrwt = 3000
 
 
 #Problem 2e --------
@@ -244,3 +242,6 @@ cleaned.blocks$weightedTE <- with(cleaned.blocks, weight * avgtreatmenteffect)
 
 blocksATE <- sum(cleaned.blocks$weightedTE)
 print(paste("The Average Treatment Effect predicted by the blocking method is", blocksATE))
+
+
+### Problem 4
