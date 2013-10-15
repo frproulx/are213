@@ -22,11 +22,7 @@ library(gmodels) #for Crosstabs
 library(splines) # for series regression
 library(np) #nonparametric regression
 library(rms) #regression modeling tools
-<<<<<<< HEAD
-library(Zelig)
-=======
 library(effects)
->>>>>>> 020f997907c59b7fa9259703a55feab356f6f87d
 
 # Homebrewed functions
 source("../util/are213-func.R")
@@ -61,7 +57,7 @@ full.record.flag <- which(ps1.data$cardiac != 9 &
                             ps1.data$drink != 99 &
                             ps1.data$drink5 !=5 &
                             ps1.data$wgain !=99
-                          )
+)
 
 ps1.data$full.record <- FALSE # initialize column as F
 ps1.data$full.record[full.record.flag] <- TRUE #reassign level to T for full records
@@ -143,16 +139,16 @@ coefficients(sm.propensityregression)[2] + coefficients(sm.propensityregression)
 
 
 stargazer(sm.propensityregression,
-           type = "latex",
-           covariate.labels = c("Delta1", "Beta", "Delta2", "Constant"),
-           style ="qje",
-           align = TRUE,
-           font.size="footnotesize",
+          type = "latex",
+          covariate.labels = c("Delta1", "Beta", "Delta2", "Constant"),
+          style ="qje",
+          align = TRUE,
+          font.size="footnotesize",
           label = "tab:propensitymodel",
           title = "Model of effects of tobacco use on birthweight using propensity score as a control",
-           dep.var.labels = "Mother Tobacco-Use Status",
-           out = "propensityscoremodel.tex"
-           )
+          dep.var.labels = "Mother Tobacco-Use Status",
+          out = "propensityscoremodel.tex"
+)
 
 #Problem 2c - Using reweighting with propensity scores --------
 
@@ -174,15 +170,15 @@ tot.propensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum(prop
 h <- 35 # This is to play with the bandwidth
 
 kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), density(dbrwt, #if nobody smoked
-        kernel = "epanechnikov",
-        bw = h,
-        weights = propensityreduced/tot.propensity.nosm))
+                                                                               kernel = "epanechnikov",
+                                                                               bw = h,
+                                                                               weights = propensityreduced/tot.propensity.nosm))
 kerndensity.nosm.df <- data.frame(kerndensity.nosm[1], kerndensity.nosm[2])
 
 kerndensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
-        kernel = "epanechnikov",
-        bw = h,
-        weights = propensityreduced/tot.propensity.sm))
+                                                                             kernel = "epanechnikov",
+                                                                             bw = h,
+                                                                             weights = propensityreduced/tot.propensity.sm))
 kerndensity.sm.df <- data.frame(kerndensity.sm[1], kerndensity.sm[2])
 
 kerndensity.plot <- ggplot(kerndensity.nosm.df, aes(x, y))
@@ -191,7 +187,7 @@ kerndensity.plot <- kerndensity.plot +
   geom_line(data = kerndensity.sm.df, aes(x, y)) +
   labs(title = paste("Density of birthweights estimated using \n propensity score-weighted kernel regression \n Bandwidth=", as.factor(h)), x = "Birthweight (grams)", y = "Density") + 
   guides(linetype = "Legend") # Having trouble getting a legend.
-  
+
 kerndensity.plot
 
 ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
@@ -248,4 +244,3 @@ cleaned.blocks$weightedTE <- with(cleaned.blocks, weight * avgtreatmenteffect)
 
 blocksATE <- sum(cleaned.blocks$weightedTE)
 print(paste("The Average Treatment Effect predicted by the blocking method is", blocksATE))
-
