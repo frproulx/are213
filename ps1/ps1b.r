@@ -104,22 +104,23 @@ summary(effect("tobacco", wsp.int))
 ps1.data.clean$tobacco.rescale <- with(ps1.data.clean, recode(tobacco, "2='0'", as.numeric.result=TRUE)) #rescales the tobacco use variable to be 0/1, where 0=no and 1 = yes
 ps1.data.clean$dmar.rescale <- with(ps1.data.clean, recode(dmar, "2='0'"))
 
-smoke.propensity.all <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath) + dplural + csex + dmage, data=ps1.data.clean, family = binomial) ## Did I miss any predetermined covariates here?
+smoke.propensity.all <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath) + dplural + csex + dmage, data=ps1.data.clean, family = binomial()) ## Did I miss any predetermined covariates here?
 
 smoke.propensity.reduced <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath), data=ps1.data.clean, family = binomial())
 
-stargazer(smoke.propensity.all, smoke.propensity.reduced,
-           type = "latex",
-           covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
-           style ="qje",
-           align = TRUE,
-          font.size = "scriptsize",
-          label = "tab:propensities",
-          title = "Propensity scores calculated for mother's smoking status \n
-logit model specification",
-           dep.var.labels = "Mother Tobacco-Use Status",
-           out = "propensityscores.tex"
-           )
+
+### THIS TABLE IS PROBLEMATIC AND I'M NOT SURE WHY
+#stargazer(smoke.propensity.all, smoke.propensity.reduced,
+#           type = "latex",
+#           covariate.labels = c("Mother's Race not White or Black", "Mother's Years of Education", "Marital status", "Father's age", "Father's Years of Education", "Father Mexican", "Father Puerto Rican", "Father Cuban", "Father Central or South American", "Father Race Other or Unknown Hispanic", "Plurality of Infant", "Sex of Infant", "Mother's age"),
+#           style ="qje",
+#           align = TRUE,
+#          label = "tab:propensities",
+#          title = "Propensity scores calculated for mother's smoking status \n
+#logit model specification",
+#           dep.var.labels = "Mother Tobacco-Use Status",
+#           out = "propensityscores.tex"
+#           )
 
 ps1.data.clean$propensityfull <- predict(smoke.propensity.all, type = "response")
 ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "response")
@@ -225,6 +226,22 @@ ggsave(file = 'img/kerndensity.pdf', plot = kerndensity.plot)
 ### Problem 3
 ## Using blocking estimator
 # Divide smokers into ~100 equally spaced blocks
-#smokers.blocked <- subset(ps1.data.clean
+prop.max <- with(ps1.data.clean, max(propensityreduced))
+prop.min <- with(ps1.data.clean, min(propensityreduced))
+prop.binsize <- (prop.max - prop.min)/99
 
-# Divide nonsmokers into ~100 equally spaced blocks
+ps1.data.clean$blocknumber <- with(ps1.data.clean,
+                                   round(propensityreduced/prop.binsize, digits = 0) + 1)
+
+blocktreatmenteffects <- ddply(ps1.data.clean, .(blocknumber), summarize, smokers = sum(tobacco.rescale == 1), nonsmokers = sum(tobacco.rescale == 0), smokerdbrwt = mean(dbrwt[tobacco.rescale == 1]), nonsmokerdbrwt = mean(dbrwt[tobacco.rescale == 0]))
+
+blocktreatmenteffects$badbin <- with(blocktreatmenteffects, as.numeric(smokers == 0 | nonsmokers == 0))
+
+cleaned.blocks <- subset(blocktreatmenteffects, badbin == 0)
+cleaned.blocks$avgtreatmenteffect <- with(cleaned.blocks, smokerdbrwt - nonsmokerdbrwt)
+cleaned.blocks$weight <- with(cleaned.blocks, (smokers + nonsmokers)/sum(smokers + nonsmokers))
+cleaned.blocks$weightedTE <- with(cleaned.blocks, weight * avgtreatmenteffect)
+
+blocksATE <- sum(cleaned.blocks$weightedTE)
+print(paste("The Average Treatment Effect predicted by the blocking method is", blocksATE))
+
