@@ -22,6 +22,7 @@ library(gmodels) #for Crosstabs
 library(splines) # for series regression
 library(np) #nonparametric regression
 library(rms) #regression modeling tools
+library(Zelig)
 
 # Homebrewed functions
 source("../util/are213-func.R")
