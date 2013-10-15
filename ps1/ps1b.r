@@ -71,17 +71,17 @@ ps1.data.missingvalues <- subset(ps1.data, full.record == FALSE)
 
 # SPLINE FIT FOR # CIGS
 
-sm.flex <- with(ps1.data.clean, smooth.spline(cigar, y=dbrwt, nknots=10, spar = 0.7, tol = 0.0001)) # Fits a smooth line to the data
-sm.flex.df <- data.frame(sm.flex$x, sm.flex$y) #converts the fitted values into a data frame for ggplot
-
-splineplot <- ggplot(sm.flex.df, aes(x = sm.flex.x, y=sm.flex.y))
-splineplot <- splineplot +
-  geom_point(data=ps1.data.clean, aes(x = cigar, y = dbrwt), pch = 1) +
-  geom_line(color='red') +
-  labs(x = 'Cigarettes smoked per day by mother', y= 'Birthweight')
-splineplot
-
-ggsave(filename = 'img/splineplot.pdf')
+# sm.flex <- with(ps1.data.clean, smooth.spline(cigar, y=dbrwt, nknots=10, spar = 0.7, tol = 0.0001)) # Fits a smooth line to the data
+# sm.flex.df <- data.frame(sm.flex$x, sm.flex$y) #converts the fitted values into a data frame for ggplot
+# 
+# splineplot <- ggplot(sm.flex.df, aes(x = sm.flex.x, y=sm.flex.y))
+# splineplot <- splineplot +
+#   geom_point(data=ps1.data.clean, aes(x = cigar, y = dbrwt), pch = 1) +
+#   geom_line(color='red') +
+#   labs(x = 'Cigarettes smoked per day by mother', y= 'Birthweight')
+# splineplot
+# 
+# ggsave(filename = 'img/splineplot.pdf')
 
 # Using Series estimator with splines on maternal age.
 
@@ -94,6 +94,8 @@ wsp.int <- lm(dbrwt ~ tobacco * ns(dmage, df=3) * dmar, data=ps1.data.clean)
 
 stargazer(wsp.ps1a, wsp, wsp.int, type="text")
 
+# TODO(Peter): Add text to Tex and a plot ...maybe.
+
 # This is the ATE with a splines regression on Age
 summary(effect("tobacco", wsp))
 
@@ -104,7 +106,7 @@ summary(effect("tobacco", wsp.int))
 ps1.data.clean$tobacco.rescale <- with(ps1.data.clean, recode(tobacco, "2='0'", as.numeric.result=TRUE)) #rescales the tobacco use variable to be 0/1, where 0=no and 1 = yes
 ps1.data.clean$dmar.rescale <- with(ps1.data.clean, recode(dmar, "2='0'"))
 
-smoke.propensity.all <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath) + dplural + csex + dmage, data=ps1.data.clean, family = binomial()) ## Did I miss any predetermined covariates here?
+smoke.propensity.all <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath) + dplural + csex + dmage, data=ps1.data.clean, family = binomial()) ## Did I miss any predetermined covariates here? No.
 
 smoke.propensity.reduced <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + dmar.rescale + dfage + dfeduc + as.factor(orfath), data=ps1.data.clean, family = binomial())
 
@@ -125,18 +127,22 @@ smoke.propensity.reduced <- glm(tobacco.rescale ~ as.factor(mrace3) + dmeduc + d
 ps1.data.clean$propensityfull <- predict(smoke.propensity.all, type = "response")
 ps1.data.clean$propensityreduced <- predict(smoke.propensity.reduced, type = "response")
 
+detach("package:rms")
 sink(file = "lrtest.tex", append = FALSE)
 lrtest(smoke.propensity.all, smoke.propensity.reduced) #Test whether the two scores are statistically different
 sink()
 print("Works through 2a")
-
+require(rms)
 #Problem 2b - Estimating a regression model using propensity scores --------
 
-sm.propensityregression <- lm(dbrwt ~ tobacco.rescale + (propensityreduced * tobacco.rescale) + propensityreduced, ps1.data.clean)
+sm.propensityregression <- lm(dbrwt ~ propensityreduced * tobacco.rescale, ps1.data.clean)
 
 #calculation of average treatment effect:
 coefficients(sm.propensityregression)[2] + coefficients(sm.propensityregression)[4]*mean(ps1.data.clean$propensityreduced)
 
+tobacco.effects <- (effect("tobacco.rescale", sm.propensityregression))
+
+print(paste("ATE is", round(tobacco.effects$fit[1] - tobacco.effects$fit[2], digits=0), "based on regression adjustment with p-score."))
 
 stargazer(sm.propensityregression,
           type = "latex",
@@ -152,12 +158,14 @@ stargazer(sm.propensityregression,
 
 #Problem 2c - Using reweighting with propensity scores --------
 
-term1 <- with(ps1.data.clean, sum((tobacco.rescale*dbrwt)/propensityreduced)/sum(tobacco.rescale/propensityreduced))
-term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale)/(1-propensityreduced)))
+ps1.data.clean$tobacco.rescale.n <- as.numeric(levels(ps1.data.clean$tobacco.rescale))[ps1.data.clean$tobacco.rescale]
+
+term1 <- with(ps1.data.clean, sum((tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced))
+term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale.n)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale.n)/(1-propensityreduced)))
 
 weightingestimator <- term1-term2 #This should be the average treatment effect
 
-term1.T <- with(subset(ps1.data.clean, tobacco.rescale=1), sum((tobacco.rescale*dbrwt)/propensityreduced)/sum(tobacco.rescale/propensityreduced))
+term1.T <- with(subset(ps1.data.clean, tobacco.rescale.n=1), sum((tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced))
 #term2.T <- with(subset(ps1.data.clean, tobacco.rescale=1), sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale)/(1-propensityreduced)))
 
 weightingestimator.T <- term1.T#-term2.T #This should be the average treatment on treated
