@@ -1,6 +1,11 @@
 # PROBLEM SET 1B
 # ARE 213 Fall 2013
-
+## TO DO:
+# Figure out ATT in 2c
+# Get a legend on the kerndensity plots to make the "beautiful and publication ready"
+# Figure the kernel regression by hand problem
+# 4 and 5
+# writing
 
 # Frank's Directory
 #setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps1")
