@@ -174,8 +174,8 @@ weightingestimator.T <- term1.T#-term2.T #This should be the average treatment o
 # Problem 2d - Kernel Density Estimator
 tot.propensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), sum(propensityreduced))
 tot.propensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum(propensityreduced))
+h <- 35 # This is to play with the bandwidth
 
-kerndensity.plot.fn <- function(h){
 kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), density(dbrwt, #if nobody smoked
                                                                                kernel = "epanechnikov",
                                                                                bw = h,
@@ -197,9 +197,7 @@ kerndensity.plot <- kerndensity.plot +
 
 kerndensity.plot
 
-ggsave(file = paste0('img/kerndensity', h,'.pdf'), plot = kerndensity.plot)}
-
-kerndensity.plot.fn(35)
+ggsave(file = paste0('img/kerndensity', h,'.pdf'), plot = kerndensity.plot)
 
 #Problem 2d - calculating kernel value by 'hand' at dbrwt = 3000 --------
 # y_pred = sum_onj(K(pi-pj/h)*yj)/sum_onj(K(pi-pj/h))
@@ -213,8 +211,23 @@ kerndensity.plot.fn(35)
 
 
 #Problem 2e --------
-for(h in seq(from = 15, to = 40, by = 5)){
-kerndensity.plot.fn(h)} # This should make plots of the kernel density function for bandwidths ranging from 15 to 40 by 5. Feel free to adjust these values
+## This is in progress
+#print("Works as far as through 2d")
+#kerndensity.plot.bws <- ggplot() # Kernel density plot at varied bandwidths
+# = 1
+#for(h in seq(from = 15, to = 40, by = 5)) {
+#  kerndensity.by.bw[i] <- list(h, with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
+#        kernel = "epanechnikov",
+#        bw = h,
+#        weights = propensityreduced/tot.propensity.sm)))
+#paste0('kerndensity.sm.df.', h) <- data.frame(paste0('kerndensity.sm.', h,'[1]'), paste0('kerndensity.sm.', h, '[2]'))
+#kerndensity.plot.bws <- kerndensity.plot.bws +
+#  geom_line(data = paste0('kerndensity.sm.df.', h), aes(x, y)) +
+#  labs(title = "Density of birthweights estimated using \n propensity score-weighted kernel regression", x = "Birthweight (grams)", y = "Density")
+#i = i + 1
+#}
+
+#kerndensity.plot.bws
 
 
 
