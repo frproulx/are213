@@ -1,4 +1,5 @@
 \documentclass[letterpaper, 12pt]{article}
+
 \usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{rotating}
@@ -49,7 +50,7 @@ We can attempt to reduce the magnitude of the first source of bias mentioned abo
 
 \section{Problem \#2}
 
-The Propensity Score Method (PSM) uses a ``surrogate" normalized metric (p-score) as a replacement for the observable controls that would normally be used to condition the estimates of a treatment response to the variable in question.  The p-score is defined as a normalized score that represents the likelihood a sample selects into treatment conditioned on observables.  Because it collapses all the dimensions into a 0:1 continuum PSM avoids the curse of dimensionality encountered with large nonparametric regression models, where it can be difficult to find neighbors or ``bandwidth-mates" in n-dimensional space.  
+The Propensity Score Method (PSM) uses a ``surrogate" normalized metric (p-score) as a replacement for the observable controls that would normally be used to condition the estimates of a treatment response to the variable in question.  The p-score is defined as a normalized score that represents the likelihood a sample selects into treatment conditioned on observables.  Because it collapses all the dimensions into a 0:1 continuum PSM avoids the curse of dimensionality encountered with large nonparametric regression models, where it can be difficult to find neighbors or ``bandwidth-mates'' in n-dimensional space.  
 
 \subsection{Part A}
 
@@ -75,13 +76,31 @@ This estimation assumes unconfoundedness. and conditional independence
 %\input{propensityscoremodel.tex}
 
 %The estimated average treatment effect is given by 
-%$\delta_1 + \delta_2 \overbar{p}(X_i)=-237.099 + (0.1594*90.427)=-222.69$
+%\begin{equation*}
+%\delta_1 + \delta_2 \overbar{p}(X_i)=-237.099 + (0.1594*90.427)=-222.69
+%\end{equation*}
 
-%This suggests that (pursuant to these assumptions) the average effect of smoking on birthweight is a reduction of 223 grams.
+This suggests that (pursuant to these assumptions) the average effect of smoking on birthweight is a reduction of 223 grams.
 
 \subsection{Part C}
 
+We estimate the average treatment effect of smoking on birthweight to be 222 grams when using the reweighting approach. This approach involved taking a weighted average of all observations using the (normalized inverse) of the propensity score as a weighting factor. This is consistent with the estimate produced using the regression approach.
 
+We estimate the average treatment on the treated to be % We still need to figure this out.
+
+\subsection{Part D}
+Here we estimate the density function with a kernel density estimator, using the density() function in R. We estimate the density function separately for the smoking and non-smoking members of the sample, and weight their responses with the propensity scores normalized to the subsample (e.g. $p(X_i)/\sum\limits{j=1}^{N_{smokers}}p(X_j)$)
+
+We estimate the density function using the Epanechnikov kernel and bandwidths ranging from 15 grams to 50 grams in increments of 5 grams. Figure \ref{fig:kernel40} shows the density function estimated with a bandwidth of 40 grams. This bandwidth appears to be a good compromise between washing out some of the noise at lower bandwidths while preserving the underlying CEF.
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=4in]{img/kerndensity40.pdf} 
+   \caption{Birthweight density function estimates produced using Epanechnikov kernel estimator for smokers and non-smokers.}
+   \label{fig:kernel40}
+\end{figure}
+
+We also estimate the density at x=3000 grams by hand. We first calculate the average propensity score for both smokers and non-smokers with infants at 3000 grams. The dataset has 12 smokers and 47 non-smokers with infants born at this weight. The average propensity score for these smokers is 0.27 and for non-smokers it is 0.20. These values stand to reason- the people who have opted in to smoking in this class have been predicted as more likely to be smokers.
 
 
 

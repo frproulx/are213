@@ -141,8 +141,6 @@ coefficients(sm.propensityregression)[2] + coefficients(sm.propensityregression)
 
 tobacco.effects <- (effect("tobacco.rescale", sm.propensityregression))
 
-print(paste("ATE is", round(tobacco.effects$fit[1] - tobacco.effects$fit[2], digits=0), "based on regression adjustment with p-score."))
-
 stargazer(sm.propensityregression,
           type = "latex",
           covariate.labels = c("Delta1", "Beta", "Delta2", "Constant"),
@@ -170,7 +168,6 @@ term1.T <- with(subset(ps1.data.clean, tobacco.rescale.n=1), sum((tobacco.rescal
 weightingestimator.T <- term1.T#-term2.T #This should be the average treatment on treated
 
 
-
 # Problem 2d - Kernel Density Estimator
 tot.propensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), sum(propensityreduced))
 tot.propensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum(propensityreduced))
@@ -192,28 +189,40 @@ kerndensity.plot <- ggplot(kerndensity.nosm.df, aes(x, y))
 kerndensity.plot <- kerndensity.plot +
   geom_line(linetype = 'dotted') + 
   geom_line(data = kerndensity.sm.df, aes(x, y)) +
-  labs(title = paste("Density of birthweights estimated using \n propensity score-weighted kernel regression \n Bandwidth=", as.factor(h)), x = "Birthweight (grams)", y = "Density") + 
+  labs(title = paste("Density of birthweights estimated using \n propensity score-weighted kernel regression \n Bandwidth=", as.factor(h)), x = "Birthweight (grams)", y = "Density") +
   guides(linetype = "Legend") # Having trouble getting a legend.
 
 kerndensity.plot
 
 ggsave(file = paste0('img/kerndensity', h,'.pdf'), plot = kerndensity.plot)}
 
-kerndensity.plot.fn(35)
+##Problem 2d - calculating kernel value by 'hand' at dbrwt = 3000 --------
+##I can't figure out what to do here. Most of this is probably wrong but maybe something is right. Want to take a whack?
+##h <- 30
+##kernel.epa <- function(u){
+##return(0.75*(1-u*u))}
 
-#Problem 2d - calculating kernel value by 'hand' at dbrwt = 3000 --------
-# y_pred = sum_onj(K(pi-pj/h)*yj)/sum_onj(K(pi-pj/h))
+##propensity3000.sm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 1)]))
+##propensity3000.nosm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 0)]))
+##for(i in 1:nrow(subset(ps1.data.clean, tobacco.rescale == 1))){
+##with(subset(ps1.data.clean, tobacco.rescale == 1),
+##     kern3000.sm.num <- kern3000.sm.num +
+##      kernel.epa(((propensity3000.sm-propensityreduced[i])/h)*dbrwt))
+## with(subset(ps1.data.clean, tobacco.rescale == 1),
+##      kern3000.sm.den <- kern3000.sm.den +
+##      kernel.epa((propensity3000.sm-propensityreduced[i])/h))
+## }
+## kern3000.sm <- kern3000.sm.num / kern3000.sm.den
 
-#h <- 30
-#kernel.epa <- function(u){
-#return(if (abs(u) < 1){0.75*(1-u*u))}
-#}
-#propensity3000.sm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 1)]))
-# I'm not sure how we get the estimated propensity score at dbrwt = 3000
 
+## kernel3000.sm <- with(subset(ps1.data.clean,tobacco.rescale == 1), data.frame(window = (3000 - dbrwt/h)))
+## kernel3000.sm$numerator <- with(subset(ps1.data.clean, tobacco.rescale == 1), kernel.epa(((3000/propensity3000.sm) - (dbrwt/propensityreduced))/h))
+## kernel3000.sm$denominator <- with(subset(ps1.data.clean, tobacco.rescale == 1), kernel.epa(((3000/propensity3000.sm) - (dbrwt/propensityreduced))/h))
+
+## with(kernel3000.sm[window < 1 & window > -1], sum(numerator))/(nrow(kernel3000.sm[abs(window < 1)])*h)
 
 #Problem 2e --------
-for(h in seq(from = 15, to = 40, by = 5)){
+for(h in seq(from = 15, to = 50, by = 5)){
 kerndensity.plot.fn(h)} # This should make plots of the kernel density function for bandwidths ranging from 15 to 40 by 5. Feel free to adjust these values
 
 
@@ -238,7 +247,13 @@ cleaned.blocks$weight <- with(cleaned.blocks, (smokers + nonsmokers)/sum(smokers
 cleaned.blocks$weightedTE <- with(cleaned.blocks, weight * avgtreatmenteffect)
 
 blocksATE <- sum(cleaned.blocks$weightedTE)
-print(paste("The Average Treatment Effect predicted by the blocking method is", blocksATE))
-
 
 ### Problem 4
+
+
+
+
+### Output values that need to be typed in to TeX:
+print(paste("The estimated average treatment effect using the reweighting approach is", round(weightingestimator, digits=0)))
+print(paste("ATE is", round(tobacco.effects$fit[1] - tobacco.effects$fit[2], digits=0), "based on regression adjustment with p-score."))
+print(paste("The Average Treatment Effect predicted by the blocking method with birthweight treated as a continuous variable is", round(blocksATE, digits=0)))
