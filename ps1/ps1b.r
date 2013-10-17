@@ -98,7 +98,7 @@ wsp.ps1a <- lm(dbrwt ~ tobacco + dmage + dmar, data=ps1.data.clean)
 wsp <- lm(dbrwt ~ tobacco + ns(dmage, df=3) + dmar, data=ps1.data.clean)
 wsp.int <- lm(dbrwt ~ tobacco * ns(dmage, df=3) * dmar, data=ps1.data.clean)
 
-stargazer(wsp.ps1a, wsp, wsp.int, style="qje", no.space = TRUE, dep.var.labels = "Birth Weight")
+stargazer(wsp.ps1a, wsp, wsp.int, out = 'splineresults.tex', style="qje", label = 'tab:splineresults', no.space = TRUE, dep.var.labels = "Birth Weight")
 
 
 
@@ -164,16 +164,12 @@ stargazer(sm.propensityregression,
 
 ps1.data.clean$tobacco.rescale.n <- as.numeric(levels(ps1.data.clean$tobacco.rescale))[ps1.data.clean$tobacco.rescale]
 
-term1 <- with(ps1.data.clean, sum((tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced))
-term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale.n)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale.n)/(1-propensityreduced)))
+ps1.data.clean$weightingterm1 <- with(ps1.data.clean, (tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced)
+ps1.data.clean$weightingterm2 <- with(ps1.data.clean, ((1-tobacco.rescale.n)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale.n)/(1-propensityreduced))
 
-weightingestimator <- term1-term2 #This should be the average treatment effect
+weightingestimator <- with(ps1.data.clean, mean(weightingterm1-weightingterm2)) #This should be the average treatment effect
 
-term1.T <- with(subset(ps1.data.clean, tobacco.rescale.n==1), sum((tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced))
-term2.T <- with(subset(ps1.data.clean, tobacco.rescale.n==1), sum(((1-tobacco.rescale.n)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale.n)/(1-propensityreduced)))
-
-weightingestimator.T <- term1.T-term2.T #This should be the average treatment on treated
-
+ATTweight <- 
 
 # Problem 2d - Kernel Density Estimator
 tot.propensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), sum(propensityreduced))
@@ -273,6 +269,15 @@ cleaned.blocks$avgtreatmenteffect <- with(cleaned.blocks, smokerdbrwt - nonsmoke
 cleaned.blocks$weight <- with(cleaned.blocks, (smokers + nonsmokers)/sum(smokers + nonsmokers))
 cleaned.blocks$weightedTE <- with(cleaned.blocks, weight * avgtreatmenteffect)
 
+blocks.plot <- ggplot(data=ps1.data.clean, aes(x=blocknumber, fill = tobacco.rescale))
+blocks.plot <- blocks.plot +
+    geom_histogram(binwidth = 1, alpha = 0.5, position = "identity") +
+    labs(title = 'Size of propensity score blocks', x = 'Ordered block number', y = 'Frequency') +
+    scale_fill_discrete(name = "Mother's \n Smoking Status",
+                        breaks = c("0", "1"),
+                        labels = c("Non-Smoker", "Smoker"))
+ggsave(filename = 'img/blockplot.pdf', plot=blocks.plot)
+
 blocksATE <- sum(cleaned.blocks$weightedTE)
 
 ### Problem 4
@@ -296,3 +301,4 @@ print(paste("The estimated average treatment effect using the reweighting approa
 print(paste("ATE is", round(tobacco.effects$fit[1] - tobacco.effects$fit[2], digits=0), "based on regression adjustment with p-score."))
 print(paste("The Average Treatment Effect predicted by the blocking method with birthweight treated as a continuous variable is", round(blocksATE, digits=0)))
 print(paste("The Average Treatment Effect predicted by the blocking method of birthweights falling into the 'low' category of less than 2500 grams is a probability of", round(blocks.lowbrwt.ATE, digits = 4),". That is, smokers are approximately", round(100*blocks.lowbrwt.ATE, digits = 0), "percent more likely to have babies with weights less than 2500 grams."))
+
