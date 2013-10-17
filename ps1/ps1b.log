@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  17 OCT 2013 09:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  17 OCT 2013 11:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -228,54 +228,101 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 41.
 
-
-LaTeX Warning: Reference `tab:splineresults' on page 1 undefined on input line 
-48.
-
 [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 (./splineresults.tex
-Overfull \hbox (286.47649pt too wide) in paragraph at lines 10--62
+Overfull \hbox (25.11142pt too wide) in paragraph at lines 10--60
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 160.5324pt on input line 62.
+LaTeX Warning: Float too large for page by 131.53242pt on input line 60.
 
-)
+) (./propensityscores.tex
+Overfull \hbox (27.52127pt too wide) in paragraph at lines 8--54
+ [][] 
+ []
 
-LaTeX Warning: Reference `tab:propensities' on page 2 undefined on input line 6
-1.
 
-(./propensityscores.tex
+LaTeX Warning: Float too large for page by 75.8658pt on input line 54.
 
-./propensityscores.tex:2: LaTeX Error: Can be used only in preamble.
+) [2] [3] [4] (./propensityscoremodel.tex
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 10.
+) [5] [6]
+<img/kerndensity40.pdf, id=35, 505.89pt x 289.08pt>
+File: img/kerndensity40.pdf Graphic file (type pdf)
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2 \usepackage
-               {dcolumn}
-? 
-./propensityscores.tex:2: Emergency stop.
- ...                                              
-                                                  
-l.2 \usepackage
-               {dcolumn}
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+<use img/kerndensity40.pdf>
+Package pdftex.def Info: img/kerndensity40.pdf used on input line 106.
+(pdftex.def)             Requested size: 433.62pt x 247.7879pt.
 
- 
+Overfull \hbox (43.62pt too wide) in paragraph at lines 106--107
+ [][] 
+ []
+
+(./kd-by-hand.R [7 <./img/kerndensity40.pdf>])
+<img/kdens-combinebw.pdf, id=49, 583.17876pt x 426.59375pt>
+File: img/kdens-combinebw.pdf Graphic file (type pdf)
+
+<use img/kdens-combinebw.pdf>
+Package pdftex.def Info: img/kdens-combinebw.pdf used on input line 122.
+(pdftex.def)             Requested size: 433.62pt x 317.1976pt.
+
+Overfull \hbox (43.62pt too wide) in paragraph at lines 122--123
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[8] [9 <./img/kdens-combinebw.pdf>]
+<img/blockplot.pdf, id=84, 505.89pt x 505.89pt>
+File: img/blockplot.pdf Graphic file (type pdf)
+ <use img/blockplot.pdf>
+Package pdftex.def Info: img/blockplot.pdf used on input line 144.
+(pdftex.def)             Requested size: 433.62pt x 433.62885pt.
+
+Overfull \hbox (43.62pt too wide) in paragraph at lines 144--145
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[10] [11 <./img/blockplot.pdf>] [12] (./ps1b.R [13] [14] [15] [16] [17]
+[18] [19]) (../util/are213-func.R [20]) [21] (./ps1b.aux) ) 
 Here is how much of TeX's memory you used:
- 3085 strings out of 493315
- 45206 string characters out of 6137904
- 148142 words of memory out of 5000000
- 6499 multiletter control sequences out of 15000+600000
- 9155 words of font info for 32 fonts, out of 8000000 for 9000
+ 3993 strings out of 493315
+ 54952 string characters out of 6137904
+ 451142 words of memory out of 5000000
+ 7386 multiletter control sequences out of 15000+600000
+ 9838 words of font info for 35 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,10n,41p,927b,247s stack positions out of 5000i,500n,10000p,200000b,80000s
-./propensityscores.tex:2:  ==> Fatal error occurred, no output PDF file produce
-d!
+ 38i,16n,41p,927b,2147s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/
+2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2
+013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/20
+13/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/201
+3/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2013/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2013/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2013/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2013/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmtt8.pfb>
+Output written on ps1b.pdf (21 pages, 415318 bytes).
+PDF statistics:
+ 187 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+

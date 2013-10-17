@@ -71,10 +71,12 @@ The likelihood ratio test result (i.e., p $<$ 0.05 but not $<$ 0.01) indicates t
 
 \subsection{Part B}
 
-In this section, we estimate a linear model controlling for the propensity score. This model is of the form
-\begin{equation*}
-dbrwt_i = \alpha + \delta_1 * tobacco_i + \delta_2 * tobacco_i * p(X_i) + \Beta * p(X_i) + u_i
-\end{equation*}
+In this section, we estimate a linear model controlling for the propensity score. 
+
+%This model is of the form
+%\begin{equation}
+%dbrwt_i = \alpha + \delta_1 * tobacco_i + \delta_2 * tobacco_i * p(X_i) + \Beta * p(X_i) + u_i
+%\end{equation}
 
 The estimated coefficients for this model are given in Table \ref{tab:propensitymodel}. 
 
@@ -106,7 +108,9 @@ We estimate the density function using the Epanechnikov kernel and bandwidths ra
    \label{fig:kernel40}
 \end{figure}
 
-We also estimate the density at $x=3000$ grams by hand. We first calculate the average propensity score for both smokers and non-smokers with infants at 3000 grams. The dataset has 12 smokers and 47 non-smokers with infants born at this weight. The average propensity score for these smokers is 0.27 and for non-smokers it is 0.20. These values stand to reason- the people who have opted in to smoking in this class have been predicted as more likely to be smokers.
+We also estimate the density at $x=3000$ grams by hand. We used the weighting scheme by inverse propensity scores combined with an Epanechkov kernel estimator.  The code almost works, and is below.
+
+\lstinputlisting{kd-by-hand.R}
 
 
 \subsection{Part E}
@@ -148,7 +152,13 @@ The Average Treatment Effect estimated using the blocking method is 217 grams. T
 Because low birth weights (<2500 grams) are of particular concern, we again use the blocking method to estimate the Average Treatment Effect of smoking on the probability of having a low birth weight. The steps taken are very similar to those taken in Problem \#3. However, now we have calculated an indicator variable for every observation in the dataset corresponding to low birth weights. Within each block, we take the proportion of smokers and non-smokers who have given birth to low birth weight infants as the probability of this occuring. The within block treatment effect is thus the difference in probability of the low birth-weight event occuring. Using this method, we estimate an Average Treatment Effect of smoking on low birthweight of 3.78\%, which is to say that smokers are 3.78\% more likely than non-smokers to produce babies in the low birth weight range.
 
 \section{Problem \#5}
-In this assignment, we have estimated the Average Treatment Effect of tobacco use by mothers on infant birthweights using a variety of methods. 
+We explored a dataset describing the birth outcomes for babies born in 1993 in Pennsylvania using the National Natality Data Files.  The effect we were exploring was the impact of maternal smoking on health outcomes, primarily with a focus on birth weight and APGAR scores, two metrics that are good indicators for overall natal health.  For the purposes of this work we take the ``treatment" to be smoking during the pregnancy only, so any covariate that occurs before the pregnancy is thought to be predetermined and not effected by the incidence of smoking.  Covariates that have to do with the pregnancy (such as visits to the Doctor) are confounded by the treatment.  
+
+In PS1A we used the linear model to explore the data and found that APGAR scores were not sensitive to tobacco use in a significant way.  Birth weight, however, showed a trend.  The agnostic regression of differences in means without any accounting for covariates resulted in an ATE of 240 grams reduced birth weight for mothers who smoke.  There are, however, several predetermined covariates that we found were important to correct for, namely maternal age and marital status (others were considered but these two were the most important).  After correction for these factors (without interaction) the ATE is estimated at 200 grams.  
+
+In PS1B we used non-parametric methods to further explore the data and create more robust estimates of the ATE for smoking.  Introducing a spline model for the maternal age - birth weight relationship did not result in a different ATE from the best one using parametric methods but adding interaction terms to the spline model did change the estimated ATE, from 200 to 220 grams.  Using a range of propensity score matching methods we confirmed that 220 grams is a reasonable estimate for the ATE and also estimate that the likelihood of very low birth weight is increased by 4 \% by smoking.  
+
+Overall, the best estimate of ATE smoking is 220 grams, which was the result from a range of non-parametric approaches.  These approaches allow us to make a reasonable estimate of what the ATE would be if smoking were randomly assigned (which it is not).  The assumptions required for the non-parametric approaches (summarized above) are reasonable given the dataset.  The best estimate, however, is probably 200 grams.  This includes one significant figure and is confirmed by every statistical approach we took.  For the purposes of public health policymaking this estimate has a reasonable level of precision.
 
 \section{Code}
 We used R to complete this assignment.  The code is below:
