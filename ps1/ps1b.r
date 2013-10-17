@@ -97,9 +97,9 @@ wsp.ps1a <- lm(dbrwt ~ tobacco + dmage + dmar, data=ps1.data.clean)
 wsp <- lm(dbrwt ~ tobacco + ns(dmage, df=3) + dmar, data=ps1.data.clean)
 wsp.int <- lm(dbrwt ~ tobacco * ns(dmage, df=3) * dmar, data=ps1.data.clean)
 
-stargazer(wsp.ps1a, wsp, wsp.int, type="text")
+stargazer(wsp.ps1a, wsp, wsp.int, style="qje", no.space = TRUE, dep.var.labels = "Birth Weight")
 
-# TODO(Peter): Add text to Tex and a plot ...maybe.
+
 
 # This is the ATE with a splines regression on Age
 summary(effect("tobacco", wsp))
@@ -124,6 +124,7 @@ stargazer(smoke.propensity.all, smoke.propensity.reduced,
           label = "tab:propensities",
           title = "Logistic function coefficients for propensity score models",
           dep.var.labels = "Mother Tobacco-Use Status",
+          no.spaces = TRUE,
           out = "propensityscores.tex"
            )
 
@@ -178,16 +179,18 @@ tot.propensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), sum(pr
 tot.propensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum(propensityreduced))
 
 kerndensity.plot.fn <- function(h){
-kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), density(dbrwt, #if nobody smoked
-                                                                               kernel = "epanechnikov",
-                                                                               bw = h,
-                                                                               weights = propensityreduced/tot.propensity.nosm))
+kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), 
+                         density(dbrwt, #if nobody smoked
+                                 kernel = "epanechnikov",
+                                 bw = h,
+                                 weights = propensityreduced/tot.propensity.nosm))
 kerndensity.nosm.df <- data.frame(kerndensity.nosm[1], kerndensity.nosm[2])
 
-kerndensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), density(dbrwt, #if everybody smoked
-                                                                             kernel = "epanechnikov",
-                                                                             bw = h,
-                                                                             weights = propensityreduced/tot.propensity.sm))
+kerndensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), 
+                       density(dbrwt, #if everybody smoked
+                               kernel = "epanechnikov",
+                               bw = h,
+                              weights = propensityreduced/tot.propensity.sm))
 kerndensity.sm.df <- data.frame(kerndensity.sm[1], kerndensity.sm[2])
 
 kerndensity.plot <- ggplot(kerndensity.nosm.df, aes(x, y))

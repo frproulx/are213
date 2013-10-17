@@ -46,7 +46,13 @@ In Problem Set 1A we used linear (i.e., $ y = \beta x + \epsilon$) estimators to
 \subsection{Part B}
 \emph{Now, consider a series estimator. Estimate the smoking effects using a flexible functional form for the control variables (e.g., higher order terms and interactions). What are the benefits and drawbacks to this approach?}
 
-We can attempt to reduce the magnitude of the first source of bias mentioned above (Functional Form) by introducing non-parametric series estimators as a replacement for linear regression.  
+We can attempt to reduce the magnitude of the first source of bias mentioned above (functional form) by introducing non-parametric series estimators as a replacement for linear regression.  To implement this we used a natural cubic spline with two knots on the ``dmar" variable (maternal age) in the regression from PS1A.  The tobacco use (treatment) and marital status remain as factors.  We also implemented a version of the model with interactions between the splined maternal age term and the two discrete terms.  The summary of the results are in Table \ref{tab:splineresults}.  The ATE for the model we used in PS1A for tobacco use was 200 grams (rounded from an exact estimate of 195 grams).  This is essentially unchanged with the addition splines to the maternal age relationship (an exact estimate of 199 grams).  Adding interaction terms results in an ATE for tobacco use of 220 grams.  
+
+The benefits to applying splines in this case is that the regression model more closely matches the reality of the data, which show that birth weight's relationship to maternal age has a peak and is not monotonically increasing.  The drawback is that the true functional form is only obscured in this approach.  While the interaction terms result in an ATE that is different from the one in a non-interacting model, the interpretation becomes much more difficult.  In a policymaking environment the addition of splines and interactions would represent a potential roadblock to the essential message, which remains unchanged, which is that birth weight is reduced in mothers who use tobacco (by about 200 grams).  
+
+
+% Table created by stargazer v.4.0 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu% Date and time: Wed, Oct 16, 2013 - 23:09:54\begin{table}[!htbp] \centering   \caption{Comparison of three linear models for birth weight}   \label{tab:splineresults} \begin{tabular}{@{\extracolsep{5pt}}lccc} \\[-1.8ex]\hline \hline \\[-1.8ex] \\[-1.8ex] & \multicolumn{3}{c}{Birth Weight} \\ \\[-1.8ex] & 1) PS1A LM & 2) 1+spline & 3) 2+interaction\\ \hline \\[-1.8ex]  tobacco2 & 195.101$^{***}$ & 199.060$^{***}$ & 252.395$^{***}$ \\   & (4.764) & (4.774) & (84.171) \\   dmage & 2.716$^{***}$ &  &  \\   & (0.338) &  &  \\   ns(dmage, df = 3)1 &  & 147.297$^{***}$ & 85.607$^{**}$ \\   &  & (10.062) & (37.532) \\   ns(dmage, df = 3)2 &  & 342.494$^{***}$ & 386.881$^{**}$ \\   &  & (36.880) & (177.619) \\   ns(dmage, df = 3)3 &  & $-$10.419 & $-$55.186 \\   &  & (25.826) & (104.185) \\   dmar2 & $-$146.507$^{***}$ & $-$123.962$^{***}$ & 57.854 \\   & (4.538) & (4.797) & (85.517) \\   tobacco2:ns(dmage, df = 3)1 &  &  & 101.145$^{**}$ \\   &  &  & (41.432) \\   tobacco2:ns(dmage, df = 3)2 &  &  & $-$68.050 \\   &  &  & (194.021) \\   tobacco2:ns(dmage, df = 3)3 &  &  & 33.670 \\   &  &  & (109.995) \\   tobacco2:dmar2 &  &  & $-$267.716$^{***}$ \\   &  &  & (94.824) \\   ns(dmage, df = 3)1:dmar2 &  &  & $-$135.516$^{***}$ \\   &  &  & (50.824) \\   ns(dmage, df = 3)2:dmar2 &  &  & $-$398.948$^{*}$ \\   &  &  & (214.796) \\   ns(dmage, df = 3)3:dmar2 &  &  & $-$275.447$^{*}$ \\   &  &  & (165.568) \\   tobacco2:ns(dmage, df = 3)1:dmar2 &  &  & 42.062 \\   &  &  & (59.539) \\   tobacco2:ns(dmage, df = 3)2:dmar2 &  &  & 619.892$^{***}$ \\   &  &  & (239.750) \\   tobacco2:ns(dmage, df = 3)3:dmar2 &  &  & 391.482$^{**}$ \\   &  &  & (192.669) \\   Constant & 3,170.698$^{***}$ & 3,040.520$^{***}$ & 2,989.989$^{***}$ \\   & (10.921) & (16.392) & (76.157) \\  \textit{N} & 114,610 & 114,610 & 114,610 \\ R$^{2}$ & 0.037 & 0.039 & 0.040 \\ Adjusted R$^{2}$ & 0.037 & 0.039 & 0.040 \\ \hline \hline \\[-1.8ex] \textit{Notes:} & \multicolumn{3}{r}{$^{***}$Significant at the 1 percent level.} \\  & \multicolumn{3}{r}{$^{**}$Significant at the 5 percent level.} \\  & \multicolumn{3}{r}{$^{*}$Significant at the 10 percent level.} \\ \normalsize \end{tabular} \end{table} 
+
 
 \section{Problem \#2}
 
@@ -61,7 +67,8 @@ To calculate the propensity score, we estimated a logit model of mother's tobacc
 
 To test whether the propensity scores predicted by these two models are significantly different  we perform a likelihood ratio test between  the full and reduced model. This test yields the following output:
 
-%\include{lrtest.tex}
+\paragraph{Likelihood ratio test for MLE method:} Chi-squared 3 d.f. =  10.21274, P value =  0.01684173 
+
 
 NOTE from class: including insignificant terms can be beneficial in terms of getting better fit (by reducing 
 
@@ -103,12 +110,11 @@ We estimate the density function using the Epanechnikov kernel and bandwidths ra
 We also estimate the density at x=3000 grams by hand. We first calculate the average propensity score for both smokers and non-smokers with infants at 3000 grams. The dataset has 12 smokers and 47 non-smokers with infants born at this weight. The average propensity score for these smokers is 0.27 and for non-smokers it is 0.20. These values stand to reason- the people who have opted in to smoking in this class have been predicted as more likely to be smokers.
 
 
-
+\section{Code}
 We used R to complete this assignment.  The code is below:
 
 \lstinputlisting{ps1b.R}
 
-\lstinputlisting{../util/are213-func.R}
 
 
 \end{document}
