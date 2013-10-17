@@ -2,7 +2,7 @@
 # ARE 213 Fall 2013
 ## TO DO:
 # Figure out ATT in 2c
-# Get a legend on the kerndensity plots to make the "beautiful and publication ready"
+# Get a legend on the kerndensity plots to make the "beautiful and publication ready" DONE
 # Figure the kernel regression by hand problem
 # problem 5
 # writing up a number of problems (I will get more done on this in the morning - need to go take a midterm).
@@ -28,6 +28,7 @@ library(splines) # for series regression
 library(np) #nonparametric regression
 library(rms) #regression modeling tools
 library(effects)
+library(reshape)
 
 # Homebrewed functions
 source("../util/are213-func.R")
@@ -124,7 +125,7 @@ stargazer(smoke.propensity.all, smoke.propensity.reduced,
           label = "tab:propensities",
           title = "Logistic function coefficients for propensity score models",
           dep.var.labels = "Mother Tobacco-Use Status",
-          no.spaces = TRUE,
+          no.space = TRUE,
           out = "propensityscores.tex"
            )
 
@@ -168,50 +169,66 @@ term2 <- with(ps1.data.clean, sum(((1-tobacco.rescale.n)*dbrwt)/(1-propensityred
 
 weightingestimator <- term1-term2 #This should be the average treatment effect
 
-term1.T <- with(subset(ps1.data.clean, tobacco.rescale.n=1), sum((tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced))
-#term2.T <- with(subset(ps1.data.clean, tobacco.rescale=1), sum(((1-tobacco.rescale)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale)/(1-propensityreduced)))
+term1.T <- with(subset(ps1.data.clean, tobacco.rescale.n==1), sum((tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced))
+term2.T <- with(subset(ps1.data.clean, tobacco.rescale.n==1), sum(((1-tobacco.rescale.n)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale.n)/(1-propensityreduced)))
 
-weightingestimator.T <- term1.T#-term2.T #This should be the average treatment on treated
+weightingestimator.T <- term1.T-term2.T #This should be the average treatment on treated
 
 
 # Problem 2d - Kernel Density Estimator
 tot.propensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), sum(propensityreduced))
 tot.propensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), sum(propensityreduced))
 
-kerndensity.plot.fn <- function(h){
+kd.plot.fn <- function(h, plot.w = 5, plot.h = 3){
 kerndensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), 
                          density(dbrwt, #if nobody smoked
                                  kernel = "epanechnikov",
                                  bw = h,
                                  weights = propensityreduced/tot.propensity.nosm))
-kerndensity.nosm.df <- data.frame(kerndensity.nosm[1], kerndensity.nosm[2])
+kerndensity.nosm.df <- data.frame(birth.weight = kerndensity.nosm$x, non.smoke = kerndensity.nosm$y)
 
 kerndensity.sm <- with(subset(ps1.data.clean, tobacco.rescale == 1), 
                        density(dbrwt, #if everybody smoked
                                kernel = "epanechnikov",
                                bw = h,
                               weights = propensityreduced/tot.propensity.sm))
-kerndensity.sm.df <- data.frame(kerndensity.sm[1], kerndensity.sm[2])
+kerndensity.sm.df <- data.frame(birth.weight = kerndensity.sm$x, smoke = kerndensity.sm$y)
 
-kerndensity.plot <- ggplot(kerndensity.nosm.df, aes(x, y))
-kerndensity.plot <- kerndensity.plot +
-  geom_line(linetype = 'dotted') + 
-  geom_line(data = kerndensity.sm.df, aes(x, y)) +
+kdens <- join(kerndensity.sm.df, kerndensity.nosm.df, by="birth.weight", type = "full")
+
+kdens.m <- melt.data.frame(kdens, id.vars="birth.weight", measure.vars = c("smoke", "non.smoke"), na.rm = TRUE)
+
+kd.plot <- ggplot(kdens.m, aes(birth.weight, value, factor(variable)))
+kd.plot <- kd.plot +
+  geom_line(aes(color=variable)) + 
   labs(title = paste("Density of birthweights estimated using \n propensity score-weighted kernel regression \n Bandwidth=", as.factor(h)), x = "Birthweight (grams)", y = "Density") +
-  guides(linetype = "Legend") # Having trouble getting a legend.
+  guides(color = guide_legend(title = "Treatment")) +
+  theme_bw() 
 
-kerndensity.plot
 
-ggsave(file = paste0('img/kerndensity', h,'.pdf'), plot = kerndensity.plot)}
+kd.plot
+
+ggsave(width = plot.w, height = plot.h, file = paste0('img/kerndensity', h,'.pdf'), plot = kd.plot)
+
+}
+
+
+
 
 ##Problem 2d - calculating kernel value by 'hand' at dbrwt = 3000 --------
 ##I can't figure out what to do here. Most of this is probably wrong but maybe something is right. Want to take a whack?
-##h <- 30
-##kernel.epa <- function(u){
-##return(0.75*(1-u*u))}
 
-##propensity3000.sm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 1)]))
-##propensity3000.nosm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 0)]))
+
+h <- 30
+
+# added identity function to kernel (cuts off outside bw)
+kernel.epa <- function(u){
+  if(abs(u)<1){return(0.75*(1-u*u))
+  }else{return(0)}
+}
+
+propensity3000.sm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 1)]))
+propensity3000.nosm <- with(ps1.data.clean, mean(propensityreduced[which(dbrwt == 3000 & tobacco.rescale == 0)]))
 ##for(i in 1:nrow(subset(ps1.data.clean, tobacco.rescale == 1))){
 ##with(subset(ps1.data.clean, tobacco.rescale == 1),
 ##     kern3000.sm.num <- kern3000.sm.num +
@@ -230,8 +247,10 @@ ggsave(file = paste0('img/kerndensity', h,'.pdf'), plot = kerndensity.plot)}
 ## with(kernel3000.sm[window < 1 & window > -1], sum(numerator))/(nrow(kernel3000.sm[abs(window < 1)])*h)
 
 #Problem 2e --------
-for(h in seq(from = 15, to = 50, by = 5)){
-kerndensity.plot.fn(h)} # This should make plots of the kernel density function for bandwidths ranging from 15 to 40 by 5. Feel free to adjust these values
+
+for(bw in seq(10,100,10)){kd.plot.fn(bw)}
+
+kd.plot.fn(40,7,4)
 
 
 
@@ -276,4 +295,4 @@ blocks.lowbrwt.ATE <- sum(cleaned.blocks.lowbrwt$weightedTE)
 print(paste("The estimated average treatment effect using the reweighting approach is", round(weightingestimator, digits=0)))
 print(paste("ATE is", round(tobacco.effects$fit[1] - tobacco.effects$fit[2], digits=0), "based on regression adjustment with p-score."))
 print(paste("The Average Treatment Effect predicted by the blocking method with birthweight treated as a continuous variable is", round(blocksATE, digits=0)))
-print(paste("The Average Treatment Effect predicted by the blocking method of birthweights falling into the 'low' category of less than 2500 grams is a probability of", round(blocks.lowbrwt.ATE, digits = 4),". That is, smokers are approximately", round(100*blocks.lowbrwt.ATE, digits = 0), "percent less more likely to have babies with weights less than 2500 grams."))
+print(paste("The Average Treatment Effect predicted by the blocking method of birthweights falling into the 'low' category of less than 2500 grams is a probability of", round(blocks.lowbrwt.ATE, digits = 4),". That is, smokers are approximately", round(100*blocks.lowbrwt.ATE, digits = 0), "percent more likely to have babies with weights less than 2500 grams."))

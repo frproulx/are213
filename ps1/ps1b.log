@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  16 OCT 2013 23:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  17 OCT 2013 01:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -230,47 +230,72 @@ Overfull \hbox (62.0422pt too wide) in paragraph at lines 59--109
 LaTeX Warning: Float too large for page by 133.86574pt on input line 109.
 
 [2] [3] (./propensityscores.tex
-Overfull \hbox (27.52127pt too wide) in paragraph at lines 9--70
+Overfull \hbox (27.52127pt too wide) in paragraph at lines 9--55
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 293.36557pt on input line 70.
+LaTeX Warning: Float too large for page by 75.8658pt on input line 55.
 
-) [4] [5] <img/kerndensity40.pdf, id=26, 504.88625pt x 504.88625pt>
+) (./propensityscoremodel.tex
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 10.
+) [4] [5] [6]
+<img/kerndensity40.pdf, id=35, 505.89pt x 289.08pt>
 File: img/kerndensity40.pdf Graphic file (type pdf)
 
 <use img/kerndensity40.pdf>
-Package pdftex.def Info: img/kerndensity40.pdf used on input line 160.
-(pdftex.def)             Requested size: 289.07999pt x 289.0824pt.
- [6 <./img/kerndensity40.pdf>] (./ps1b.R [7]
-[8] [9] [10] [11] [12]) (./ps1b.aux) ) 
+Package pdftex.def Info: img/kerndensity40.pdf used on input line 159.
+(pdftex.def)             Requested size: 433.62pt x 247.7879pt.
+
+Overfull \hbox (43.62pt too wide) in paragraph at lines 159--160
+ [][] 
+ []
+
+[7 <./img/kerndensity40.pdf>]
+<img/kdens-combinebw.pdf, id=48, 583.17876pt x 426.59375pt>
+File: img/kdens-combinebw.pdf Graphic file (type pdf)
+
+<use img/kdens-combinebw.pdf>
+Package pdftex.def Info: img/kdens-combinebw.pdf used on input line 175.
+(pdftex.def)             Requested size: 433.62pt x 317.1976pt.
+
+Overfull \hbox (43.62pt too wide) in paragraph at lines 175--176
+ [][] 
+ []
+
+[8 <./img/kdens-combinebw.pdf>] (./ps1b.R [9] [10] [11] [12] [13] [14] [15])
+(../util/are213-func.R [16]) [17] (./ps1b.aux) ) 
 Here is how much of TeX's memory you used:
- 3881 strings out of 493315
- 53147 string characters out of 6137904
- 424438 words of memory out of 5000000
- 7296 multiletter control sequences out of 15000+600000
- 9492 words of font info for 34 fonts, out of 8000000 for 9000
+ 3929 strings out of 493315
+ 53790 string characters out of 6137904
+ 464438 words of memory out of 5000000
+ 7335 multiletter control sequences out of 15000+600000
+ 9838 words of font info for 35 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,16n,41p,927b,2151s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2013/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2013/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2013/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmtt8.pfb>
-Output written on ps1b.pdf (12 pages, 183494 bytes).
+</usr/local/texlive/2013/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2013/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2013/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2013/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2013/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmti10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmtt8.pfb>
+Output written on ps1b.pdf (17 pages, 406428 bytes).
 PDF statistics:
- 101 PDF objects out of 1000 (max. 8388607)
- 71 compressed objects within 1 object stream
+ 164 PDF objects out of 1000 (max. 8388607)
+ 111 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

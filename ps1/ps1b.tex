@@ -69,23 +69,22 @@ To test whether the propensity scores predicted by these two models are signific
 
 \paragraph{Likelihood ratio test for MLE method:} Chi-squared 3 d.f. =  10.21274, P value =  0.01684173 
 
+The likelihood ratio test result (i.e., p $<$ 0.05 but not $<$ 0.01) indicates that the reduced-form model is sufficient for our purposes.
 
-NOTE from class: including insignificant terms can be beneficial in terms of getting better fit (by reducing 
-
-
+% NOTE from class: including insignificant terms can be beneficial in terms of getting better fit (by reducing 
 
 \subsection{Part B}
 
-This estimation assumes unconfoundedness. and conditional independence
+This estimation assumes unconfoundedness and a constant treatment effect.
 
 % SECTION BELOW WAS RESULTING IN ERRORS on TeX compilation...commented out for now
 
-%\input{propensityscoremodel.tex}
+\input{propensityscoremodel.tex}
 
-%The estimated average treatment effect is given by 
-%\begin{equation*}
-%\delta_1 + \delta_2 \overbar{p}(X_i)=-237.099 + (0.1594*90.427)=-222.69
-%\end{equation*}
+The estimated average treatment effect is given by 
+\begin{equation}
+\delta_1 + \delta_2 \overline{p}(X_i)=-237.099 + (0.1594 * 90.427)=-222.69
+\end{equation}
 
 This suggests that (pursuant to these assumptions) the average effect of smoking on birthweight is a reduction of 223 grams.
 
@@ -98,23 +97,55 @@ We estimate the average treatment on the treated to be % We still need to figure
 \subsection{Part D}
 Here we estimate the density function with a kernel density estimator, using the density() function in R. We estimate the density function separately for the smoking and non-smoking members of the sample, and weight their responses with the propensity scores normalized to the subsample (e.g. $p(X_i)/\sum\limits{j=1}^{N_{smokers}}p(X_j)$)
 
-We estimate the density function using the Epanechnikov kernel and bandwidths ranging from 15 grams to 50 grams in increments of 5 grams. Figure \ref{fig:kernel40} shows the density function estimated with a bandwidth of 40 grams. This bandwidth appears to be a good compromise between washing out some of the noise at lower bandwidths while preserving the underlying CEF.
+We estimate the density function using the Epanechnikov kernel and bandwidths ranging from 10 grams to 100 grams in increments of 10 grams. Figure \ref{fig:kernel40} shows the density function estimated with a bandwidth of 40 grams. This bandwidth appears to be a good compromise between washing out some of the noise at lower bandwidths while preserving the underlying CEF. 
 
 \begin{figure}[h!]
    \centering
-   \includegraphics[width=4in]{img/kerndensity40.pdf} 
+   \includegraphics[width=6in]{img/kerndensity40.pdf} 
    \caption{Birthweight density function estimates produced using Epanechnikov kernel estimator for smokers and non-smokers.}
    \label{fig:kernel40}
 \end{figure}
 
+
+
 We also estimate the density at x=3000 grams by hand. We first calculate the average propensity score for both smokers and non-smokers with infants at 3000 grams. The dataset has 12 smokers and 47 non-smokers with infants born at this weight. The average propensity score for these smokers is 0.27 and for non-smokers it is 0.20. These values stand to reason- the people who have opted in to smoking in this class have been predicted as more likely to be smokers.
+
+
+\subsection{Part E}
+
+Figure \ref{fig:kernelbw} shows how the character of the kernel density estimator is effected by the choice of bandwidth for the problem at hand.  While all the kernel densities tend to tell the same story, those with ``middle" bandwidth are a good balance between the choppy nature of small bandwidth and over-smoothing of large bandwidth.
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=6in]{img/kdens-combinebw.pdf} 
+   \caption{Comparison of bandwidth choices for birthweight density function estimates produced using Epanechnikov kernel estimator for smokers and non-smokers.}
+   \label{fig:kernelbw}
+\end{figure}
+
+\subsection{Part F}
+
+The weighting approach in Part C offers a way to use propensity scores in a regression model, so it is possible to ``tell a story" with the results that is accessible to people who are comfortable with regression models.  TODO: Add text here. 
+
+The potential downside to the weighting scheme is that outlier values (very high or low propensity scores) for those who went ``against" their propensity (i.e., for a low score, they selected to treatment or vice versa) will have very high weight (approaching infinity in the limit).  It is possible to mitigate this issue by trimming the data to only consider people with propensity scores between 10 \% and 90\%, for instance.  
+
+\subsection{Part G}
+Using a range of propensity scoring methods we find that the average effect of smoking on birth weight is 220 grams (lower weight for mothers who smoke).  Both regression adjustment and reweighing methods resulted in essentially the same result, which matches the result of using cubic splines and interaction in a regression model.  
+
+TODO: Finish writing interpretation.
+\section{Problem \# 3}
+
+\section{Problem \#4}
+
+\section{Problem \#5}
 
 
 \section{Code}
 We used R to complete this assignment.  The code is below:
 
 \lstinputlisting{ps1b.R}
+\lstinputlisting{../util/are213-func.R}
 
-
-
+\newpage
+\thispagestyle{empty}
+\mbox{}
 \end{document}
