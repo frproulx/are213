@@ -28,5 +28,5 @@ reasonable.weight <- which(data.sm$weight < 10)
 # sum contributions and divide by number of obs., 
 kernel.3000.sm <- sum(data.sm$ksum) / (sum(data.sm$weight[reasonable.weight]) * length(data.sm$ksum) * h)
 
-
+# this almost works but doesn't quite match the plots.  :(
 

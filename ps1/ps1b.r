@@ -164,12 +164,12 @@ stargazer(sm.propensityregression,
 
 ps1.data.clean$tobacco.rescale.n <- as.numeric(levels(ps1.data.clean$tobacco.rescale))[ps1.data.clean$tobacco.rescale]
 
-ps1.data.clean$weightingterm1 <- with(ps1.data.clean, (tobacco.rescale.n*dbrwt)/propensityreduced)/sum(tobacco.rescale.n/propensityreduced)
-ps1.data.clean$weightingterm2 <- with(ps1.data.clean, ((1-tobacco.rescale.n)*dbrwt)/(1-propensityreduced))/sum((1-tobacco.rescale.n)/(1-propensityreduced))
+ps1.data.clean$weightingterm1 <- with(ps1.data.clean, ((tobacco.rescale.n*dbrwt)/propensityreduced))
+ps1.data.clean$weightingterm2 <- with(ps1.data.clean, (((1-tobacco.rescale.n)*dbrwt)/(1-propensityreduced)))
 
-weightingestimator <- with(ps1.data.clean, mean(weightingterm1-weightingterm2)) #This should be the average treatment effect
+weightingestimator <- with(ps1.data.clean, sum((weightingterm1/sum(tobacco.rescale.n/propensityreduced))-(weightingterm2/sum((1-tobacco.rescale.n)/(1-propensityreduced))))) #This should be the average treatment effect
 
-ATTweight <- 
+ATTweight <- with(ps1.data.clean, sum(((propensityreduced*weightingterm1)/sum(propensityreduced))-(((1-propensityreduced)*weightingterm2)/sum(1-propensityreduced))))
 
 # Problem 2d - Kernel Density Estimator
 tot.propensity.nosm <- with(subset(ps1.data.clean, tobacco.rescale == 0), sum(propensityreduced))
@@ -298,6 +298,7 @@ blocks.lowbrwt.ATE <- sum(cleaned.blocks.lowbrwt$weightedTE)
 
 ### Output values that need to be typed in to TeX:
 print(paste("The estimated average treatment effect using the reweighting approach is", round(weightingestimator, digits=0)))
+print(paste("The estimated average treatment on the treated using the reweighting approach is", round(ATTweight, digits = 0)))
 print(paste("ATE is", round(tobacco.effects$fit[1] - tobacco.effects$fit[2], digits=0), "based on regression adjustment with p-score."))
 print(paste("The Average Treatment Effect predicted by the blocking method with birthweight treated as a continuous variable is", round(blocksATE, digits=0)))
 print(paste("The Average Treatment Effect predicted by the blocking method of birthweights falling into the 'low' category of less than 2500 grams is a probability of", round(blocks.lowbrwt.ATE, digits = 4),". That is, smokers are approximately", round(100*blocks.lowbrwt.ATE, digits = 0), "percent more likely to have babies with weights less than 2500 grams."))

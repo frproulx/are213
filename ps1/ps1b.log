@@ -219,4 +219,63 @@ e
 \c@lstlisting=\count108
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <14.4> on input line 35.
-LaTeX Font Info:    External font `cmex10' loa
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 35.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 41.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 41.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 41.
+
+
+LaTeX Warning: Reference `tab:splineresults' on page 1 undefined on input line 
+48.
+
+[1
+
+{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(./splineresults.tex
+Overfull \hbox (286.47649pt too wide) in paragraph at lines 10--62
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 160.5324pt on input line 62.
+
+)
+
+LaTeX Warning: Reference `tab:propensities' on page 2 undefined on input line 6
+1.
+
+(./propensityscores.tex
+
+./propensityscores.tex:2: LaTeX Error: Can be used only in preamble.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2 \usepackage
+               {dcolumn}
+? 
+./propensityscores.tex:2: Emergency stop.
+ ...                                              
+                                                  
+l.2 \usepackage
+               {dcolumn}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+ 
+Here is how much of TeX's memory you used:
+ 3085 strings out of 493315
+ 45206 string characters out of 6137904
+ 148142 words of memory out of 5000000
+ 6499 multiletter control sequences out of 15000+600000
+ 9155 words of font info for 32 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 38i,10n,41p,927b,247s stack positions out of 5000i,500n,10000p,200000b,80000s
+./propensityscores.tex:2:  ==> Fatal error occurred, no output PDF file produce
+d!

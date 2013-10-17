@@ -92,7 +92,7 @@ Pursuant to these assumptions, the estimated ATE of smoking on birthweight based
 \subsection{Part C}
 We estimate the average treatment effect of smoking on birthweight to be 222 grams when using the reweighting approach. This approach involved taking a weighted average of all observations using the (normalized inverse) of the propensity score as a weighting factor. This is consistent with the estimate produced using the regression approach.
 
-We estimate the average treatment on the treated to be 
+We estimate the average treatment on the treated to be 240 grams. This was performed by using the summed propensity scores as a weighting function. This suggests that (depending on relevant assumptions being met), the mothers who smoke are more affected by smoking on average in terms of infant birthweight than the general population.
 
 \subsection{Part D}
 Here we estimate the density function with a kernel density estimator, using the density() function in R. We estimate the density function separately for the smoking and non-smoking members of the sample, and weight their responses with the propensity scores normalized to the subsample (e.g. $p(X_i)/\sum\limits{j=1}^{N_{smokers}}p(X_j)$)
@@ -121,15 +121,16 @@ Figure \ref{fig:kernelbw} shows how the character of the kernel density estimato
 \end{figure}
 
 \subsection{Part F}
+The weighting approach used in part (c) deals with the fact that some people have a higher likelihood of selecting into treatment by weighting the outcomes of the treated individuals by the inverse of their propensity for the treatment. In essence, this means that the more likely a treated individual would be to select into treatment (based on the estimated propensity score, i.e. ``are they behaving how we expect them to behave in terms of choosing to smoke?''), the less weight their outcome receives, and vice versa. In this way, this approach is supposed to normalize out individuals' self-selection into treatment against the likelihood that they would opt in. This is desirable because it provides a means of estimating the unobserved counterfactual outcomes. 
 
-The weighting approach in Part C offers a way to use propensity scores in a regression model, so it is possible to ``tell a story" with the results that is accessible to people who are comfortable with regression models.  TODO: Add text here. 
-
-The potential downside to the weighting scheme is that outliEr values (very high or low propensity scores) for those who went ``against" their propensity (i.e., for a low score, they selected to treatment or vice versa) will have very high weight (approaching infinity in the limit).  It is possible to mitigate this issue by trimming the data to only consider people with propensity scores between 10 \% and 90\%, for instance.  
+The potential downside to the weighting scheme is that outlier values (very high or low propensity scores) for those who went ``against'' their propensity (i.e., for a low score, they selected to treatment or vice versa) will have very high weight (approaching infinity in the limit).  It is possible to mitigate this issue by trimming the data to only consider people with propensity scores between 10 \% and 90\%, for instance.  
 
 \subsection{Part G}
-Using a range of propensity scoring methods we find that the average effect of smoking on birth weight is 220 grams (lower weight for mothers who smoke).  Both regression adjustment and reweighing methods resulted in essentially the same result, which matches the result of using cubic splines and interaction in a regression model.  
+Using a range of propensity scoring methods we find that the average effect of smoking on birth weight is approximately 220 grams (lower birth weights for mothers who smoke).  Both regression adjustment and reweighting methods resulted in essentially the same result, which matches the result of using cubic splines and interaction in a regression model. These findings, controlling for self-selection, result consistently across methods in an ATE 10\% higher than in the simple linear case presented in Problem Set 1A.
 
-TODO: Finish writing interpretation.
+The estimates produced in part (b) depend on the assumptions that the treatment effect heterogeneity is linear in the propensity score, that the treatment effect heterogeneity is \emph{not} linear in the covariates, and that the decision to smoke is randomly assigned conditional on the exogenous variables.
+The estimates produced in part (c) also assume that the decision to smoke is randomly assigned conditional on the exogenous variables (unconfoundedness) but do not need assume that the treatment effect heterogeneity is linear in the propensity score.  
+
 \section{Problem \# 3}
 Here we use a blocking approach to estimate the Average Treatment Effect. This entails subdividing all of the observations into evenly spaced blocks based on propensity scores. The average treatment effect is estimated within each blocks by calculating the average birthweights of children to smokers and to non-smokers separately and taking the difference. Any blocks with 0 smokers or 0 non-smokers are discarded, as no ``match'' has been made here. Finally, the average treatment across blocks is taken, weighting each block based on the number of observations within the block. 
 The block sizes produced using this method are displayed in Figure \ref{fig:blocks}. In this plot, the histograms are plotted on top of each other to demonstrate how the smokers and non-smokers are distributed with respect to each other.
@@ -147,8 +148,7 @@ The Average Treatment Effect estimated using the blocking method is 217 grams. T
 Because low birth weights (<2500 grams) are of particular concern, we again use the blocking method to estimate the Average Treatment Effect of smoking on the probability of having a low birth weight. The steps taken are very similar to those taken in Problem \#3. However, now we have calculated an indicator variable for every observation in the dataset corresponding to low birth weights. Within each block, we take the proportion of smokers and non-smokers who have given birth to low birth weight infants as the probability of this occuring. The within block treatment effect is thus the difference in probability of the low birth-weight event occuring. Using this method, we estimate an Average Treatment Effect of smoking on low birthweight of 3.78\%, which is to say that smokers are 3.78\% more likely than non-smokers to produce babies in the low birth weight range.
 
 \section{Problem \#5}
-
-\subfile{subfiles/prob5.tex}
+In this assignment, we have estimated the Average Treatment Effect of tobacco use by mothers on infant birthweights using a variety of methods. 
 
 \section{Code}
 We used R to complete this assignment.  The code is below:
