@@ -4,8 +4,8 @@
 # Figure out ATT in 2c
 # Get a legend on the kerndensity plots to make the "beautiful and publication ready"
 # Figure the kernel regression by hand problem
-# 4 and 5
-# writing
+# problem 5
+# writing up a number of problems (I will get more done on this in the morning - need to go take a midterm).
 
 # Frank's Directory
 #setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps1")
@@ -254,7 +254,18 @@ cleaned.blocks$weightedTE <- with(cleaned.blocks, weight * avgtreatmenteffect)
 blocksATE <- sum(cleaned.blocks$weightedTE)
 
 ### Problem 4
+ps1.data.clean$lowbrwt <- as.numeric(ps1.data.clean$dbrwt < 2500)
 
+blocklowbrwt <- ddply(ps1.data.clean, .(blocknumber), summarize, smokers = sum(tobacco.rescale == 1), nonsmokers = sum(tobacco.rescale == 0), lowbrwtprob.sm = mean(lowbrwt[tobacco.rescale == 1]), lowbrwtprob.nosm = mean(lowbrwt[tobacco.rescale == 0]))
+
+blocklowbrwt$badbin <- with(blocklowbrwt, as.numeric(smokers == 0 | nonsmokers == 0))
+
+cleaned.blocks.lowbrwt <- subset(blocklowbrwt, badbin == 0)
+cleaned.blocks.lowbrwt$ATE <- with(cleaned.blocks.lowbrwt, lowbrwtprob.sm - lowbrwtprob.nosm)
+cleaned.blocks.lowbrwt$weight <- with(cleaned.blocks.lowbrwt, (smokers + nonsmokers)/sum(smokers + nonsmokers))
+cleaned.blocks.lowbrwt$weightedTE <- with(cleaned.blocks.lowbrwt, weight * ATE)
+
+blocks.lowbrwt.ATE <- sum(cleaned.blocks.lowbrwt$weightedTE)
 
 
 
@@ -262,3 +273,4 @@ blocksATE <- sum(cleaned.blocks$weightedTE)
 print(paste("The estimated average treatment effect using the reweighting approach is", round(weightingestimator, digits=0)))
 print(paste("ATE is", round(tobacco.effects$fit[1] - tobacco.effects$fit[2], digits=0), "based on regression adjustment with p-score."))
 print(paste("The Average Treatment Effect predicted by the blocking method with birthweight treated as a continuous variable is", round(blocksATE, digits=0)))
+print(paste("The Average Treatment Effect predicted by the blocking method of birthweights falling into the 'low' category of less than 2500 grams is a probability of", round(blocks.lowbrwt.ATE, digits = 4),". That is, smokers are approximately", round(100*blocks.lowbrwt.ATE, digits = 0), "percent less more likely to have babies with weights less than 2500 grams."))
