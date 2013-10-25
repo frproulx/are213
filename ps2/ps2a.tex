@@ -1,0 +1,62 @@
+\documentclass[letterpaper, 12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{dcolumn}
+\usepackage{listings}
+\usepackage{subfiles}
+\usepackage{amsmath}
+
+% Code listing commands
+\lstset{language=R,
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\ttfamily,
+numbers=left,
+numberstyle=\footnotesize,
+stepnumber=1,
+numbersep=5pt,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+frame=single,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+breakatwhitespace=false,
+title=\lstname,
+escapeinside={},
+keywordstyle={},
+morekeywords={}
+}
+
+\begin{document}
+\title{ARE213 Problem Set \#2A}
+\author{Peter Alstone \& Frank Proulx}
+\maketitle
+
+\section{Problem \#1}
+\subsection{Part A}
+Here we will consider the within estimator, as suggested. This suggests that we want to find $\hat{\beta_{FE}}$ by running the following regression:
+\begin{equation}
+\ddot{Y_{it}} = \ddot{X'_{it}}\hat{\beta_{FE}} + \ddot{\epsilon_{it}}
+\end{equation}
+Where $\ddot{Y_{it}}=Y_{it}-\bar{Y_i}$, $\ddot{X_{it}}=X_{it}-\bar{X_i}$, $\bar{Y_i}=\frac{1}{T}\sum_{t=1}^TY_{it}$, and $\bar{X_i}=\frac{1}{T}\sum_{t=1}^TX_{it}$.
+Based on OLS, our fixed effects estimator is:
+\begin{equation}
+\hat{\beta_{FE}}=(\ddot{X_{it}}\ddot{X'_{it}})^{-1}\ddot{X_{it}}\ddot{Y_{it}} %His notes say you ``don't have to invert the mega-matrix'', so I might be doing this wrong.
+\end{equation}
+
+We know that $\ddot{X_{i}}=\boldsymbol{A}X_i$, so
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
