@@ -37,23 +37,49 @@ morekeywords={}
 
 \section{Problem \#1}
 \subsection{Part A}
-Here we will consider the within estimator, as suggested. This suggests that we want to find $\hat{\beta_{FE}}$ by running the following regression:
+Here we will consider the within estimator, as suggested. This suggests that we want to find $\widehat{\beta_{FE}}$ by running the following regression:
 \begin{equation}
-\ddot{Y_{it}} = \ddot{X'_{it}}\hat{\beta_{FE}} + \ddot{\epsilon_{it}}
+\ddot{Y_{it}} = \ddot{X'_{it}}\widehat{\beta_{FE}} + \ddot{\epsilon_{it}}
 \end{equation}
 Where $\ddot{Y_{it}}=Y_{it}-\bar{Y_i}$, $\ddot{X_{it}}=X_{it}-\bar{X_i}$, $\bar{Y_i}=\frac{1}{T}\sum_{t=1}^TY_{it}$, and $\bar{X_i}=\frac{1}{T}\sum_{t=1}^TX_{it}$.
 Based on OLS, our fixed effects estimator is:
 \begin{equation}
-\hat{\beta_{FE}}=(\ddot{X_{it}}\ddot{X'_{it}})^{-1}\ddot{X_{it}}\ddot{Y_{it}} %His notes say you ``don't have to invert the mega-matrix'', so I might be doing this wrong.
+\widehat{\beta_{FE}}=(\ddot{X'_{it}}\ddot{X_{it}})^{-1}\ddot{X'_{it}}\ddot{Y_{it}} %His notes say you ``don't have to invert the mega-matrix'', so I might be doing this wrong.
 \end{equation}
 
-We know that $\ddot{X_{i}}=\boldsymbol{A}X_i$, so
+We know that $\ddot{X_{i}}=\boldsymbol{A}X_i$ and $\ddot{Y_{i}}=\boldsymbol{A}Y_{i}$, so
+\begin{equation}
+\widehat{\beta_{FE}} = (X'_{it}\boldsymbol{A}\boldsymbol{A}X_{it})^{-1} X_{it}\boldsymbol{A}\boldsymbol{A}Y_{it}
+\end{equation}
+
+However, since AA=A, and thus $\boldsymbol{AA}=\boldsymbol{A}$, this reduces to
+\begin{equation}
+\widehat{\beta_{FE}} = (X'_{it}\boldsymbol{A}X_{it})^{-1} X_{it} \boldsymbol{A} Y_{it}
+\end{equation}
+
+Given that T=2, this can be broken up as follows:
 
 
 
 
 
+And looking at the first differences estimator, where we get $\widehat{\beta_{FD}}$ by running the regression
+\begin{equation}
+\Delta Y_{it} = \Delta X'_{it} \widehat{\beta_{FD}} + \Delta \epsilon_{it}
+\end{equation}
 
+where $\Delta Y_{it} = Y_{it} - Y_{it-1}$, $\Delta X_{it} = X_{it} - X_{it-1}$, and $\Delta \epsilon_{it} = \epsilon_{it} - \epsilon_{it-1}$.
+
+Because we only have T=2, this differencing estimator can only be estimated for t=2, so we regress
+\begin{align}
+\Delta Y_{i2} = \Delta X'_{i2} \widehat{\beta_{FD}} + \Delta \epsilon_{i2} \\
+Y_{i2}-Y_{i1} = (X_{i2}-X_{i1})'\widehat{\beta_{FD}} + \epsilon_{i2}-\epsilon_{i1}
+\end{align}
+
+thus, our first difference estimator is
+\begin{equation}
+\widehat{\beta_{FD}}=((X_{i2}-X_{i1})'(X_{i2}-X_{i1}))^{-1} (X_{i2}-X_{i1})'(Y_{i2}-Y_{i1})
+\end{equation}
 
 
 

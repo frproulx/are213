@@ -45,3 +45,32 @@ arrange_ggplot2 <- function(..., nrow=NULL, ncol=NULL, as.table=FALSE) {
     }
   }
 }
+
+robust <- function(model){ #This calculates the Huber-White Robust standard errors -- code from http://thetarzan.wordpress.com/2011/05/28/heteroskedasticity-robust-and-clustered-standard-errors-in-r/
+    s <- summary(model)
+    X <- model.matrix(model)
+    u2 <- residuals(model)^2
+    XDX <- 0
+
+    for(i in 1:nrow(X)) {
+        XDX <- XDX +u2[i]*X[i,]%*%t(X[i,])
+    }
+
+# inverse(X'X)
+    XX1 <- solve(t(X)%*%X)
+
+#Compute variance/covariance matrix
+    varcovar <- XX1 %*% XDX %*% XX1
+
+# Degrees of freedom adjustment
+    dfc <- sqrt(nrow(X))/sqrt(nrow(X)-ncol(X))
+
+    stdh <- dfc*sqrt(diag(varcovar))
+    
+    t <- model$coefficients/stdh
+    p <- 2*pnorm(-abs(t))
+    results <- cbind(model$coefficients, stdh, t, p)
+    dimnames(results) <- dimnames(s$coefficients)
+    results
+}
+
