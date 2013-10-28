@@ -1,0 +1,48 @@
+\documentclass[letterpaper, 12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{dcolumn}
+\usepackage{listings}
+\usepackage{subfiles}
+
+% Code listing commands
+\lstset{language=R,
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\ttfamily,
+numbers=left,
+numberstyle=\footnotesize,
+stepnumber=1,
+numbersep=5pt,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+frame=single,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+breakatwhitespace=false,
+title=\lstname,
+escapeinside={},
+keywordstyle={},
+morekeywords={}
+}
+
+\begin{document}
+\title{ARE213 Problem Set \#2A}
+\author{Peter Alstone \& Frank Proulx}
+\maketitle
+
+\section{Problem \#1}
+
+
+
+
+
+
+
+
+
+
+\end{document}

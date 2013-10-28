@@ -1,0 +1,16 @@
+## Frank's wd
+setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps2")
+
+library(foreign) #this is to read in Stata data
+library(Hmisc)
+library(psych)
+library(stargazer)
+library(ggplot2) # for neato plotting tools
+library(plyr) # for nice data tools like ddply
+library(car) # "companion for applied regression" - recode fxn, etc.
+library(gmodels) #for Crosstabs
+
+source("../util/are213-func.R")
+source("../util/watercolor.R") # for watercolor plots
+
+ps2a.data <- read.dta('traffic_safety2.dta')
