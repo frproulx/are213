@@ -39,26 +39,19 @@ morekeywords={}
 \subsection{Part A}
 Here we will consider the within estimator, as suggested. This suggests that we want to find $\widehat{\beta_{FE}}$ by running the following regression:
 \begin{equation}
-\ddot{Y_{it}} = \ddot{X_{it}}\widehat{\beta_{FE}} + \ddot{\epsilon_{it}}
+\ddot{Y_{it}} = \ddot{X'_{it}}\widehat{\beta_{FE}} + \ddot{\epsilon_{it}}
 \end{equation}
 Where $\ddot{Y_{it}}=Y_{it}-\bar{Y_i}$, $\ddot{X_{it}}=X_{it}-\bar{X_i}$, $\bar{Y_i}=\frac{1}{T}\sum_{t=1}^TY_{it}$, and $\bar{X_i}=\frac{1}{T}\sum_{t=1}^TX_{it}$.
-Based on OLS, our fixed effects estimator is:
+Our fixed effects estimator is therefore
+
 \begin{equation}
 \widehat{\beta_{FE}}=(\ddot{X'_{it}}\ddot{X_{it}})^{-1}\ddot{X'_{it}}\ddot{Y_{it}} %His notes say you ``don't have to invert the mega-matrix'', so I might be doing this wrong.
 \end{equation}
 
-We know that $\ddot{X_{i}}=\boldsymbol{A}X_i$ and $\ddot{Y_{i}}=\boldsymbol{A}Y_{i}$, so
+Because we have T=2, this can be rewritten as
 \begin{equation}
-\widehat{\beta_{FE}} = (X'_{it}\boldsymbol{A}\boldsymbol{A}X_{it})^{-1} X_{it}\boldsymbol{A}\boldsymbol{A}Y_{it}
+\widehat{\beta_{FE}}=((X_{it}-\frac{1}{2}X_{i1}-\frac{1}{2}X_{i2})'(X_{it}-\frac{1}{2}X_{i1}-\frac{1}{2}X_{i2}))^{-1}(X_{it}-\frac{1}{2}X_{i1}-\frac{1}{2}X_{i2})'(Y_{it}-\frac{1}{2}Y_{i1}-\frac{1}{2}Y_{i2})
 \end{equation}
-
-However, since AA=A, and thus $\boldsymbol{AA}=\boldsymbol{A}$, this reduces to
-\begin{equation}
-\widehat{\beta_{FE}} = (X'_{it}\boldsymbol{A}X_{it})^{-1} X_{it} \boldsymbol{A} Y_{it}
-\end{equation}
-
-Given that T=2, this can be broken up as follows:
-
 
 
 
