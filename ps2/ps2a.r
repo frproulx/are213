@@ -1,5 +1,7 @@
 ## Frank's wd
 setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps2")
+## Peter's wd
+# setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps2")
 
 library(foreign) #this is to read in Stata data
 library(Hmisc)
@@ -38,7 +40,19 @@ pooled.OLS.robust <- robust(pooled.OLS)
 pooled.quadtime.robust <- robust(pooled.quadtime)
 pooled.full.robust <- robust(pooled.full)
 
+# In theory you can get robust SE from adding "robust=TRUE" to a summary call of a plm object.  
+summary(pooled.OLS, robust=TRUE)
+
 ## still needs cluster standard error
+
+# See http://people.su.se/~ma/clustering.pdf -- functions in util pulled from there...but doesn't work with plm package :(
+# This blog has an implementation that claims to work but I hesitate to just implement their coded:
+# http://diffuseprior.wordpress.com/2012/06/15/standard-robust-and-clustered-standard-errors-computed-in-r/
+
+# # Doesn't work with plm...
+# clx(pooled.OLStest, ps2a.data, ps2a.data$state)
+
+
 
 ## Part C: compute between estimator w/ and w/o covariates
 between.nocov <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "between")
@@ -50,6 +64,7 @@ RE.nocov <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "random") #Assu
 RE.cov <- plm(logfatalpc ~ primary + secondary + college + unemploy + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "random")
 
 ## Part E compute cluster standard errors for RE model
+
 
 
 
