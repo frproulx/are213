@@ -29,8 +29,9 @@ pooled.OLS <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "pooling")
 
 pooled.quadtime <- plm(logfatalpc ~ primary + sqnetyears, data = ps2a.pdata, model = "pooling")
 
-pooled.full <- plm(logfatalpc ~ primary + secondary + college + unemploy + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "pooling")
+pooled.full <- plm(logfatalpc ~ primary + secondary + college + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "pooling")
 
+stargazer(pooled.OLS, pooled.quadtime, pooled.full, title = "Pooled Models of Fatalities Per Capita", out = 'p3a.tex', font.size = "footnotesize", column.labels = c("bivariate", "quadratic time", "covariates"))
 
 ## Part B
 pooled.OLS.robust <- robust(pooled.OLS)
