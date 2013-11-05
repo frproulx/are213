@@ -12,6 +12,8 @@ library(plyr) # for nice data tools like ddply
 library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(plm) # for panel data
+require(lmtest)
+# require(sandwich)
 
 source("../util/are213-func.R")
 #source("../util/watercolor.R") # for watercolor plots
@@ -52,6 +54,12 @@ stargazer(pooled.OLS, pooled.quadtime, pooled.full,
           column.labels = c("bivariate", "quadratic time", "covariates"),
           label="tab:3a")
 
+#typical
+coeftest(pooled.full)
+#robust
+coeftest(pooled.full, vcov = vcovHC)
+#clustered
+coeftest(pooled.full, vcov = vcovHC(pooled.full, type="HC1", cluster = "group"))
 
 ## Part B
 pooled.OLS.robust <- robust(pooled.OLS)
@@ -72,10 +80,61 @@ ols.hetero(logfatalpc ~ primary, data = ps2a.data, robust=TRUE, cluster="state")
 
 
 
+# ### REBOOT:  but this section doesn't work ------
+# 
+# # centering function
+# gcenter <- function(df1,group) {
+#   variables <- paste(
+#   rep("c", ncol(df1)), colnames(df1), sep=".")
+#   copydf <- df1
+#   for (i in 1:ncol(df1)) {
+#   copydf[,i] <- df1[,i] - ave(df1[,i], group,FUN=mean)}
+#   colnames(copydf) <- variables
+#   return(cbind(df1,copydf))}
+# 
+# 
+# # cast df with centering
+# pd.state <- gcenter(ps2a.data, ps2a.data$state)
+# 
+# # Part A
+# require(lmtest)
+# require(sandwich)
+# 
+# pool.ols <- lm(logfatalpc ~ primary, data = ps2a.data)
+# pool.quadtime <- lm(logfatalpc ~ primary + year + sqyears, data = ps2a.data)
+# pool.full <- lm(logfatalpc ~ primary + year + sqyears + secondary + college + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.data)
+# 
+# #NON-robust estimates:
+# se.ols <- coeftest(pool.ols
+# se.quadtime <- coeftest(pool.quadtime)
+# se.full <- coeftest(pool.full)
+# 
+# stargazer(se.ols, se.quadtime, se.full,
+#          title = "Typical Pooled Models of Fatalities Per Capita", 
+#          style="qje",
+#          out = 'p3a1.tex', 
+#          font.size = "footnotesize", 
+#          column.labels = c("bivariate", "quadratic time", "covariates"),
+#          label="tab:3a")                  
+#                    
+# #robust ests that should match STATA:
+# robust.ols <- coeftest(pool.ols, vcov = vcovHC(pool.ols, type="HC1"))
+# robust.quadtime <- coeftest(pool.quadtime, vcov = vcovHC(pool.quadtime,type = "HC1"))
+# robust.full <- coeftest(pool.full, vcov = vcovHC(pool.full, type = "HC1"))
+# 
+# stargazer(robust.ols, robust.quadtime, robust.full,
+#          title = "ROBUST Pooled Models of Fatalities Per Capita", 
+#          style="qje",
+#          out = 'p3a2.tex', 
+#          font.size = "footnotesize", 
+#          column.labels = c("bivariate", "quadratic time", "covariates"),
+#          label="tab:3a")
+                   
 
+                   
 
-
-## Part C: compute between estimator w/ and w/o covariates
+                   
+## Part C: compute between estimator w/ and w/o covariates-----
 between.nocov <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "between")
 between.cov <- plm(logfatalpc ~ primary + secondary + college + totalvmt + snow32 + rural_speed, data = ps2a.pdata, model = "between")
 
