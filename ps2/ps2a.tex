@@ -76,15 +76,21 @@ thus, our first difference estimator is
 
 \section{Problem \#3}
 \subsection{Part A}
-Running pooled bivariate OLS, adding a quadratic time trend, and adding the covariates that we expect to belong produces the models shown in Table .
+Running pooled bivariate OLS, adding a quadratic time trend, and adding the covariates that we expect to belong produces the models shown in Table ref{tab:3a}.  The pooled OLS is an ill-informed baseline model but nonetheless tells us that there is a statistically significant negative correlation between the states with primary seatbelt laws and those without.  In particular, the mean of the log fatalities per capita is reduced by 0.14 for states with primary seatbelt laws.  This does not, however, account for the year to year trends that are captured by including a set of quadratic year terms in the regression as shown in the ``quadratic time" regression.  This basic trend is that deaths have gone down over time.  Correcting for these trends may allow our OLS estimates approach the true ATE, and indeed the apparent effect of primary seatbelt laws is reduced.  When further covariates are added that are relevant (see Table ref{tab:3a}) further reductions in the apparent effect occur and the effect is no longer statistically significant.  
 \subfile{p3a.tex}
 
-Pooled analysis assumes that there are no unobserved unique time constant attributes of individuals and no universal effects across time.
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{plot3a.pdf}
+\caption{Year to year trends in the log of traffic fatalities per capita, divided by primary seatbelt law presence.  A LOESS fit to each dataset is included for reference but is not necessarily indicative of the true underlying function.}
+\label{fig:3a}
+\end{center}
+\end{figure}
 
-The bivariate case suggests that the log of per capita traffic fatalities decreases by 0.144 with the introduction of primary seatbelt laws, across both place and time.
-The quadratic time term is significant at a high level, but 
+
 
 \subsection{Part B}
+No, the standard errors are most likely not correct (are they ever really correct?).  In this case the error comes from
 
 
 \subsection{Part C}

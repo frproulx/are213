@@ -14,17 +14,28 @@ library(gmodels) #for Crosstabs
 library(plm) # for panel data
 
 source("../util/are213-func.R")
-source("../util/watercolor.R") # for watercolor plots
+#source("../util/watercolor.R") # for watercolor plots
 
 ps2a.data <- read.dta('traffic_safety2.dta')
 ps2a.datakey <- data.frame(var.name=names(ps2a.data), var.labels = attr(ps2a.data, "var.labels"))
 ps2a.data$logfatalpc <- with(ps2a.data, log(fatalities/population))
 ps2a.data$sqyears <- with(ps2a.data, year^2)
 
+# Graphical exploration of data
+
+ggplot(ps2a.data, aes(year, fatalities/population)) + geom_point(aes(color=primary)) + facet_grid(.~primary) + stat_smooth()
+
+pdf("plot3a.pdf", width=5, height=4)
+ggplot(ps2a.data, aes(year, log(fatalities/population))) + geom_point(aes(color=primary)) + facet_grid(.~primary) + stat_smooth()
+dev.off()
+
 #Puts data into pdata.frame for use with the plm package.
 ps2a.pdata <- pdata.frame(ps2a.data, index = c("state", "year")) 
                           
 ## Problem 3
+
+# Issues with non-conforming matrix seem to trace to bad factor class for year....fixed here.  
+ps2a.pdata$year <- as.numeric(ps2a.pdata$year)
 
 ## Part A (pooled OLS, quadratic time trend, and all possible covariates)
 pooled.OLS <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "pooling")
@@ -33,7 +44,14 @@ pooled.quadtime <- plm(logfatalpc ~ primary + year + sqyears, data = ps2a.pdata,
 
 pooled.full <- plm(logfatalpc ~ primary + year + sqyears + secondary + college + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "pooling")
 
-stargazer(pooled.OLS, pooled.quadtime, pooled.full, title = "Pooled Models of Fatalities Per Capita", out = 'p3a.tex', font.size = "footnotesize", column.labels = c("bivariate", "quadratic time", "covariates"))
+stargazer(pooled.OLS, pooled.quadtime, pooled.full,
+          title = "Pooled Models of Fatalities Per Capita", 
+          style="qje",
+          out = 'p3a.tex', 
+          font.size = "footnotesize", 
+          column.labels = c("bivariate", "quadratic time", "covariates"),
+          label="tab:3a")
+
 
 ## Part B
 pooled.OLS.robust <- robust(pooled.OLS)
@@ -46,11 +64,13 @@ summary(pooled.OLS, robust=TRUE)
 ## still needs cluster standard error
 
 # See http://people.su.se/~ma/clustering.pdf -- functions in util pulled from there...but doesn't work with plm package :(
-# This blog has an implementation that claims to work but I hesitate to just implement their coded:
+# Clustered SE code not included in basic R pacakge so need to hard-code it :)  Based on:
 # http://diffuseprior.wordpress.com/2012/06/15/standard-robust-and-clustered-standard-errors-computed-in-r/
 
-# # Doesn't work with plm...
-# clx(pooled.OLStest, ps2a.data, ps2a.data$state)
+# This function only works in the bivariate case...
+ols.hetero(logfatalpc ~ primary, data = ps2a.data, robust=TRUE, cluster="state")
+
+
 
 
 
