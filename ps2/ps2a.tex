@@ -78,7 +78,35 @@ thus, our first difference estimator is
 \subsection{Part A}
 Running pooled bivariate OLS, adding a quadratic time trend, and adding the covariates that we expect to belong produces the models shown in Table .
 \subfile{p3a.tex}
-Does this typeset correctly?
 
+Pooled analysis assumes that there are no unobserved unique time constant attributes of individuals and no universal effects across time.
+
+The bivariate case suggests that the log of per capita traffic fatalities decreases by 0.144 with the introduction of primary seatbelt laws, across both place and time.
+The quadratic time term is significant at a high level, but 
+
+\subsection{Part B}
+
+
+\subsection{Part C}
+The between estimator will give an unbiased estimate of the effect of primary seat belt laws insofar as variation within states (across time) is uncorrelated with the observables.
+\subfile{p3c.tex}
+
+We don't think that this criterion is met here. For example, within a given state, the total vmt per year probably tracks very closely with fatalities, as the higher VMT within a given year, the more likely there are to be fatal crashes (ceteris paribus).
+%% I don't know what to say about standard errors.
+
+
+\subsection{Part D}
+The RE estimator will give an unbiased estimate so long as the within states variation is uncorrelated with observables. Again, this assumption is probably not met here.
+\subfile{p3d.tex}
+
+The Random Effects estimator has the advantage over pooled OLS that it allows for (and assumes) unobserved heterogeneity. OLS has the advantage that it is more efficient than the Random Effects estimator when said heterogeneity does not exist.
+
+\subsection{Part E}
+
+\subsection{Part F}
+\subfile{p3fg.tex}
+
+
+\subsection{Part G}
 
 \end{document}

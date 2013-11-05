@@ -19,7 +19,7 @@ source("../util/watercolor.R") # for watercolor plots
 ps2a.data <- read.dta('traffic_safety2.dta')
 ps2a.datakey <- data.frame(var.name=names(ps2a.data), var.labels = attr(ps2a.data, "var.labels"))
 ps2a.data$logfatalpc <- with(ps2a.data, log(fatalities/population))
-ps2a.data$sqnetyears <- with(ps2a.data, (year-1981)^2)
+ps2a.data$sqyears <- with(ps2a.data, year^2)
 
 #Puts data into pdata.frame for use with the plm package.
 ps2a.pdata <- pdata.frame(ps2a.data, index = c("state", "year")) 
@@ -29,9 +29,9 @@ ps2a.pdata <- pdata.frame(ps2a.data, index = c("state", "year"))
 ## Part A (pooled OLS, quadratic time trend, and all possible covariates)
 pooled.OLS <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "pooling")
 
-pooled.quadtime <- plm(logfatalpc ~ primary + sqnetyears, data = ps2a.pdata, model = "pooling")
+pooled.quadtime <- plm(logfatalpc ~ primary + year + sqyears, data = ps2a.pdata, model = "pooling")
 
-pooled.full <- plm(logfatalpc ~ primary + secondary + college + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "pooling")
+pooled.full <- plm(logfatalpc ~ primary + year + sqyears + secondary + college + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "pooling")
 
 stargazer(pooled.OLS, pooled.quadtime, pooled.full, title = "Pooled Models of Fatalities Per Capita", out = 'p3a.tex', font.size = "footnotesize", column.labels = c("bivariate", "quadratic time", "covariates"))
 
@@ -56,15 +56,22 @@ summary(pooled.OLS, robust=TRUE)
 
 ## Part C: compute between estimator w/ and w/o covariates
 between.nocov <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "between")
-between.cov <- plm(logfatalpc ~ primary + secondary + college + unemploy + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "between")
+between.cov <- plm(logfatalpc ~ primary + secondary + college + totalvmt + snow32 + rural_speed, data = ps2a.pdata, model = "between")
 
+stargazer(between.nocov, between.cov, title = "Between models of effects of primary seatbelt use laws", out = "p3c.tex", font.size = "footnotesize")
 
 ## Part D
 RE.nocov <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "random") #Assumes effects are uncorrelated
 RE.cov <- plm(logfatalpc ~ primary + secondary + college + unemploy + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "random")
 
-## Part E compute cluster standard errors for RE model
+stargazer(RE.nocov, RE.cov, title = "Random Effects Models", out = "p3d.tex", font.size = "footnotesize")
 
+## Part E compute cluster standard errors for RE
 
+## Part F compute FE estimator
+fixed.primary <- plm(logfatalpc ~ primary + sqnetyears, data = ps2a.pdata, model = "within")
 
+## Part G
+fixed.cov <- plm(logfatalpc ~ primary + sqnetyears + secondary + college + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.pdata, model = "within")
 
+stargazer(fixed.primary, fixed.cov, title = "Fixed Effects Models", out = "p3fg.tex", font.size = "footnotesize")
