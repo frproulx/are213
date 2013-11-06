@@ -70,7 +70,7 @@ summary(pooled.OLS, robust=TRUE)
 # This function only works in the bivariate case...
 ols.hetero(logfatalpc ~ primary, data = ps2a.data, robust=TRUE, cluster="state")
 
-
+## Computing Huber-White by hand.
 
 
 

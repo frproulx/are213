@@ -77,7 +77,7 @@ These are hand written and attached separately.
 
 \section{Problem \#3}
 \subsection{Part A}
-Running pooled bivariate OLS, adding a quadratic time trend, and adding the covariates that we expect to belong produces the models shown in Table ref{tab:3a}.  The pooled OLS is an ill-informed baseline model but nonetheless tells us that there is a statistically significant negative correlation between the states with primary seatbelt laws and those without.  In particular, the mean of the log fatalities per capita is reduced by 0.14 for states with primary seatbelt laws.  This does not, however, account for the year to year trends that are captured by including a set of quadratic year terms in the regression as shown in the ``quadratic time" regression.  This basic trend is that deaths have gone down over time.  Correcting for these trends may allow our OLS estimates approach the true ATE, and indeed the apparent effect of primary seatbelt laws is reduced.  When further covariates are added that are relevant (see Table ref{tab:3a}) further reductions in the apparent effect occur and the effect is no longer statistically significant.  
+Running pooled bivariate OLS, adding a quadratic time trend, and adding the covariates that we expect to belong produces the models shown in Table \ref{tab:3a}.  The pooled OLS is an ill-informed baseline model but nonetheless tells us that there is a statistically significant negative correlation between the states with primary seatbelt laws and those without.  In particular, the mean of the log fatalities per capita is reduced by 0.14 for states with primary seatbelt laws.  This does not, however, account for the year to year trends that are captured by including a set of quadratic year terms in the regression as shown in the ``quadratic time" regression.  This basic trend is that deaths have gone down over time.  Correcting for these trends may allow our OLS estimates approach the true ATE, and indeed the apparent effect of primary seatbelt laws is reduced.  When further covariates are added that are relevant (see Table \ref{tab:3a}) further reductions in the apparent effect occur and the effect is no longer statistically significant.  
 \subfile{p3a.tex}
 
 \begin{figure}[htbp]
@@ -92,16 +92,88 @@ Running pooled bivariate OLS, adding a quadratic time trend, and adding the cova
 
 \subsection{Part B}
 No, the standard errors are most likely not correct (are they ever really, truly correct outside a purely theoretical framework?).  In this case the error in the SE estimates comes from heteroscedasticity in the error terms from the regression.  Table \ref{tab:3b1} shows that introducing robust standard errors (using the HC1 estimator for the OLS covariance matrix).  Clustering on the state grouping only increases the SE slightly over the robust pooled version, indicating most of the heteroscedasticity is in the full sample and not within-group.  
+Table \ref{tab:3b2} shows the results of calculating the standard errors by hand, using the code shown here.
+
 
 
 \subfile{p3b1.tex}
+\subfile{p3b2.tex}
+
+\begin{lstlisting}
+## Robust by hand
+#This calculates the Huber-White Robust standard errors -- code based on http://thetarzan.wordpress.com/2011/05/28/heteroskedasticity-robust-and-clustered-standard-errors-in-r/
+s <- summary(pooled.full)
+X <- model.matrix(pooled.full)
+u2 <- residuals(pooled.full)^2
+XDX <- 0
+
+for(i in 1:nrow(X)) {
+    XDX <- XDX +u2[i]*X[i,]%*%t(X[i,])
+}
+
+# inverse(X'X)
+XX1 <- solve(t(X)%*%X)
+
+#Compute variance/covariance matrix
+varcovar <- XX1 %*% XDX %*% XX1
+
+# Degrees of freedom adjustment
+dfc <- sqrt(nrow(X))/sqrt(nrow(X)-ncol(X))
+
+stdh <- dfc*sqrt(diag(varcovar))
+
+t <- pooled.full$coefficients/stdh
+p <- 2*pnorm(-abs(t))
+results.robust <- cbind(pooled.full$coefficients, stdh, t, p)
+dimnames(results.robust) <- dimnames(s$coefficients)
+results.robust
+
+## cluster by hand -- using many of the same variables as defined in the robust section (above), with some modifications:
+cluster <- "state"
+clus <- cbind(X, "state"=ps2a.data[,cluster], "resid" = resid(pooled.full))
+                                        #number of clusters
+m <- dim(table(clus[,cluster]))
+k <- dim(X)[2]
+
+uj <- matrix(NA, nrow=m, ncol = k)
+gs <- names(table(ps2a.data[,cluster]))
+for (i in 1:m){
+    uj[i,] <- t(matrix(clus[clus[,cluster]==gs[i], 'resid'])) %*% clus[clus[,cluster]==gs[i], 1:k]
+}
+
+
+#Compute variance/covariance matrix
+varcovar <- XX1 %*% crossprod(uj) %*% XX1
+
+# Degrees of freedom adjustment
+dfc <- sqrt((m/(m-1)) * (nrow(X)-1)/(nrow(X)-ncol(X)))
+
+stdh <- dfc*sqrt(diag(varcovar))
+
+t <- pooled.full$coefficients/stdh
+p <- 2*pnorm(-abs(t))
+results.cluster <- cbind(pooled.full$coefficients, stdh, t, p)
+dimnames(results.cluster) <- dimnames(s$coefficients)
+results.cluster
+
+hand.comparison <- cbind(a.typ.full[,2], results.robust[,2], results.cluster[,2])
+colnames(hand.comparison) <- c("Conventional", "Robust", "Clustered")
+stargazer(data.frame(hand.comparison),
+          summary = FALSE,
+          title = "Comparison of Standard Error HC Methods for Full Pooled Model, as calculated by hand",
+          style = "qje",
+          out = 'p3b2.tex',
+          font.size = "footnotesize", 
+          column.labels = c("Conventional", "HC1 Robust", "HC1 Robust + Cluster"),
+          label="tab:3b2"
+          )
+\end{lstlisting}
 
 \subsection{Part C}
 The between estimator will give an unbiased estimate of the effect of primary seat belt laws insofar as variation within states (across time) is uncorrelated with the observables.
 \subfile{p3c.tex}
 
 We don't think that this criterion is met here. For example, within a given state, the total vmt per year probably tracks very closely with fatalities, as the higher VMT within a given year, the more likely there are to be fatal crashes (ceteris paribus).  
-
 
 %% I don't know what to say about standard errors. -- my best shot at it below...still hazy.
 The standard errors are sufficiently large in this model that we cannot rule out the null hypothesis (no effect of primary seatbelt laws) in either the simple case or the case with covariates. 

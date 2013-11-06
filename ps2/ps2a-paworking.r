@@ -90,6 +90,77 @@ stargazer(a.typ.full, a.robust.full, a.clust.full,
           label="tab:3b1"
           )
 
+
+## Robust by hand
+                                        #This calculates the Huber-White Robust standard errors -- code based on http://thetarzan.wordpress.com/2011/05/28/heteroskedasticity-robust-and-clustered-standard-errors-in-r/
+s <- summary(pooled.full)
+X <- model.matrix(pooled.full)
+u2 <- residuals(pooled.full)^2
+XDX <- 0
+
+for(i in 1:nrow(X)) {
+    XDX <- XDX +u2[i]*X[i,]%*%t(X[i,])
+}
+
+                                        # inverse(X'X)
+XX1 <- solve(t(X)%*%X)
+
+                                        #Compute variance/covariance matrix
+varcovar <- XX1 %*% XDX %*% XX1
+
+                                        # Degrees of freedom adjustment
+dfc <- sqrt(nrow(X))/sqrt(nrow(X)-ncol(X))
+
+stdh <- dfc*sqrt(diag(varcovar))
+
+t <- pooled.full$coefficients/stdh
+p <- 2*pnorm(-abs(t))
+results.robust <- cbind(pooled.full$coefficients, stdh, t, p)
+dimnames(results.robust) <- dimnames(s$coefficients)
+results.robust
+
+## cluster by hand -- using many of the same variables as defined in the robust section (above), with some modifications:
+cluster <- "state"
+clus <- cbind(X, "state"=ps2a.data[,cluster], "resid" = resid(pooled.full))
+                                        #number of clusters
+m <- dim(table(clus[,cluster]))
+k <- dim(X)[2]
+
+uj <- matrix(NA, nrow=m, ncol = k)
+gs <- names(table(ps2a.data[,cluster]))
+for (i in 1:m){
+    uj[i,] <- t(matrix(clus[clus[,cluster]==gs[i], 'resid'])) %*% clus[clus[,cluster]==gs[i], 1:k]
+}
+
+
+                                        #Compute variance/covariance matrix
+varcovar <- XX1 %*% crossprod(uj) %*% XX1
+
+                                        # Degrees of freedom adjustment
+dfc <- sqrt((m/(m-1)) * (nrow(X)-1)/(nrow(X)-ncol(X)))
+
+stdh <- dfc*sqrt(diag(varcovar))
+
+t <- pooled.full$coefficients/stdh
+p <- 2*pnorm(-abs(t))
+results.cluster <- cbind(pooled.full$coefficients, stdh, t, p)
+dimnames(results.cluster) <- dimnames(s$coefficients)
+results.cluster
+
+hand.comparison <- cbind(a.typ.full[,2], results.robust[,2], results.cluster[,2])
+colnames(hand.comparison) <- c("Conventional", "Robust", "Clustered")
+stargazer(data.frame(hand.comparison),
+          summary = FALSE,
+          title = "Comparison of Standard Error HC Methods for Full Pooled Model, as calculated by hand",
+          style = "qje",
+          out = 'p3b2.tex',
+          font.size = "footnotesize", 
+          column.labels = c("Conventional", "HC1 Robust", "HC1 Robust + Cluster"),
+          label="tab:3b2"
+          )
+ 
+
+
 # # OLS CASE doesn't work for some reason. ------
 # #typical
 # a.typ.OLS <- coeftest(pooled.OLS)
