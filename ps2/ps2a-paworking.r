@@ -1,9 +1,8 @@
 ## Frank's wd
 setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps2")
 ## Peter's wd
-# setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps2")
+setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps2")
 
-# TODO: Hand-code an OLS clustered estimator for Prob 3b.  One option for this is to reference and adopt the code at http://diffuseprior.wordpress.com/2012/06/15/standard-robust-and-clustered-standard-errors-computed-in-r
 
 library(foreign) #this is to read in Stata data
 library(Hmisc)
@@ -147,8 +146,8 @@ results.cluster <- cbind(pooled.full$coefficients, stdh, t, p)
 dimnames(results.cluster) <- dimnames(s$coefficients)
 results.cluster
 
-hand.comparison <- cbind(a.typ.full[,2], results.robust[,2], results.cluster[,2])
-colnames(hand.comparison) <- c("Conventional", "Robust", "Clustered")
+hand.comparison <- cbind(rownames(results.cluster), a.typ.full[,2], results.robust[,2], results.cluster[,2])
+colnames(hand.comparison) <- c("Estimand","Conventional", "Robust", "Clustered")
 stargazer(data.frame(hand.comparison),
           summary = FALSE,
           title = "Comparison of Standard Error HC Methods for Full Pooled Model, as calculated by hand",
@@ -156,100 +155,10 @@ stargazer(data.frame(hand.comparison),
           out = 'p3b2.tex',
           font.size = "footnotesize", 
           column.labels = c("Conventional", "HC1 Robust", "HC1 Robust + Cluster"),
-          label="tab:3b2"
+          label="tab:3b2",
+          digits=4
           )
  
-
-
-# # OLS CASE doesn't work for some reason. ------
-# #typical
-# a.typ.OLS <- coeftest(pooled.OLS)
-# #robust
-# a.robust.OLS <- coeftest(pooled.OLS, vcov = vcovHC)
-# #clustered
-# a.clust.OLS <- coeftest(pooled.OLS, vcov = vcovHC(pooled.OLS, type="HC1", cluster = "group"))
-# 
-# stargazer(a.typ.OLS, a.robust.OLS, a.clust.OLS, 
-#           title = "Comparison of Standard Error HC Methods for Bivariate Pooled OLS",
-#           style = "qje",
-#           out = 'p3b1b.tex',
-#           font.size = "footnotesize", 
-#           column.labels = c("Assume Homo", "HC1 Robust", "HC1 Robust + Cluster"),
-#           label="tab:3b1b"
-# )
-# OLD CODE FROM Part B ------
-
-# pooled.OLS.robust <- robust(pooled.OLS)
-# pooled.quadtime.robust <- robust(pooled.quadtime)
-# pooled.full.robust <- robust(pooled.full)
-
-# # In theory you can get robust SE from adding "robust=TRUE" to a summary call of a plm object.  
-# summary(pooled.OLS, robust=TRUE)
-
-## still needs cluster standard error
-
-# See http://people.su.se/~ma/clustering.pdf -- functions in util pulled from there...but doesn't work with plm package :(
-# Clustered SE code not included in basic R pacakge so need to hard-code it :)  Based on:
-# http://diffuseprior.wordpress.com/2012/06/15/standard-robust-and-clustered-standard-errors-computed-in-r/
-# 
-# # This function only works in the bivariate case...
-# ols.hetero(logfatalpc ~ primary, data = ps2a.data, robust=TRUE, cluster="state")
-# 
-# ### REBOOT:  but this section doesn't work ------
-# 
-# # centering function
-# gcenter <- function(df1,group) {
-#   variables <- paste(
-#   rep("c", ncol(df1)), colnames(df1), sep=".")
-#   copydf <- df1
-#   for (i in 1:ncol(df1)) {
-#   copydf[,i] <- df1[,i] - ave(df1[,i], group,FUN=mean)}
-#   colnames(copydf) <- variables
-#   return(cbind(df1,copydf))}
-# 
-# 
-# # cast df with centering
-# pd.state <- gcenter(ps2a.data, ps2a.data$state)
-# 
-# # Part A
-# require(lmtest)
-# require(sandwich)
-# 
-# pool.ols <- lm(logfatalpc ~ primary, data = ps2a.data)
-# pool.quadtime <- lm(logfatalpc ~ primary + year + sqyears, data = ps2a.data)
-# pool.full <- lm(logfatalpc ~ primary + year + sqyears + secondary + college + beer + totalvmt + precip + snow32 + rural_speed + urban_speed, data = ps2a.data)
-# 
-# #NON-robust estimates:
-# se.ols <- coeftest(pool.ols
-# se.quadtime <- coeftest(pool.quadtime)
-# se.full <- coeftest(pool.full)
-# 
-# stargazer(se.ols, se.quadtime, se.full,
-#          title = "Typical Pooled Models of Fatalities Per Capita", 
-#          style="qje",
-#          out = 'p3a1.tex', 
-#          font.size = "footnotesize", 
-#          column.labels = c("bivariate", "quadratic time", "covariates"),
-#          label="tab:3a")                  
-#                    
-# #robust ests that should match STATA:
-# robust.ols <- coeftest(pool.ols, vcov = vcovHC(pool.ols, type="HC1"))
-# robust.quadtime <- coeftest(pool.quadtime, vcov = vcovHC(pool.quadtime,type = "HC1"))
-# robust.full <- coeftest(pool.full, vcov = vcovHC(pool.full, type = "HC1"))
-# 
-# stargazer(robust.ols, robust.quadtime, robust.full,
-#          title = "ROBUST Pooled Models of Fatalities Per Capita", 
-#          style="qje",
-#          out = 'p3a2.tex', 
-#          font.size = "footnotesize", 
-#          column.labels = c("bivariate", "quadratic time", "covariates"),
-#          label="tab:3a")
-                   
-
-                   
-
-                   
-
 
 ## Part C: compute between estimator w/ and w/o covariates-----
 between.nocov <- plm(logfatalpc ~ primary, data = ps2a.pdata, model = "between")

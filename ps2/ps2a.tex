@@ -92,12 +92,63 @@ Running pooled bivariate OLS, adding a quadratic time trend, and adding the cova
 
 \subsection{Part B}
 No, the standard errors are most likely not correct (are they ever really, truly correct outside a purely theoretical framework?).  In this case the error in the SE estimates comes from heteroscedasticity in the error terms from the regression.  Table \ref{tab:3b1} shows that introducing robust standard errors (using the HC1 estimator for the OLS covariance matrix).  Clustering on the state grouping only increases the SE slightly over the robust pooled version, indicating most of the heteroscedasticity is in the full sample and not within-group.  
-Table \ref{tab:3b2} shows the results of calculating the standard errors by hand, using the code shown here.
-
-
+Table \ref{tab:3b2} shows the results of calculating the standard errors by hand, using the code shown in the code listings section at the end (with a call out to that section of code).
 
 \subfile{p3b1.tex}
 \subfile{p3b2.tex}
+
+
+\subsection{Part C}
+The between estimator will give an unbiased estimate of the effect of primary seat belt laws insofar as variation within states (across time) is uncorrelated with the observables.
+\subfile{p3c.tex}
+
+We don't think that this criterion is met here. For example, within a given state, the total vmt per year probably tracks very closely with fatalities, as the higher VMT within a given year, the more likely there are to be fatal crashes (ceteris paribus).  
+
+%% I don't know what to say about standard errors. -- my best shot at it below...still hazy.
+The standard errors are sufficiently large in this model that we cannot rule out the null hypothesis (no effect of primary seatbelt laws) in either the simple case or the case with covariates. 
+
+\subsection{Part D}
+The RE estimator will give an unbiased estimate so long as the within states variation is uncorrelated with observables. Again, this assumption is probably not met here.  In the RE model we find (for the first time) that seat belt laws appear to be correlated with statistical significance with reduced fatalities....but do we trust these?  Table \ref{tab:p3d} summarizes the results for the RE model both with and without covariates.  
+\subfile{p3d.tex}
+
+The Random Effects estimator has the advantage over pooled OLS that it allows for (and assumes) unobserved heterogeneity. OLS has the advantage that it is more efficient than the Random Effects estimator when said heterogeneity does not exist.
+
+\subsection{Part E}
+
+The conventional standard errors for the RE model are likely incorrect because of a built-in assumption that the errors within each individual are correlated equally over time.  Because this is a long-term dataset we would prefer to relax this assumption by introducing robust clustered SE estimates.  Table \ref{tab:p3e} shows that this increases the SE of the coefficient on primary seatbelt use, but only by about double.  The SE is still small compared to the estimand.
+
+\subfile{p3e.tex}
+
+\subsection{Part F}
+
+The conventional and clustered standard errors differ (as they have for many other approaches) by about a factor of two in the FE method.  These are compared in Table \ref{tab:p3f}.  The baseline standard errors (or roughly the coefficient of variation) is small for the fixed effects model because all of the unobserved individual state characteristics are wrapped up in the FE model without any between-ness muddying their influence.  However, there remain heteroscedastic errors within each state from idiosyncrasies  between time periods when states did and did not have seat belt laws (national-level trends, automobile manufacturing standards, etc.) that are exogenous to the states and link them.  Figure \ref{fig:3f} shows how the adoption of state-level primary seatbelt laws occurred non-uniformly through the sample.
+% this is my best attempt at this...
+
+\subfile{p3f.tex}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{allstates.pdf}
+\caption{Year to year trends in the log of traffic fatalities per capita, with facets by state ID.  A LOESS fit to each dataset is included for reference but is not necessarily indicative of the true underlying function.}
+\label{fig:3f}
+\end{center}
+\end{figure}
+
+
+\subsection{Part G}
+
+The addition of covariate terms to the FE model reduces the estimate of the ATE for enacting primary seatbelt laws to about a 6\% reduction in annual fatalities.  With robust / clustered standard errors this is estimate maintains its significance at a 5\% confidence level. 
+
+\subfile{p3g.tex}
+
+\section{Code Listings}
+
+We used R to complete this assignment...which turned out to be quite challenging in this case, since R has no equivalently easy version of ``robust" or ``cluster(group)," but it was a learning experience.  The code is below:
+
+\lstinputlisting{ps2a-paworking.R}
+
+
+\subsection{Hand-coded HC Robust Clustered Standard Errors}
 
 \begin{lstlisting}
 ## Robust by hand
@@ -169,49 +220,6 @@ stargazer(data.frame(hand.comparison),
           )
 \end{lstlisting}
 
-\subsection{Part C}
-The between estimator will give an unbiased estimate of the effect of primary seat belt laws insofar as variation within states (across time) is uncorrelated with the observables.
-\subfile{p3c.tex}
-
-We don't think that this criterion is met here. For example, within a given state, the total vmt per year probably tracks very closely with fatalities, as the higher VMT within a given year, the more likely there are to be fatal crashes (ceteris paribus).  
-
-%% I don't know what to say about standard errors. -- my best shot at it below...still hazy.
-The standard errors are sufficiently large in this model that we cannot rule out the null hypothesis (no effect of primary seatbelt laws) in either the simple case or the case with covariates. 
-
-\subsection{Part D}
-The RE estimator will give an unbiased estimate so long as the within states variation is uncorrelated with observables. Again, this assumption is probably not met here.  In the RE model we find (for the first time) that seat belt laws appear to be correlated with statistical significance with reduced fatalities....but do we trust these?  Table \ref{tab:p3d} summarizes the results for the RE model both with and without covariates.  
-\subfile{p3d.tex}
-
-The Random Effects estimator has the advantage over pooled OLS that it allows for (and assumes) unobserved heterogeneity. OLS has the advantage that it is more efficient than the Random Effects estimator when said heterogeneity does not exist.
-
-\subsection{Part E}
-
-The conventional standard errors for the RE model are likely incorrect because of a built-in assumption that the errors within each individual are correlated equally over time.  Because this is a long-term dataset we would prefer to relax this assumption by introducing robust clustered SE estimates.  Table \ref{tab:p3e} shows that this increases the SE of the coefficient on primary seatbelt use, but only by about double.  The SE is still small compared to the estimand.
-
-\subfile{p3e.tex}
-
-\subsection{Part F}
-
-The conventional and clustered standard errors differ (as they have for many other approaches) by about a factor of two in the FE method.  These are compared in Table \ref{tab:p3f}.  The baseline standard errors (or roughly the coefficient of variation) is small for the fixed effects model because all of the unobserved individual state characteristics are wrapped up in the FE model without any between-ness muddying their influence.  However, there remain heteroscedastic errors within each state from idiosyncrasies  between time periods when states did and did not have seat belt laws (national-level trends, automobile manufacturing standards, etc.) that are exogenous to the states and link them.  Figure \ref{fig:3f} shows how the adoption of state-level primary seatbelt laws occurred non-uniformly through the sample.
-% this is my best attempt at this...
-
-\subfile{p3f.tex}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics{allstates.pdf}
-\caption{Year to year trends in the log of traffic fatalities per capita, with facets by state ID.  A LOESS fit to each dataset is included for reference but is not necessarily indicative of the true underlying function.}
-\label{fig:3f}
-\end{center}
-\end{figure}
-
-
-\subsection{Part G}
-
-The addition of covariate terms to the FE model reduces the estimate of the ATE for enacting primary seatbelt laws to about a 6\% reduction in annual fatalities.  With robust / clustered standard errors this is estimate maintains its significance at a 5\% confidence level. 
-
-\subfile{p3g.tex}
-
-
+\lstinputlisting{../util/are213-func.R}
 
 \end{document}
