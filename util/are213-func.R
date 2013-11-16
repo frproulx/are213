@@ -74,3 +74,93 @@ robust <- function(model){ #This calculates the Huber-White Robust standard erro
     results
 }
 
+## Two functions for clustered standard errors below from: http://people.su.se/~ma/clustering.pdf -------
+
+clx <- 
+  function(fm, dfcw, cluster){
+    # R-codes (www.r-project.org) for computing
+    # clustered-standard errors. Mahmood Arai, Jan 26, 2008.
+    
+    # The arguments of the function are:
+    # fitted model, cluster1 and cluster2
+    # You need to install libraries `sandwich' and `lmtest'
+    
+    # reweighting the var-cov matrix for the within model
+    library(sandwich);library(lmtest)
+    M <- length(unique(cluster))   
+    N <- length(cluster)           
+    K <- fm$rank                        
+    dfc <- (M/(M-1))*((N-1)/(N-K))  
+    uj  <- apply(estfun(fm),2, function(x) tapply(x, cluster, sum));
+    vcovCL <- dfc*sandwich(fm, meat=crossprod(uj)/N)*dfcw
+    coeftest(fm, vcovCL) }
+
+mclx <- 
+  function(fm, dfcw, cluster1, cluster2){
+    # R-codes (www.r-project.org) for computing multi-way 
+    # clustered-standard errors. Mahmood Arai, Jan 26, 2008. 
+    # See: Thompson (2006), Cameron, Gelbach and Miller (2006)
+    # and Petersen (2006).
+    # reweighting the var-cov matrix for the within model
+    
+    # The arguments of the function are:
+    # fitted model, cluster1 and cluster2
+    # You need to install libraries `sandwich' and `lmtest'
+    
+    library(sandwich);library(lmtest)
+    cluster12 = paste(cluster1,cluster2, sep="")
+    M1  <- length(unique(cluster1))
+    M2  <- length(unique(cluster2))   
+    M12 <- length(unique(cluster12))
+    N   <- length(cluster1)          
+    K   <- fm$rank             
+    dfc1  <- (M1/(M1-1))*((N-1)/(N-K))  
+    dfc2  <- (M2/(M2-1))*((N-1)/(N-K))  
+    dfc12 <- (M12/(M12-1))*((N-1)/(N-K))  
+    u1j   <- apply(estfun(fm), 2, function(x) tapply(x, cluster1,  sum)) 
+    u2j   <- apply(estfun(fm), 2, function(x) tapply(x, cluster2,  sum)) 
+    u12j  <- apply(estfun(fm), 2, function(x) tapply(x, cluster12, sum)) 
+    vc1   <-  dfc1*sandwich(fm, meat=crossprod(u1j)/N )
+    vc2   <-  dfc2*sandwich(fm, meat=crossprod(u2j)/N )
+    vc12  <- dfc12*sandwich(fm, meat=crossprod(u12j)/N)
+    vcovMCL <- (vc1 + vc2 - vc12)*dfcw
+    coeftest(fm, vcovMCL)}
+
+## Function to compute ols standard errors , robust, clustered...
+## Based on http://diffuseprior.wordpress.com/2012/06/15/standard-robust-and-clustered-standard-errors-computed-in-r/
+ols.hetero <- function(form, data, robust=FALSE, cluster=NULL,digits=3){
+  r1 <- lm(form, data)
+  if(length(cluster)!=0){
+    data <- na.omit(data[,c(colnames(r1$model),cluster)])
+    r1 <- lm(form, data)
+  }
+  X <- model.matrix(r1)
+  n <- dim(X)[1]
+  k <- dim(X)[2]
+  if(robust==FALSE & length(cluster)==0){
+    se <- sqrt(diag(solve(crossprod(X)) * as.numeric(crossprod(resid(r1))/(n-k))))
+    res <- cbind(coef(r1),se)
+  }
+  if(robust==TRUE){
+    u <- matrix(resid(r1))
+    meat1 <- t(X) %*% diag(diag(crossprod(t(u)))) %*% X
+    dfc <- n/(n-k)    
+    se <- sqrt(dfc*diag(solve(crossprod(X)) %*% meat1 %*% solve(crossprod(X))))
+    res <- cbind(coef(r1),se)
+  }
+  if(length(cluster)!=0){
+    clus <- cbind(X,data[,cluster],resid(r1))
+    colnames(clus)[(dim(clus)[2]-1):dim(clus)[2]] <- c(cluster,"resid")
+    m <- dim(table(clus[,cluster]))
+    dfc <- (m/(m-1))*((n-1)/(n-k))
+    uclust  <- apply(resid(r1)*X,2, function(x) tapply(x, clus[,cluster], sum))
+    se <- sqrt(diag(solve(crossprod(X)) %*% (t(uclust) %*% uclust) %*% solve(crossprod(X)))*dfc)   
+    res <- cbind(coef(r1),se)
+  }
+  res <- cbind(res,res[,1]/res[,2],(1-pnorm(abs(res[,1]/res[,2])))*2)
+  res1 <- matrix(as.numeric(sprintf(paste("%.",paste(digits,"f",sep=""),sep=""),res)),nrow=dim(res)[1])
+  rownames(res1) <- rownames(res)
+  colnames(res1) <- c("Estimate","Std. Error","t value","Pr(>|t|)")
+  return(res1)
+}
+
