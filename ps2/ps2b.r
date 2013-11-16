@@ -1,5 +1,5 @@
 ## Frank's wd
-setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps2")
+## setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps2")
 ## Peter's wd
 # setwd("~/Google Drive/ERG/Classes/ARE213/are213/ps2")
 
@@ -12,6 +12,7 @@ library(plyr) # for nice data tools like ddply
 library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(plm) # for panel data
+library(Synth) #for synthetic control
 
 source("../util/are213-func.R")
 
@@ -41,11 +42,17 @@ preperiod.plot
 ## Subpart ii
                                         # Compare logfatalpc in year before treatment
 treatment.fatalities.85 <- with(ps2a.data, logfatalpc[which(state == 99 & year == 1985)])
-control.fatalities.85 <- subset(ps2a.data, year == 1985 & 
+## control.fatalities.85 <- subset(ps2a.data, year == 1985 & 
 
 
 
+## Part B - Synthetic control method
 
+## subpart ii
 
+syntheticdata <- dataprep(ps2a.data,
+	      predictors = c("college", "beer", "secondary", "unemploy", "totalvmt", "precip", "snow32", "rural_speed", "urban_speed", "sqyears"),
+	      treatment.identifier = primary, 
+	      	 dependent = logfatalpc, unit.variable = state, time.variable = year) #This is to get the data intothe proper format for the synth package
 
-
+seatbelts.synth <- synth(data.prep.obj = syntheticdata)
