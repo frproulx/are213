@@ -21,28 +21,69 @@ ps2a.datakey <- data.frame(var.name=names(ps2a.data), var.labels = attr(ps2a.dat
 ps2a.data$logfatalpc <- with(ps2a.data, log(fatalities/population))
 ps2a.data$sqyears <- with(ps2a.data, year^2)
 
-## Problem 1
+state.labels <- attr(ps2a.data, "label.table")
 
-## Part a
-## Subpart i
+
+## Problem 1 --------------------
+
+## Part a -------------
+## Subpart i ------------
                                         # Average pre-period log fatalities per cap.
 pre.treatment.avg <- with(subset(ps2a.data, (state == 99 & primary == 0)), mean(logfatalpc))
 pre.control.avg <- with(subset(ps2a.data, (state != 99 & primary == 0)), mean(logfatalpc))
-                                        # It seems like we should maybe be excluding CT, IA, NM, and TX from the control group (if they aren't already)
-pre.period.data <- ddply(ps2a.data, .(year, treatment = as.integer(state == 99)), summarize,
+
+                                        # Define state types
+ps2a.data$type <- "Control"
+
+for(i in 1:length(ps2a.data$year)){
+  if(ps2a.data$state[i] == 99){
+    ps2a.data$type[i] <- "Composite Treatment"}
+    
+  if(ps2a.data$state[i] %in% c(4,10,30,41)){
+    ps2a.data$type[i] <- "Treatment State"}
+}
+
+use.rows <- which(ps2a.data$type != "Treatment State")
+
+pre.period.data <- ddply(ps2a.data[use.rows,], .(year, type), summarize,
                          logfatalpc = mean(logfatalpc))
 
-                                        # Plot of average fatality rates pre-1986. This could be made prettier for sure
-preperiod.plot <- ggplot(pre.period.data, aes(x = year, y = logfatalpc))
+# Plot of average fatality rates pre-1986.
+preperiod.plot <- ggplot(data = subset(pre.period.data, year < 1986), aes(x = year, y = logfatalpc, color = type))
 preperiod.plot <- preperiod.plot +
-    geom_line(data = subset(pre.period.data, year < 1986 & treatment == 0), linetype = "dashed") +
-    geom_line(data = subset(pre.period.data, year < 1986 & treatment == 1), linetype = "solid")
+                           geom_line() + 
+                           theme_bw() +
+                           ylab("log(fatalities per capita)")
+
+pdf(file="img-p2b-1.pdf", width = 6, height = 4)
 preperiod.plot
+dev.off()
 
 ## Subpart ii
-                                        # Compare logfatalpc in year before treatment
-treatment.fatalities.85 <- with(ps2a.data, logfatalpc[which(state == 99 & year == 1985)])
-## control.fatalities.85 <- subset(ps2a.data, year == 1985 & 
+# Compare logfatalpc in year before treatment
+
+year.before <- ddply(subset(ps2a.data, year == 1985 & type != "Treatment State"), .(state), summarize, 
+                     type = type, 
+                     logfatalpc = logfatalpc)
+
+target.fatal <- year.before$logfatalpc[which(year.before$type== "Composite Treatment")]
+year.before$distance <- abs(year.before$logfatalpc - target.fatal)
+year.before$distance[which(year.before$type== "Composite Treatment")] <- NA
+
+best.yb.match <- which(year.before$distance == min(year.before$distance, na.rm=T))
+
+print(paste("The state number for the closest year before match is", year.before$state[best.yb.match]))
+
+# The best match is Alabama.  
+
+# Tables comparing Alabama to the composite treatment group
+stargazer(subset(ps2a.data, state==99),
+          out = "tab-ps2b-1a.tex",
+          title = "Composite Treatment Group Summary")
+
+stargazer(subset(ps2a.data, state==1),
+          out = "tab-ps2b-1b.tex",
+          title = "Closest match for pre-policy fatalities: Alabama")
 
 
 
@@ -50,9 +91,13 @@ treatment.fatalities.85 <- with(ps2a.data, logfatalpc[which(state == 99 & year =
 
 ## subpart ii
 
-syntheticdata <- dataprep(ps2a.data,
+# Not working yet...
+
+syntheticdata.1 <- dataprep(ps2a.data,
 	      predictors = c("college", "beer", "secondary", "unemploy", "totalvmt", "precip", "snow32", "rural_speed", "urban_speed", "sqyears"),
-	      treatment.identifier = primary, 
-	      	 dependent = logfatalpc, unit.variable = state, time.variable = year) #This is to get the data intothe proper format for the synth package
+	      treatment.identifier = "primary", 
+	      dependent = "logfatalpc", 
+        unit.variable = "state", 
+        time.variable = "year") 
 
 seatbelts.synth <- synth(data.prep.obj = syntheticdata)
