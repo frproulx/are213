@@ -134,6 +134,13 @@ dev.off()
 
 ## Part B - Synthetic control method
 
+
+# Identify which states can be "control" (i.e., those that never have a primary seatbelt law)
+
+state.policy <- ddply(ps2a.data, .(state), summarize, primary.max = max(primary))
+good.states <- which(state.policy$primary.max < 1)
+control.states <- state.policy$state[good.states]
+
 ## subpart ii
 
 
@@ -143,13 +150,13 @@ ps2a.data <- join(ps2a.data, state.labels)
 
 # synthetic controls dataprep with FULL set of tractable predictors
 syn.data.full <- dataprep(foo = ps2a.data,
-                       predictors = c("college", "precip", "snow32", "beer", "secondary", "vmt_percapita", "unemploy"),
+                       predictors = c("college", "precip", "snow32", "beer", "vmt_percapita", "unemploy"),
                        predictors.op = c("mean"),
                        dependent = "logfatalpc",
                        unit.variable = "state",
                        time.variable = "year",
                        treatment.identifier = 99,
-                       controls.identifier = c(1:48),
+                       controls.identifier = control.states,
                        time.predictors.prior = c(1981:1985),
                        time.optimize.ssr = c(1981:1985),
                        time.plot = c(1981:2003),
@@ -159,6 +166,25 @@ syn.data.full <- dataprep(foo = ps2a.data,
 
 seatbelts.synth <- synth(data.prep.obj = syn.data.full)
 
+
 # Visual exploration of plots....
 gaps.plot(seatbelts.synth, syn.data.full)
 path.plot(seatbelts.synth, syn.data.full, Ylim = c(-1.3, -2))
+
+# Tables for synthetic controls results
+syn.table <- synth.tab(seatbelts.synth, syn.data.full,3)
+
+get.plot.data <- function(synth.res, dataprep.res, label="unlabeled"){
+  out <- data.frame(time=dataprep.res$tag$time.plot)
+  
+  synthetic.trend <- dataprep.res$Y0plot %*% synth.res$solution.w
+  treatment.trend <- dataprep.res$Y1plot
+  gap <- treatment.trend - synthetic.trend
+  
+  out$synth <- as.numeric(synthetic.trend)
+  out$treat <- as.numeric(treatment.trend)
+  out$gap <- as.numeric(gap)
+  out$label <- label
+  
+  return(out)
+}
