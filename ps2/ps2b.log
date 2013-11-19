@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  18 NOV 2013 00:30
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  18 NOV 2013 16:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -198,11 +198,7 @@ File: lstlang2.sty 2004/09/05 1.3 listings language file
 (/usr/local/texlive/2013/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2004/09/05 1.3 listings language file
 )
-(./ps2b.aux
-
-LaTeX Warning: Label `' multiply defined.
-
-)
+(./ps2b.aux)
 \openout1 = `ps2b.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
@@ -280,43 +276,67 @@ e
 ))
 \c@lstlisting=\count120
 
-(./tab-ps2b-1a.tex
-Overfull \hbox (10.46568pt too wide) in paragraph at lines 10--34
- [][] 
- []
+<img-p2b-logfatTrend.pdf, id=1, 433.62pt x 289.08pt>
+File: img-p2b-logfatTrend.pdf Graphic file (type pdf)
 
-) (./tab-ps2b-1b.tex) <plot3a.pdf, id=1, 361.35pt x 289.08pt>
-File: plot3a.pdf Graphic file (type pdf)
- <use plot3a.pdf>
-Package pdftex.def Info: plot3a.pdf used on input line 44.
-(pdftex.def)             Requested size: 361.34912pt x 289.07928pt.
+<use img-p2b-logfatTrend.pdf>
+Package pdftex.def Info: img-p2b-logfatTrend.pdf used on input line 50.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+
+Overfull \hbox (43.61894pt too wide) in paragraph at lines 50--51
+ [] 
+ []
 
 [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2] [3 <./plot3a.pdf>] (../util/are213-func.R [4] [5] [6]) [7] (./ps2b.aux)
+[2 <./img-p2b-logfatTrend.pdf>]
+<img-p2b-compareStates.pdf, id=19, 289.08pt x 289.08pt>
+File: img-p2b-compareStates.pdf Graphic file (type pdf)
 
-LaTeX Warning: There were multiply-defined labels.
+<use img-p2b-compareStates.pdf>
+Package pdftex.def Info: img-p2b-compareStates.pdf used on input line 69.
+(pdftex.def)             Requested size: 289.07928pt x 289.07928pt.
+ (./tab-ps2b-1a.tex
+Overfull \hbox (10.46568pt too wide) in paragraph at lines 10--34
+ [][] 
+ []
 
- ) 
+) (./tab-ps2b-1b.tex)
+<img-ps2b-compareStatesFacets.pdf, id=20, 505.89pt x 433.62pt>
+File: img-ps2b-compareStatesFacets.pdf Graphic file (type pdf)
+
+<use img-ps2b-compareStatesFacets.pdf>
+Package pdftex.def Info: img-ps2b-compareStatesFacets.pdf used on input line 80
+.
+(pdftex.def)             Requested size: 505.88875pt x 433.61894pt.
+
+Overfull \hbox (115.88875pt too wide) in paragraph at lines 80--81
+ [] 
+ []
+
+[3] [4 <./img-p2b-compareStates.pdf>] [5] [6] [7 <./img-ps2b-compareStatesFacet
+s.pdf>] (../util/are213-func.R [8] [9] [10]) [11] (./ps2b.aux) ) 
 Here is how much of TeX's memory you used:
- 4475 strings out of 493315
- 60048 string characters out of 6137904
- 445489 words of memory out of 5000000
- 7863 multiletter control sequences out of 15000+600000
- 9656 words of font info for 36 fonts, out of 8000000 for 9000
+ 4490 strings out of 493315
+ 60503 string characters out of 6137904
+ 405489 words of memory out of 5000000
+ 7876 multiletter control sequences out of 15000+600000
+ 10270 words of font info for 38 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,9n,41p,336b,2153s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr
-/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
-local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ps2b.pdf (7 pages, 103044 bytes).
+ 38i,9n,41p,1117b,2151s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/tex
+live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texl
+ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texli
+ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
+/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2
+013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/201
+3/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on ps2b.pdf (11 pages, 125019 bytes).
 PDF statistics:
- 64 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 89 PDF objects out of 1000 (max. 8388607)
+ 62 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

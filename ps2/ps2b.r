@@ -13,6 +13,7 @@ library(car) # "companion for applied regression" - recode fxn, etc.
 library(gmodels) #for Crosstabs
 library(plm) # for panel data
 library(Synth) #for synthetic control
+library(reshape)
 
 source("../util/are213-func.R")
 
@@ -21,7 +22,18 @@ ps2a.datakey <- data.frame(var.name=names(ps2a.data), var.labels = attr(ps2a.dat
 ps2a.data$logfatalpc <- with(ps2a.data, log(fatalities/population))
 ps2a.data$sqyears <- with(ps2a.data, year^2)
 
+# make state labels dataframe
 state.labels <- attr(ps2a.data, "label.table")
+state.labels$state.name <- attr(state.labels$state_number,"names")
+state.labels <- as.data.frame(state.labels)
+state.labels$state <- state.labels$state_number
+state.labels$state.name <- as.character(state.labels$state.name)
+state.labels$state_number <- NULL
+state.labels <- rbind(state.labels, c("TU", 99))
+
+
+
+tu.label <- data.frame(state_number = 99, state.name = "TU")
 
 
 ## Problem 1 --------------------
@@ -55,7 +67,7 @@ preperiod.plot <- preperiod.plot +
                            theme_bw() +
                            ylab("log(fatalities per capita)")
 
-pdf(file="img-p2b-1.pdf", width = 6, height = 4)
+pdf(file="img-p2b-logfatTrend.pdf", width = 6, height = 4)
 preperiod.plot
 dev.off()
 
@@ -70,6 +82,20 @@ target.fatal <- year.before$logfatalpc[which(year.before$type== "Composite Treat
 year.before$distance <- abs(year.before$logfatalpc - target.fatal)
 year.before$distance[which(year.before$type== "Composite Treatment")] <- NA
 
+
+# plot all states and TU
+pdf("img-p2b-compareStates.pdf", width = 4, height = 4)
+
+ggplot(year.before, aes(logfatalpc)) + 
+  geom_histogram(binwidth=0.1) +
+  geom_histogram(data=subset(year.before, state==1), aes(logfatalpc), binwidth=0.1, fill="red") +
+  theme_bw() +
+  xlab("log(fatalities per capita)") +
+  geom_vline(aes(xintercept=target.fatal), size = 1, color = "blue") 
+
+dev.off()
+  
+
 best.yb.match <- which(year.before$distance == min(year.before$distance, na.rm=T))
 
 print(paste("The state number for the closest year before match is", year.before$state[best.yb.match]))
@@ -79,25 +105,60 @@ print(paste("The state number for the closest year before match is", year.before
 # Tables comparing Alabama to the composite treatment group
 stargazer(subset(ps2a.data, state==99),
           out = "tab-ps2b-1a.tex",
-          title = "Composite Treatment Group Summary")
+          title = "Composite Treatment Group Summary",
+          label = "tab:a21")
 
 stargazer(subset(ps2a.data, state==1),
           out = "tab-ps2b-1b.tex",
-          title = "Closest match for pre-policy fatalities: Alabama")
+          title = "Closest match for pre-policy fatalities: Alabama",
+          label = "tab:a22")
 
 
+# graphical comparison between states
+
+prep.gg.compare <- melt.data.frame(subset(ps2a.data, state==99 | state ==1), id.vars = c("state","year"))
+
+prep.gg.compare$value <- as.numeric(prep.gg.compare$value)
+prep.gg.compare$state <- as.factor(prep.gg.compare$state)
+
+vars.we.care.about <- c("beer", "college", "primary", "secondary", "unemploy", "logfatalpc", "rural_speed", "urban_speed", "precip")
+rows.we.care.about <- which(prep.gg.compare$variable %in% vars.we.care.about)
+
+gg.compare.states <- ggplot(prep.gg.compare[rows.we.care.about,], aes(x=year, y=value, color=state)) + 
+  geom_point() + 
+  facet_wrap("variable", scales = "free")
+
+pdf("img-ps2b-compareStatesFacets.pdf", width=7, height = 6)
+gg.compare.states
+dev.off()
 
 ## Part B - Synthetic control method
 
 ## subpart ii
 
-# Not working yet...
 
-syntheticdata.1 <- dataprep(ps2a.data,
-	      predictors = c("college", "beer", "secondary", "unemploy", "totalvmt", "precip", "snow32", "rural_speed", "urban_speed", "sqyears"),
-	      treatment.identifier = "primary", 
-	      dependent = "logfatalpc", 
-        unit.variable = "state", 
-        time.variable = "year") 
+# add to dataset
+ps2a.data$vmt_percapita <- with(ps2a.data, totalvmt / population)
+ps2a.data <- join(ps2a.data, state.labels)
 
-seatbelts.synth <- synth(data.prep.obj = syntheticdata)
+# synthetic controls dataprep with FULL set of tractable predictors
+syn.data.full <- dataprep(foo = ps2a.data,
+                       predictors = c("college", "precip", "snow32", "beer", "secondary", "vmt_percapita", "unemploy"),
+                       predictors.op = c("mean"),
+                       dependent = "logfatalpc",
+                       unit.variable = "state",
+                       time.variable = "year",
+                       treatment.identifier = 99,
+                       controls.identifier = c(1:48),
+                       time.predictors.prior = c(1981:1985),
+                       time.optimize.ssr = c(1981:1985),
+                       time.plot = c(1981:2003),
+                       unit.names.variable = "state.name"
+) 
+
+
+seatbelts.synth <- synth(data.prep.obj = syn.data.full)
+
+# Visual exploration of plots....
+gaps.plot(seatbelts.synth, syn.data.full)
+path.plot(seatbelts.synth, syn.data.full, Ylim = c(-1.3, -2))
