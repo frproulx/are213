@@ -5,4 +5,4 @@ Note: This is a working repo for problem sets.  If you shouldn't be here because
 
 Checkout
 --------
-ps1b: Peter working on it Sunday Night (Oct 13)
+ps2b: Open for business.
