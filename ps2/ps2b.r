@@ -169,7 +169,7 @@ get.plot.data <- function(synth.res, dataprep.res, label="unlabeled", type = "un
 }
 
 #helper function: run dataprep, synth, and get.plot.data for a set of inputs.
-run.syn <- function(predictor.set, time.prior, treatment.state, control.states, label = "unlabeled", type = "unknown"){
+run.syn <- function(predictor.set, time.prior, treatment.state = std.treatment.state, control.states, label = "unlabeled", type = "unknown"){
 
 # synthetic controls dataprep with specified set of tractable predictors
 dataprep.results <- dataprep(foo = ps2a.data,
@@ -193,23 +193,44 @@ output <- get.plot.data(synth.results, dataprep.results, label, type)
 return(output)
 }
 
-# default entries to run.syn function
+## helper function: makes a gap plot so we can get them to look consistent 
+make.gap.plot <- function(syntheticresults, finame){
+gap.plot <- ggplot(data = syntheticresults, aes(y = gap, x = time))
+gap.plot <- gap.plot +
+    geom_path() +
+        geom_path(aes(y = synth), alpha = 0.8) +
+            geom_path(aes(y = treat), alpha = 0.6) +
+                geom_vline(xintercept = 1986, linetype = 'dotted')
+ggsave(filename = paste0('img-gap-', finame, '.pdf'), plot = gap.plot)
+return(gap.plot)
+}
+
+
+                                        # default entries to run.syn function
 std.treatment.state <- 99
 full.predictor.set <- c("college", "precip", "snow32", "beer", "vmt_percapita", "unemploy")
 full.time.prior <- c(1981:1985)
 
+## Part C: Pretty pictures
+full.synthesis <- run.syn(full.predictor.set, full.time.prior, 99, control.states)
+full.gap.plot <- make.gap.plot(full.synthesis, 'full')
 
+full.synthesis1984 <- run.syn(full.predictor.set, c(1981:1984), 99, control.states)
+full.1984.gap.plot <- make.gap.plot(full.synthesis1984, 'full1984')
+
+vmt.synthesis <- run.syn("vmt_percapita", full.time.prior, 99, control.states)
+vmt.gap.plot <- make.gap.plot(vmt.synthesis, 'vmt')
 
 # Script to generate a placebo test plot
 
-placebo.test <- run.syn(full.predictor.set, full.time.prior, 99, control.states, label = 99, type = "treatment")
+## placebo.test <- run.syn(full.predictor.set, full.time.prior, 99, control.states, label = 99, type = "treatment")
 
-for(state in control.states){
-  updated.control <- control.states[which(control.states!=state)]
-  placebo.additional.result <- run.syn(full.predictor.set, full.time.prior, state, updated.control, label = state, type = "placebo")
-  placebo.test <- rbind(placebo.test, placebo.additional.result)
-  print(paste("Finished with state number", state, "and you should be patient for the rest to finish :)"))
-}
+## for(state in control.states){
+##   updated.control <- control.states[which(control.states!=state)]
+##   placebo.additional.result <- run.syn(full.predictor.set, full.time.prior, state, updated.control, label = state, type = "placebo")
+##   placebo.test <- rbind(placebo.test, placebo.additional.result)
+##   print(paste("Finished with state number", state, "and you should be patient for the rest to finish :)"))
+## }
 
 # plot all the lines
 ggplot(placebo.test, aes(time, gap, group=label))+geom_line(aes(color=type))+geom_vline(aes(xintercept = 1985))
@@ -222,5 +243,6 @@ ggplot(placebo.test, aes(time, gap, group=label))+geom_line(aes(color=type))+geo
 
 # # Tables for synthetic controls results
 # syn.table <- synth.tab(seatbelts.synth, syn.data.full,3)
+
 
 
