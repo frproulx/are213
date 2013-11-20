@@ -140,6 +140,7 @@ dev.off()
 state.policy <- ddply(ps2a.data, .(state), summarize, primary.max = max(primary))
 good.states <- which(state.policy$primary.max < 1)
 control.states <- state.policy$state[good.states]
+all.states <- c(control.states, 99)
 
 ## subpart ii
 
@@ -148,33 +149,8 @@ control.states <- state.policy$state[good.states]
 ps2a.data$vmt_percapita <- with(ps2a.data, totalvmt / population)
 ps2a.data <- join(ps2a.data, state.labels)
 
-# synthetic controls dataprep with FULL set of tractable predictors
-syn.data.full <- dataprep(foo = ps2a.data,
-                       predictors = c("college", "precip", "snow32", "beer", "vmt_percapita", "unemploy"),
-                       predictors.op = c("mean"),
-                       dependent = "logfatalpc",
-                       unit.variable = "state",
-                       time.variable = "year",
-                       treatment.identifier = 99,
-                       controls.identifier = control.states,
-                       time.predictors.prior = c(1981:1985),
-                       time.optimize.ssr = c(1981:1985),
-                       time.plot = c(1981:2003),
-                       unit.names.variable = "state.name"
-) 
-
-
-seatbelts.synth <- synth(data.prep.obj = syn.data.full)
-
-
-# Visual exploration of plots....
-gaps.plot(seatbelts.synth, syn.data.full)
-path.plot(seatbelts.synth, syn.data.full, Ylim = c(-1.3, -2))
-
-# Tables for synthetic controls results
-syn.table <- synth.tab(seatbelts.synth, syn.data.full,3)
-
-get.plot.data <- function(synth.res, dataprep.res, label="unlabeled"){
+#helper function: extract useful data from synth results
+get.plot.data <- function(synth.res, dataprep.res, label="unlabeled", type = "unknown"){
   out <- data.frame(time=dataprep.res$tag$time.plot)
   
   synthetic.trend <- dataprep.res$Y0plot %*% synth.res$solution.w
@@ -184,7 +160,67 @@ get.plot.data <- function(synth.res, dataprep.res, label="unlabeled"){
   out$synth <- as.numeric(synthetic.trend)
   out$treat <- as.numeric(treatment.trend)
   out$gap <- as.numeric(gap)
+  out$spe <- out$gap^2
   out$label <- label
+  out$type <- type
+  
   
   return(out)
 }
+
+#helper function: run dataprep, synth, and get.plot.data for a set of inputs.
+run.syn <- function(predictor.set, time.prior, treatment.state, control.states, label = "unlabeled", type = "unknown"){
+
+# synthetic controls dataprep with specified set of tractable predictors
+dataprep.results <- dataprep(foo = ps2a.data,
+                       predictors = predictor.set,
+                       predictors.op = c("mean"),
+                       dependent = "logfatalpc",
+                       unit.variable = "state",
+                       time.variable = "year",
+                       treatment.identifier = treatment.state,
+                       controls.identifier = control.states,
+                       time.predictors.prior = time.prior,
+                       time.optimize.ssr = time.prior,
+                       time.plot = c(1981:2003),
+                       unit.names.variable = "state.name"
+) 
+
+synth.results <- synth(data.prep.obj = dataprep.results)
+
+output <- get.plot.data(synth.results, dataprep.results, label, type)
+
+return(output)
+}
+
+# default entries to run.syn function
+std.treatment.state <- 99
+full.predictor.set <- c("college", "precip", "snow32", "beer", "vmt_percapita", "unemploy")
+full.time.prior <- c(1981:1985)
+
+
+
+# Script to generate a placebo test plot
+
+placebo.test <- run.syn(full.predictor.set, full.time.prior, 99, control.states, label = 99, type = "treatment")
+
+for(state in control.states){
+  updated.control <- control.states[which(control.states!=state)]
+  placebo.additional.result <- run.syn(full.predictor.set, full.time.prior, state, updated.control, label = state, type = "placebo")
+  placebo.test <- rbind(placebo.test, placebo.additional.result)
+  print(paste("Finished with state number", state, "and you should be patient for the rest to finish :)"))
+}
+
+# plot all the lines
+ggplot(placebo.test, aes(time, gap, group=label))+geom_line(aes(color=type))+geom_vline(aes(xintercept = 1985))
+
+
+
+# # Visual exploration of plots....only works if you have the native dataprep and synth objects.  We would rather make our own plots :)
+# gaps.plot(seatbelts.synth, syn.data.full)
+# path.plot(seatbelts.synth, syn.data.full, Ylim = c(-1.3, -2))
+
+# # Tables for synthetic controls results
+# syn.table <- synth.tab(seatbelts.synth, syn.data.full,3)
+
+
