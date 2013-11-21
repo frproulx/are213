@@ -49,10 +49,10 @@ ps2a.data$type <- "Control"
 
 for(i in 1:length(ps2a.data$year)){
   if(ps2a.data$state[i] == 99){
-    ps2a.data$type[i] <- "Composite Treatment"}
-    
+      ps2a.data$type[i] <- "Composite Treatment"}
+  
   if(ps2a.data$state[i] %in% c(4,10,30,41)){
-    ps2a.data$type[i] <- "Treatment State"}
+      ps2a.data$type[i] <- "Treatment State"}
 }
 
 use.rows <- which(ps2a.data$type != "Treatment State")
@@ -60,19 +60,19 @@ use.rows <- which(ps2a.data$type != "Treatment State")
 pre.period.data <- ddply(ps2a.data[use.rows,], .(year, type), summarize,
                          logfatalpc = mean(logfatalpc))
 
-# Plot of average fatality rates pre-1986.
+                                        # Plot of average fatality rates pre-1986.
 preperiod.plot <- ggplot(data = subset(pre.period.data, year < 1986), aes(x = year, y = logfatalpc, color = type))
 preperiod.plot <- preperiod.plot +
-                           geom_line() + 
-                           theme_bw() +
-                           ylab("log(fatalities per capita)")
+    geom_line() + 
+    theme_bw() +
+    ylab("log(fatalities per capita)")
 
 pdf(file="img-p2b-logfatTrend.pdf", width = 6, height = 4)
 preperiod.plot
 dev.off()
 
 ## Subpart ii
-# Compare logfatalpc in year before treatment
+                                        # Compare logfatalpc in year before treatment
 
 year.before <- ddply(subset(ps2a.data, year == 1985 & type != "Treatment State"), .(state), summarize, 
                      type = type, 
@@ -83,15 +83,15 @@ year.before$distance <- abs(year.before$logfatalpc - target.fatal)
 year.before$distance[which(year.before$type== "Composite Treatment")] <- NA
 
 
-# plot all states and TU
+                                        # plot all states and TU
 pdf("img-p2b-compareStates.pdf", width = 4, height = 4)
 
 ggplot(year.before, aes(logfatalpc)) + 
-  geom_histogram(binwidth=0.1) +
-  geom_histogram(data=subset(year.before, state==1), aes(logfatalpc), binwidth=0.1, fill="red") +
-  theme_bw() +
-  xlab("log(fatalities per capita)") +
-  geom_vline(aes(xintercept=target.fatal), size = 1, color = "blue") 
+    geom_histogram(binwidth=0.1) +
+    geom_histogram(data=subset(year.before, state==1), aes(logfatalpc), binwidth=0.1, fill="red") +
+    theme_bw() +
+    xlab("log(fatalities per capita)") +
+    geom_vline(aes(xintercept=target.fatal), size = 1, color = "blue") 
 
 dev.off()
   
@@ -100,9 +100,9 @@ best.yb.match <- which(year.before$distance == min(year.before$distance, na.rm=T
 
 print(paste("The state number for the closest year before match is", year.before$state[best.yb.match]))
 
-# The best match is Alabama.  
+                                        # The best match is Alabama.  
 
-# Tables comparing Alabama to the composite treatment group
+                                        # Tables comparing Alabama to the composite treatment group
 stargazer(subset(ps2a.data, state==99),
           out = "tab-ps2b-1a.tex",
           title = "Composite Treatment Group Summary",
@@ -125,8 +125,8 @@ vars.we.care.about <- c("beer", "college", "primary", "secondary", "unemploy", "
 rows.we.care.about <- which(prep.gg.compare$variable %in% vars.we.care.about)
 
 gg.compare.states <- ggplot(prep.gg.compare[rows.we.care.about,], aes(x=year, y=value, color=state)) + 
-  geom_point() + 
-  facet_wrap("variable", scales = "free")
+    geom_point() + 
+    facet_wrap("variable", scales = "free")
 
 pdf("img-ps2b-compareStatesFacets.pdf", width=7, height = 6)
 gg.compare.states
@@ -135,7 +135,7 @@ dev.off()
 ## Part B - Synthetic control method
 
 
-# Identify which states can be "control" (i.e., those that never have a primary seatbelt law)
+                                        # Identify which states can be "control" (i.e., those that never have a primary seatbelt law)
 
 state.policy <- ddply(ps2a.data, .(state), summarize, primary.max = max(primary))
 good.states <- which(state.policy$primary.max < 1)
@@ -151,58 +151,58 @@ ps2a.data <- join(ps2a.data, state.labels)
 
 #helper function: extract useful data from synth results
 get.plot.data <- function(synth.res, dataprep.res, label="unlabeled", type = "unknown"){
-  out <- data.frame(time=dataprep.res$tag$time.plot)
+    out <- data.frame(time=dataprep.res$tag$time.plot)
   
-  synthetic.trend <- dataprep.res$Y0plot %*% synth.res$solution.w
-  treatment.trend <- dataprep.res$Y1plot
-  gap <- treatment.trend - synthetic.trend
+    synthetic.trend <- dataprep.res$Y0plot %*% synth.res$solution.w
+    treatment.trend <- dataprep.res$Y1plot
+    gap <- treatment.trend - synthetic.trend
   
-  out$synth <- as.numeric(synthetic.trend)
-  out$treat <- as.numeric(treatment.trend)
-  out$gap <- as.numeric(gap)
-  out$spe <- out$gap^2
-  out$label <- label
-  out$type <- type
+    out$synth <- as.numeric(synthetic.trend)
+    out$treat <- as.numeric(treatment.trend)
+    out$gap <- as.numeric(gap)
+    out$spe <- out$gap^2
+    out$label <- label
+    out$type <- type
   
   
-  return(out)
+    return(out)
 }
 
 #helper function: run dataprep, synth, and get.plot.data for a set of inputs.
 run.syn <- function(predictor.set, time.prior, treatment.state = std.treatment.state, control.states, label = "unlabeled", type = "unknown"){
 
 # synthetic controls dataprep with specified set of tractable predictors
-dataprep.results <- dataprep(foo = ps2a.data,
-                       predictors = predictor.set,
-                       predictors.op = c("mean"),
-                       dependent = "logfatalpc",
-                       unit.variable = "state",
-                       time.variable = "year",
-                       treatment.identifier = treatment.state,
-                       controls.identifier = control.states,
-                       time.predictors.prior = time.prior,
-                       time.optimize.ssr = time.prior,
-                       time.plot = c(1981:2003),
-                       unit.names.variable = "state.name"
-) 
+    dataprep.results <- dataprep(foo = ps2a.data,
+                                 predictors = predictor.set,
+                                 predictors.op = c("mean"),
+                                 dependent = "logfatalpc",
+                                 unit.variable = "state",
+                                 time.variable = "year",
+                                 treatment.identifier = treatment.state,
+                                 controls.identifier = control.states,
+                                 time.predictors.prior = time.prior,
+                                 time.optimize.ssr = time.prior,
+                                 time.plot = c(1981:2003),
+                                 unit.names.variable = "state.name"
+                                 ) 
 
-synth.results <- synth(data.prep.obj = dataprep.results)
+    synth.results <- synth(data.prep.obj = dataprep.results)
+    
+    output <- get.plot.data(synth.results, dataprep.results, label, type)
 
-output <- get.plot.data(synth.results, dataprep.results, label, type)
-
-return(output)
+    return(output)
 }
 
 ## helper function: makes a gap plot so we can get them to look consistent 
 make.gap.plot <- function(syntheticresults, finame){
-gap.plot <- ggplot(data = syntheticresults, aes(y = gap, x = time))
-gap.plot <- gap.plot +
-    geom_path() +
-        geom_path(aes(y = synth), alpha = 0.8) +
-            geom_path(aes(y = treat), alpha = 0.6) +
-                geom_vline(xintercept = 1986, linetype = 'dotted')
-ggsave(filename = paste0('img-gap-', finame, '.pdf'), plot = gap.plot)
-return(gap.plot)
+    gap.plot <- ggplot(data = syntheticresults, aes(y = gap, x = time))
+    gap.plot <- gap.plot +
+        geom_path() +
+            geom_path(aes(y = synth), alpha = 0.8) +
+                geom_path(aes(y = treat), alpha = 0.6) +
+                    geom_vline(xintercept = 1986, linetype = 'dotted')
+    ggsave(filename = paste0('img-gap-', finame, '.pdf'), plot = gap.plot)
+    return(gap.plot)
 }
 
 
@@ -212,6 +212,7 @@ full.predictor.set <- c("college", "precip", "snow32", "beer", "vmt_percapita", 
 full.time.prior <- c(1981:1985)
 
 ## Part C: Pretty pictures
+## Part (i)
 full.synthesis <- run.syn(full.predictor.set, full.time.prior, 99, control.states)
 full.gap.plot <- make.gap.plot(full.synthesis, 'full')
 
@@ -222,20 +223,31 @@ vmt.synthesis <- run.syn("vmt_percapita", full.time.prior, 99, control.states)
 vmt.gap.plot <- make.gap.plot(vmt.synthesis, 'vmt')
 
 # Script to generate a placebo test plot
+## Part (ii)
 
-## placebo.test <- run.syn(full.predictor.set, full.time.prior, 99, control.states, label = 99, type = "treatment")
+placebo.test <- run.syn(full.predictor.set, full.time.prior, treatment.state = 99, control.states, label = 99, type = "treatment")
 
-## for(state in control.states){
-##   updated.control <- control.states[which(control.states!=state)]
-##   placebo.additional.result <- run.syn(full.predictor.set, full.time.prior, state, updated.control, label = state, type = "placebo")
-##   placebo.test <- rbind(placebo.test, placebo.additional.result)
-##   print(paste("Finished with state number", state, "and you should be patient for the rest to finish :)"))
-## }
+for(state in control.states){
+    updated.control <- control.states[which(control.states!=state)]
+    placebo.additional.result <- run.syn(full.predictor.set, full.time.prior, state, updated.control, label = state, type = "placebo")
+    placebo.test <- rbind(placebo.test, placebo.additional.result)
+    print(paste("Finished with state number", state, "and you should be patient for the rest to finish :)"))
+}
 
 # plot all the lines
 ggplot(placebo.test, aes(time, gap, group=label))+geom_line(aes(color=type))+geom_vline(aes(xintercept = 1985))
 
+placebo.test$treated <- (placebo.test$time > 1985)
+## Part(iii)
 
+MPSEs <- ddply(placebo.test, .(label), summarize,
+               preMPSE = mean(spe[!treated]),
+               postMPSE = mean(spe[treated]))
+MPSEs$ratio <- with(MPSEs, postMPSE/preMPSE)
+
+MPSE.plot <- ggplot(MPSEs, aes(x=ratio))
+MPSE.plot <-  MPSE.plot +
+    geom_histogram()
 
 # # Visual exploration of plots....only works if you have the native dataprep and synth objects.  We would rather make our own plots :)
 # gaps.plot(seatbelts.synth, syn.data.full)
