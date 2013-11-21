@@ -67,9 +67,7 @@ preperiod.plot <- preperiod.plot +
     theme_bw() +
     ylab("log(fatalities per capita)")
 
-pdf(file="img-p2b-logfatTrend.pdf", width = 6, height = 4)
-preperiod.plot
-dev.off()
+ggsave(filename = "img-p2b.logfatTrend.pdf", plot = preperiod.plot, width = 6, height = 4)
 
 ## Subpart ii
                                         # Compare logfatalpc in year before treatment
@@ -194,15 +192,24 @@ run.syn <- function(predictor.set, time.prior, treatment.state = std.treatment.s
 }
 
 ## helper function: makes a gap plot so we can get them to look consistent 
-make.gap.plot <- function(syntheticresults, finame){
+make.gap.plot <- function(syntheticresults, finame, desc){
     gap.plot <- ggplot(data = syntheticresults, aes(y = gap, x = time))
     gap.plot <- gap.plot +
         geom_path() +
-            geom_path(aes(y = synth), alpha = 0.8) +
-                geom_path(aes(y = treat), alpha = 0.6) +
-                    geom_vline(xintercept = 1986, linetype = 'dotted') +
-      theme_bw() + geom_hline(yintercept = 0) + ylab("Treat. and Syn. Cntrl (lower) and \ngap between them (upper series)")
+            geom_vline(xintercept = 1986, linetype = 'dotted') +
+                theme_bw() + geom_hline(yintercept = 0) + ylab("difference in log(fatalities/person)") +
+                    labs(title = paste("Gap between TU and synth. control for", desc))
     ggsave(filename = paste0('img-gap-', finame, '.pdf'), plot = gap.plot, width=5, height = 5)
+    
+    split.plot <- ggplot(data = syntheticresults, aes(y = treat, x = time))
+    split.plot <- split.plot +
+        geom_path() +
+            geom_path(aes(y = synth), linetype = 'dashed') +
+                geom_vline(xintercept = 1986, linetype = 'dotted') +
+                        theme_bw() + ylab('log(fatalities/person)') +
+                            labs(title = paste("Treat. and Syn. Cntrl for", desc))
+    ggsave(filename = paste0('img-split-', finame, '.pdf'), plot = split.plot, width=5, height = 5)
+    
     return(gap.plot)
 }
 
@@ -215,13 +222,13 @@ full.time.prior <- c(1981:1985)
 ## Part C: Pretty pictures
 ## Part (i)
 full.synthesis <- run.syn(full.predictor.set, full.time.prior, 99, control.states)
-full.gap.plot <- make.gap.plot(full.synthesis, 'full')
+full.gap.plot <- make.gap.plot(full.synthesis, 'full', 'all covariates')
 
 full.synthesis1984 <- run.syn(full.predictor.set, c(1981:1984), 99, control.states)
-full.1984.gap.plot <- make.gap.plot(full.synthesis1984, 'full1984')
+full.1984.gap.plot <- make.gap.plot(full.synthesis1984, 'full1984', 'all covariates, years 1981-1984')
 
 vmt.synthesis <- run.syn("vmt_percapita", full.time.prior, 99, control.states)
-vmt.gap.plot <- make.gap.plot(vmt.synthesis, 'vmt')
+vmt.gap.plot <- make.gap.plot(vmt.synthesis, 'vmt', 'VMT per capita covariate')
 
 # Script to generate a placebo test plot
 ## Part (ii)
@@ -234,6 +241,8 @@ for(state in control.states){
     placebo.test <- rbind(placebo.test, placebo.additional.result)
     print(paste("Finished with state number", state, "and you should be patient for the rest to finish :)"))
 }
+
+placebo.test$treated <- (placebo.test$time > 1985)
 
 MPSEs <- ddply(placebo.test, .(label), summarize,
                preMPSE = mean(spe[!treated]),
@@ -251,21 +260,19 @@ ex.number <- length(control.states) - length(include.states) -1
 in.number <- length(include.states)
 
 # plot all the lines
-pdf(paste0("img-placeboTest",preThreshold,".pdf"), width = 6, height = 5)
+placeboTest <- ggplot(placebo.test[include.states.rows,], aes(time, gap, group=label))
+placeboTest <- placeboTest +
+    geom_line(aes(color=type))+
+    geom_vline(aes(xintercept = 1985), linetype="dotted") +
+    theme_bw() +
+    xlab("year") +
+    ylab("Estimated gap between treatment and synthetic control") +
+    scale_color_brewer(palette = "Paired") +
+    geom_hline(yintercept = 0) +
+    ggtitle(paste0("Placebo test plot with ",ex.number," control states excluded that have \n >", preThreshold, "x divergence from TU pre-treatment MSPE\n(includes ", in.number, " control states)"))
+ggsave(paste0("img-placeboTest", preThreshold, ".pdf"), plot = placeboTest, width = 6, height = 5)
 
-ggplot(placebo.test[include.states.rows,], aes(time, gap, group=label))+
-  geom_line(aes(color=type))+
-  geom_vline(aes(xintercept = 1985), linetype="dotted") +
-  theme_bw() +
-  xlab("year") +
-  ylab("Estimated gap between treatment and synthetic control") +
-  scale_color_brewer(palette = "Paired") +
-  geom_hline(yintercept = 0) +
-  ggtitle(paste0("Placebo test plot with ",ex.number," control states excluded that have \n >", preThreshold, "x divergence from TU pre-treatment MSPE\n(includes ", in.number, " control states)"))
 
-dev.off()
-
-placebo.test$treated <- (placebo.test$time > 1985)
 ## Part(iii)
 
 
@@ -277,9 +284,7 @@ MPSE.plot <-  MPSE.plot +
   annotate(geom="text", x=50, y=3, label="Blue indicates TU") +
   xlab("MSPE ratio (post:pre)")
 
-pdf("img-mspeRatio.pdf", width = 5, height = 5)
-MPSE.plot
-dev.off()
+ggsave(filename = "img-mspeRatio.pdf", plot = MPSE.plot, width = 5, height = 5)
 
 # # Visual exploration of plots....only works if you have the native dataprep and synth objects.  We would rather make our own plots :)
 # gaps.plot(seatbelts.synth, syn.data.full)

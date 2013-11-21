@@ -7,6 +7,7 @@
 \usepackage{listings}
 \usepackage{subfiles}
 \usepackage{amsmath}
+\usepackage{subcaption}
 
 % Code listing commands
 \lstset{language=R,
@@ -134,33 +135,55 @@ The steps taken in this estimation by the Synth package are as follows:
 \subsection{Gap between TU and synth control}
 %use preferred specification and a few others
 
-We show a series of figures (\ref{fig:c11}, \ref{fig:c12}, \ref{fig:c13}) for various specifications (including the preferred specification) below.  Since the actual data are very close to zero it is possible to view both the ``gap" and the two parallel datasets (treatment and synthetic control) on the same plot axis, and we do that here.  
+We show a series of figures (\ref{fig:c11} \& \ref{fig:c12}) for various specifications (including the preferred specification) below. Both the gaps (Synthetic unit - Treated unit) and the actual values have been plotted here. 
 
-The mean gap is about 0.15 on the log scale, which corresponds to approximately a 15\% reduction in traffic fatalities per capita.    
+The mean gap is about 0.15 on the log scale, which corresponds to approximately a 15\% reduction in traffic fatalities per capita. 
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics{img-gap-full.pdf}
-\caption{Gap between Treatment Unit and Synthetic Control developed using all previous time periods and all covariates.}
-\label{fig:c11}
-\end{center}
+\begin{figure}
+  \begin{centering}
+    \begin{subfigure}[b]{\textwidth}
+      \includegraphics{img-gap-full.pdf}
+      \caption{All covariates, all times}
+      \label{fig:c11a}
+    \end{subfigure}
+    
+    \begin{subfigure}[b]{\textwidth}
+      \includegraphics{img-gap-full1984.pdf}
+      \caption{All covariates, 1981-1984}
+      \label{fig:c11b}
+    \end{subfigure}
+
+    \begin{subfigure}[b]
+      \includegraphics{img-gap-vmt.pdf}
+      \caption{VMT per capita as covariate}
+      \label{fig:c11c}
+    \end{subfigure}
+    \caption{Plots of gaps between Log(fatalities per capita) for synthetic control unit and treatment unit}\label{fig:c11}
 \end{figure}
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics{img-gap-full1984.pdf}
-\caption{Gap between Treatment Unit and Synthetic Control developed using time periods 1981-1984 and all covariates.}
-\label{fig:c12}
-\end{center}
+
+\begin{figure}
+  \begin{centering}
+    \begin{subfigure}[b]{\textwidth}
+      \includegraphics{img-split-full.pdf}
+      \caption{All covariates, all times}
+      \label{fig:c12a}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+      \includegraphics{img-split-full1984.pdf}
+      \caption{All covariates, 1981-1984}
+      \label{fig:c12b}
+    \end{subfigure}
+
+    \begin{subfigure}[b]
+      \includegraphics{img-split-vmt.pdf}
+      \caption{VMT per capita as covariate}
+      \label{fig:c12c}
+    \end{subfigure}
+    \caption{Plots of log(fatalities per capita) in synthetic control unit and treatment unit}\label{fig:c12}
 \end{figure}
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics{img-gap-vmt.pdf}
-\caption{Gap between Treatment Unit and Synthetic Control developed using all previous time periods and VMT per capita as a covariate.}
-\label{fig:c13}
-\end{center}
-\end{figure}
 
 \subsection{Gap between TU \& preferred synth spec. and gap between each control state and its ``placebo'' treatment}
 
@@ -182,6 +205,8 @@ Another source of difference is in the structural way the estimates are made.  W
 
 \section{Appendix: Code Listings}
 
+\lstinputlisting{./ps2b.r}
 \lstinputlisting{../util/are213-func.R}
+
 
 \end{document}
