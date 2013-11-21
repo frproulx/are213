@@ -200,8 +200,9 @@ make.gap.plot <- function(syntheticresults, finame){
         geom_path() +
             geom_path(aes(y = synth), alpha = 0.8) +
                 geom_path(aes(y = treat), alpha = 0.6) +
-                    geom_vline(xintercept = 1986, linetype = 'dotted')
-    ggsave(filename = paste0('img-gap-', finame, '.pdf'), plot = gap.plot)
+                    geom_vline(xintercept = 1986, linetype = 'dotted') +
+      theme_bw() + geom_hline(yintercept = 0) + ylab("Treat. and Syn. Cntrl (lower) and \ngap between them (upper series)")
+    ggsave(filename = paste0('img-gap-', finame, '.pdf'), plot = gap.plot, width=5, height = 5)
     return(gap.plot)
 }
 
@@ -234,20 +235,51 @@ for(state in control.states){
     print(paste("Finished with state number", state, "and you should be patient for the rest to finish :)"))
 }
 
-# plot all the lines
-ggplot(placebo.test, aes(time, gap, group=label))+geom_line(aes(color=type))+geom_vline(aes(xintercept = 1985))
-
-placebo.test$treated <- (placebo.test$time > 1985)
-## Part(iii)
-
 MPSEs <- ddply(placebo.test, .(label), summarize,
                preMPSE = mean(spe[!treated]),
                postMPSE = mean(spe[treated]))
 MPSEs$ratio <- with(MPSEs, postMPSE/preMPSE)
 
-MPSE.plot <- ggplot(MPSEs, aes(x=ratio))
+
+# Exclusion threshold for placebo plot based on 
+preThreshold <- 50 #exclude states with pre-intervention MSPE greater than x times that for TU 
+tu.mspe <- MPSEs$preMPSE[which(MPSEs$label==99)]
+include.states <- MPSEs$label[which(MPSEs$preMPSE < tu.mspe * preThreshold)]
+include.states.rows <- which(placebo.test$label %in% include.states)
+
+ex.number <- length(control.states) - length(include.states) -1
+in.number <- length(include.states)
+
+# plot all the lines
+pdf(paste0("img-placeboTest",preThreshold,".pdf"), width = 6, height = 5)
+
+ggplot(placebo.test[include.states.rows,], aes(time, gap, group=label))+
+  geom_line(aes(color=type))+
+  geom_vline(aes(xintercept = 1985), linetype="dotted") +
+  theme_bw() +
+  xlab("year") +
+  ylab("Estimated gap between treatment and synthetic control") +
+  scale_color_brewer(palette = "Paired") +
+  geom_hline(yintercept = 0) +
+  ggtitle(paste0("Placebo test plot with ",ex.number," control states excluded that have \n >", preThreshold, "x divergence from TU pre-treatment MSPE\n(includes ", in.number, " control states)"))
+
+dev.off()
+
+placebo.test$treated <- (placebo.test$time > 1985)
+## Part(iii)
+
+
+MPSE.plot <- ggplot(MPSEs, aes(ratio))
 MPSE.plot <-  MPSE.plot +
-    geom_histogram()
+  geom_histogram() + 
+  geom_histogram(data=subset(MPSEs, label==99), aes(ratio), fill="blue") +
+  theme_bw() +
+  annotate(geom="text", x=50, y=3, label="Blue indicates TU") +
+  xlab("MSPE ratio (post:pre)")
+
+pdf("img-mspeRatio.pdf", width = 5, height = 5)
+MPSE.plot
+dev.off()
 
 # # Visual exploration of plots....only works if you have the native dataprep and synth objects.  We would rather make our own plots :)
 # gaps.plot(seatbelts.synth, syn.data.full)
