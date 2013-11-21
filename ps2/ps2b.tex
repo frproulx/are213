@@ -91,10 +91,10 @@ Overall Alabama does not appear to be a particularly good match for the composit
 
 \subsection{Why synthetic controls?}
 
-\paragraph{Unsweet Home Alabama}
+\paragraph{Unsweet Home Alabama:}
 We saw earlier the difficulties in selecting an exact counterfactual match for implementing differences in differences type selection on unobservables techniques.  While Alabama would appear on face value to be a good match (based on having similar outcomes in the year prior to treatment) we saw that this was coincidental and that the covariates are not a good match to the composite treatment state.  Synthetic control methods are motivated by producing a ``better" match by combining (synthesizing) multiple control states in a weighting scheme to create a composite control state with better match of the important covariates and dependent variable than any particular control state.  
 
-\paragraph{Dr. Synth-love, or how I learned to stop worrying and love econometrics}
+\paragraph{Dr. Synth-love, or how I learned to stop worrying and love econometrics:}
 Synthetic controls have a multi-step, iterative process for developing weighting factors to apply to control states for construction of a composite control state.  The goal is to identify a weighting matrix $W$ that minimizes the distance between the treatment covariates (e.g. alcohol consumption, total VMT) and pre-intervention outcomes (log fatalities per capita) for the weighted control unit and the treatment unit. In particular, the following more formally defined criteria are sought (from Synth R package documentation):
 \begin{itemize}
 \item $\sum_{j=2}^{J+1} w_j^* \bar{Y}_j^{K_1} = \bar{Y}_1^{K_M}$ , where $j$ refers to the state, $w_j$ is state $j$'s weight, and $\bar{Y}_j^{K_m}$ denotes the pre-treatment outcome in state $j$ in year $m$
@@ -109,16 +109,34 @@ The steps taken in this estimation by the Synth package are as follows:
 \item Weight the control characteristics matrix with weight vector W.
 \item Minimize the distance between the treatment unit characteristic matrix and the weighted control characteristics matrix with respect to the weighting matrix. Formally, that's $\min_{W} \sqrt{(X_1 - X_0W)'V(X_1-X_0W)}$ where $V$ is chosen by default to minimize the mean square error of the estimator.
 \end{enumerate}
-%I think he might want us to go more in depth on how V is calculated
+%I think he might want us to go more in depth on how V is calculated.  >> I think we have enough here -P
+
+\paragraph{Pros and Cons:} The upsides to Synthetic control are that one can create a better match for the treatment unit than exists in reality and that it is a method that prevents issues of selection bias (i.e., it is possible to say, ``I am using synthetic control" instead of needing to justify ex post the selection of particular units to match in classic differences in differences methods).  Another nice feature of the method is the use of graphical placebo testing analysis for determination of the statistical power of results.  It is an elegant and compelling way to approach error analysis.  A potential methodological downside is that the method approaches a black box estimate that does not provide much intuition compared to other methods.  This may manifest as a lack of trust in results from this method compared to those that are more straightforward to understand.   
 
 
-\subsection{Synthesizing control} The process of creating a synthetic control unit involves 2 steps in the Synth package on [R].  First is specifying the form of the model in a ``data prep" step.  This is then passed to the synthetic control function to attempt implementing the algorithm described above.  In practice we found that errors arise when predictors are included that do not have variation in the mean values among the control units.  We used an additive process (adding more and more predictor covariates in the specification) to test whether there is variation.  A sub-finding is that the computational intensity increases as covariates are added.  This is a relatively small dataset but it is possible that this method could become computationally difficult with large datasets and many covariates.  After the process of adding we found that there is variation in all the potentially meaningful covariates except rural and urban speed limits.  Since speed limits were constant throughout the sample before 1986 they cannot be included in the synthetic controls specification.  
+\subsection{Synthesizing control} The process of creating a synthetic control unit involves 2 steps in the Synth package on [R].  First is specifying the form of the model in a ``data prep" step.  This is then passed to the synthetic control function to attempt implementing the algorithm described above.  In practice we found that errors arise when predictors are included that do not have variation in the mean values among the control units.  We used an additive process (adding more and more predictor covariates in the specification) to test whether there is variation.  A sub-finding is that the computational intensity increases as covariates are added.  This is a relatively small dataset but it is possible that this method could become computationally difficult with large datasets and many covariates.  After the process of adding we found that there is variation in all the potentially meaningful covariates except rural and urban speed limits.  Since speed limits were constant throughout the sample before 1986 they cannot be included in the synthetic controls specification.  Additionally, the presence of secondary seatbelt laws does not vary in the pre-treatment period so is also left out of the potential covariates.  
+
+\paragraph{Preferred specification:} We identified that the following specifications were best for synthetic control analysis of this data:
+
+\begin{itemize}
+
+\item{Covariates to include in pre-treatment ``training" period: Full set of tractable and reasonable covariates.  This includes alcohol consumption, VMT per capita, college educational attainment, precipitation, snowfall, and unemployment rate.  We tried other combinations of covariates and found little influence on the result.  We hoped a VMT-only specification would provide clarity but the gap in the pre-treatment period was biased compared to using the full set of covariates.}
+
+\item{Pre-treatment period: We use the full set of years available in the data, from 1981 to 1985, for the pre-treatment period.  We considered dropping 1985 to avoid anticipation effects but this is not done for two reasons: first, it did not have noticeable impacts on the results (i.e., the divergence between treatment and synthetic control appears between 1985-1986 regardless of whether 1985 is included), and second, because there is a very short pre-treatment period available and we wished to maximize the support of the data.}
+
+\end{itemize}
 
 % Needs discussion of our application, including preferred specification
 
-\section{... but does it work?}
+\section{...but does it work?}
+
+
 \subsection{Gap between TU and synth control}
 %use preferred specification and a few others
+
+We show a series of figures (\ref{fig:c11}, \ref{fig:c12}, \ref{fig:c13}) for various specifications (including the preferred specification) below.  Since the actual data are very close to zero it is possible to view both the ``gap" and the two parallel datasets (treatment and synthetic control) on the same plot axis, and we do that here.  
+
+The mean gap is about 0.15 on the log scale, which corresponds to approximately a 15\% reduction in traffic fatalities per capita.    
 
 \begin{figure}[htbp]
 \begin{center}
@@ -144,20 +162,23 @@ The steps taken in this estimation by the Synth package are as follows:
 \end{center}
 \end{figure}
 
-
-
 \subsection{Gap between TU \& preferred synth spec. and gap between each control state and its ``placebo'' treatment}
 
-\paragraph{Do you conclude that the treatment was significant?}
+\paragraph{Graphical significance?}
 
 
-\subsection{Create graph of post-treatment/pre-treatment prediction ratios of MSPE for the actual and placebo treatment gaps in (ii)}
+\subsection{MSPE Ratios}
 
-\paragraph{... Was it significant??}
+\paragraph{... Was it significant??}  We find that the MSPE ratio for the TU is about 20, which is the second highest among the combined set of the TU and the control states.  Florida (as a placebo) had a higher MSPE ratio, about 120.  This sows seeds of doubt but we still find that the TU has a higher apparent effect then 93\% of units.  
 
 
-\section{Compare with fixed effects in question 3 of last problem set}
+\section{Compare with FE Model}
 
+Our central estimate for the impact of seatbelt laws using synthetic control methods is a 15\% reduction in fatality rate.  This is roughly double the estimates we found using a fixed effects model (8\% with significance at a 0.05 level) in the previous assignment.  It is notable that many of the alternative estimates for the coefficient on primary seatbelt laws had higher (but not significant) results closer to those we find with the synthetic controls method.  
+
+The differences may stem from a reduced sample of treatment states in the synthetic control method.  Since only four states with primary seatbelt laws were included (out of nearly 20 that eventually have the laws) it could be the case that the analysis is biased.
+
+Another source of difference is in the structural way the estimates are made.  Where the fixed effects model compares pre and post treatment, the synthetic controls method compares only in the post-treatment period.  The fixed effects model includes first and second order corrections for year which should address some of these issues, but to the extent that the trend in national-level drivers for traffic fatalities does not obey the quadratic functional form there are potential errors that are not present in the synthetic control method, since synthetic controls does not impose a linear function in the same way on the covariates.  
 
 \section{Appendix: Code Listings}
 
