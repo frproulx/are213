@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.9)  20 NOV 2013 11:22
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.9)  20 NOV 2013 18:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -275,9 +275,6 @@ e
 ))
 \c@lstlisting=\count120
 
-
-LaTeX Warning: Reference `fig:a11' on page 1 undefined on input line 46.
-
 <img-p2b-logfatTrend.pdf, id=1, 433.62pt x 289.08pt>
 File: img-p2b-logfatTrend.pdf Graphic file (type pdf)
 
@@ -305,7 +302,113 @@ LaTeX Warning: Reference `tab:a22' on page 3 undefined on input line 66.
 
 LaTeX Warning: Reference `fig:a22' on page 3 undefined on input line 66.
 
+<img-p2b-compareStates.pdf, id=19, 289.08pt x 289.08pt>
+File: img-p2b-compareStates.pdf Graphic file (type pdf)
 
-!pdfTeX error: pdflatex (file ./img-p2b-compareStates.pdf): PDF inclusion: requ
-ired page does not exist <0>
- ==> Fatal error occurred, no output PDF file produced!
+<use img-p2b-compareStates.pdf>
+Package pdftex.def Info: img-p2b-compareStates.pdf used on input line 72.
+(pdftex.def)             Requested size: 289.07928pt x 289.07928pt.
+ (./tab-ps2b-1a.tex
+Overfull \hbox (10.46568pt too wide) in paragraph at lines 10--34
+ [][] 
+ []
+
+) (./tab-ps2b-1b.tex)
+<img-ps2b-compareStatesFacets.pdf, id=20, 505.89pt x 433.62pt>
+File: img-ps2b-compareStatesFacets.pdf Graphic file (type pdf)
+
+<use img-ps2b-compareStatesFacets.pdf>
+Package pdftex.def Info: img-ps2b-compareStatesFacets.pdf used on input line 83
+.
+(pdftex.def)             Requested size: 505.88875pt x 433.61894pt.
+
+Overfull \hbox (115.88875pt too wide) in paragraph at lines 83--84
+ [] 
+ []
+
+[3] [4 <./img-p2b-compareStates.pdf>] [5] [6] [7 <./img-ps2b-compareStatesFacet
+s.pdf>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 100.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 100.
+
+Overfull \hbox (2.61879pt too wide) in paragraph at lines 110--111
+\OT1/cmr/m/n/12 weight-ing ma-trix. For-mally, that's $[][] []$
+ []
+
+[8] <img-gap-full.pdf, id=60, 451.6875pt x 410.53375pt>
+File: img-gap-full.pdf Graphic file (type pdf)
+ <use img-gap-full.pdf>
+Package pdftex.def Info: img-gap-full.pdf used on input line 125.
+(pdftex.def)             Requested size: 451.68639pt x 410.53275pt.
+
+Overfull \hbox (61.68639pt too wide) in paragraph at lines 125--126
+ [] 
+ []
+
+<img-gap-full1984.pdf, id=61, 451.6875pt x 410.53375pt>
+File: img-gap-full1984.pdf Graphic file (type pdf)
+
+<use img-gap-full1984.pdf>
+Package pdftex.def Info: img-gap-full1984.pdf used on input line 133.
+(pdftex.def)             Requested size: 451.68639pt x 410.53275pt.
+
+Overfull \hbox (61.68639pt too wide) in paragraph at lines 133--134
+ [] 
+ []
+
+<img-gap-vmt.pdf, id=62, 451.6875pt x 410.53375pt>
+File: img-gap-vmt.pdf Graphic file (type pdf)
+ <use img-gap-vmt.pdf>
+Package pdftex.def Info: img-gap-vmt.pdf used on input line 141.
+(pdftex.def)             Requested size: 451.68639pt x 410.53275pt.
+
+Overfull \hbox (61.68639pt too wide) in paragraph at lines 141--142
+ [] 
+ []
+
+
+Overfull \hbox (8.62286pt too wide) in paragraph at lines 154--154
+[]\OT1/cmr/bx/n/14.4 Create graph of post-treatment/pre-treatment pre-
+ []
+
+(../util/are213-func.R [9] [10 <./img-gap-full.pdf>] [11 <./img-gap-full1984.pd
+f>] [12 <./img-gap-vmt.pdf>] [13] [14]) [15] [16] (./ps2b.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 4528 strings out of 493307
+ 60707 string characters out of 6139905
+ 448541 words of memory out of 5000000
+ 7912 multiletter control sequences out of 15000+600000
+ 10270 words of font info for 38 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 38i,9n,41p,1119b,2151s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on ps2b.pdf (16 pages, 194065 bytes).
+PDF statistics:
+ 160 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+
