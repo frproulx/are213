@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.9)  21 NOV 2013 10:15
-=======
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 NOV 2013 10:12
->>>>>>> 6730811393fcf27339bcbb5eb21d8f895e2845c6
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 NOV 2013 10:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -231,23 +227,67 @@ File: lstlang2.sty 2004/09/05 1.3 listings language file
 (/usr/local/texlive/2013/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2004/09/05 1.3 listings language file
 )
-<<<<<<< HEAD
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+(./ps2b.aux)
+\openout1 = `ps2b.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+ (/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count117
+\scratchdimen=\dimen128
+\scratchbox=\box35
+\nofMPsegments=\count118
+\nofMParguments=\count119
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count120
+\MPscratchDim=\dimen129
+\MPnumerator=\count121
+\makeMPintoPDFobject=\count122
+\everyMPtoPDFconversion=\toks27
+) (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+(/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+(/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
 Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
@@ -259,7 +299,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/usr/local/texlive/2013/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
@@ -280,8 +320,9 @@ Overfull \hbox (43.61894pt too wide) in paragraph at lines 54--55
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./img-p2b-logfatTrend.
-pdf>] <img-p2b-compareStates.pdf, id=19, 289.08pt x 289.08pt>
+{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2 <./img-p2b-logfatTrend.pdf>]
+<img-p2b-compareStates.pdf, id=19, 289.08pt x 289.08pt>
 File: img-p2b-compareStates.pdf Graphic file (type pdf)
 
 <use img-p2b-compareStates.pdf>
@@ -309,7 +350,7 @@ Overfull \hbox (115.88875pt too wide) in paragraph at lines 84--85
 s.pdf>]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 101.
 
- (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
@@ -322,43 +363,41 @@ Overfull \hbox (2.61879pt too wide) in paragraph at lines 111--112
 [8] [9] <img-gap-full.pdf, id=63, 361.35pt x 361.35pt>
 File: img-gap-full.pdf Graphic file (type pdf)
  <use img-gap-full.pdf>
-Package pdftex.def Info: img-gap-full.pdf used on input line 144.
+Package pdftex.def Info: img-gap-full.pdf used on input line 145.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
 <img-gap-full1984.pdf, id=64, 361.35pt x 361.35pt>
 File: img-gap-full1984.pdf Graphic file (type pdf)
  <use img-gap-full1984.pdf>
-Package pdftex.def Info: img-gap-full1984.pdf used on input line 152.
+Package pdftex.def Info: img-gap-full1984.pdf used on input line 153.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
 <img-gap-vmt.pdf, id=65, 361.35pt x 361.35pt>
 File: img-gap-vmt.pdf Graphic file (type pdf)
  <use img-gap-vmt.pdf>
-Package pdftex.def Info: img-gap-vmt.pdf used on input line 160.
+Package pdftex.def Info: img-gap-vmt.pdf used on input line 161.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
 <img-split-full.pdf, id=66, 361.35pt x 361.35pt>
 File: img-split-full.pdf Graphic file (type pdf)
  <use img-split-full.pdf>
-Package pdftex.def Info: img-split-full.pdf used on input line 168.
+Package pdftex.def Info: img-split-full.pdf used on input line 170.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
 <img-split-full1984.pdf, id=67, 361.35pt x 361.35pt>
 File: img-split-full1984.pdf Graphic file (type pdf)
 
 <use img-split-full1984.pdf>
-Package pdftex.def Info: img-split-full1984.pdf used on input line 176.
+Package pdftex.def Info: img-split-full1984.pdf used on input line 178.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
  <img-split-vmt.pdf, id=68, 361.35pt x 361.35pt>
 File: img-split-vmt.pdf Graphic file (type pdf)
 
 <use img-split-vmt.pdf>
-Package pdftex.def Info: img-split-vmt.pdf used on input line 184.
+Package pdftex.def Info: img-split-vmt.pdf used on input line 186.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
- (./placebo_sensitivity.tex [10] [11 <./img-gap-full.pdf>] [12 <./img-gap-full1
-984.pdf>] [13 <./img-gap-vmt.pdf>] [14 <./img-split-full.pdf>] [15 <./img-split
--full1984.pdf>] [16 <./img-split-vmt.pdf>]
-<img-placeboTest50.pdf, id=121, 433.62pt x 361.35pt>
+ (./placebo_sensitivity.tex
+<img-placeboTest50.pdf, id=69, 433.62pt x 361.35pt>
 File: img-placeboTest50.pdf Graphic file (type pdf)
 
 <use img-placeboTest50.pdf>
@@ -369,7 +408,9 @@ Overfull \hbox (43.61894pt too wide) in paragraph at lines 5--6
  [] 
  []
 
-<img-placeboTest20.pdf, id=122, 433.62pt x 361.35pt>
+[10] [11 <./img-gap-full.pdf>] [12 <./img-gap-full1984.pdf>] [13 <./img-gap-vmt
+.pdf>] [14 <./img-split-full.pdf>] [15 <./img-split-full1984.pdf>] [16 <./img-s
+plit-vmt.pdf>] <img-placeboTest20.pdf, id=122, 433.62pt x 361.35pt>
 File: img-placeboTest20.pdf Graphic file (type pdf)
 
 <use img-placeboTest20.pdf>
@@ -411,72 +452,42 @@ Overfull \hbox (43.61894pt too wide) in paragraph at lines 37--38
  [] 
  []
 
-) [17 <./img-placeboTest50.pdf>] [18 <./img-placeboTest20.pdf>] [19 <./img-plac
-eboTest10.pdf>] [20 <./img-placeboTest5.pdf>] [21 <./img-placeboTest2.pdf>]
-<img-mspeRatio.pdf, id=173, 361.35pt x 361.35pt>
+) <img-mspeRatio.pdf, id=126, 361.35pt x 361.35pt>
 File: img-mspeRatio.pdf Graphic file (type pdf)
  <use img-mspeRatio.pdf>
-Package pdftex.def Info: img-mspeRatio.pdf used on input line 202.
+Package pdftex.def Info: img-mspeRatio.pdf used on input line 204.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
+[17 <./img-placeboTest50.pdf>] [18 <./img-placeboTest20.pdf>] [19 <./img-placeb
+oTest10.pdf>] [20 <./img-placeboTest5.pdf>] [21 <./img-placeboTest2.pdf>]
 [22 <./img-mspeRatio.pdf>] (./ps2b.r [23] [24] [25] [26] [27] [28])
 (../util/are213-func.R [29] [30] [31]) [32] (./ps2b.aux) ) 
 Here is how much of TeX's memory you used:
- 5846 strings out of 493307
- 83635 string characters out of 6139905
- 426183 words of memory out of 5000000
- 9203 multiletter control sequences out of 15000+600000
+ 5843 strings out of 493315
+ 84117 string characters out of 6137904
+ 445131 words of memory out of 5000000
+ 9196 multiletter control sequences out of 15000+600000
  10270 words of font info for 38 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  42i,9n,41p,1265b,2153s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ps2b.pdf (32 pages, 274486 bytes).
+</usr/local/texlive/2
+013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/20
+13/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/201
+3/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2013/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2013/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2013/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2013/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmtt8.pfb>
+Output written on ps2b.pdf (32 pages, 274335 bytes).
 PDF statistics:
  258 PDF objects out of 1000 (max. 8388607)
  179 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  76 words of extra memory for PDF output out of 10000 (max. 10000000)
 
-=======
-(./ps2b.aux
-
-./ps2b.aux:31: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.31 <
-      <<<<<< HEAD
-? 
-./ps2b.aux:31: Emergency stop.
- ...                                              
-                                                  
-l.31 <
-      <<<<<< HEAD
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
- 
-Here is how much of TeX's memory you used:
- 4079 strings out of 493315
- 60747 string characters out of 6137904
- 168131 words of memory out of 5000000
- 7520 multiletter control sequences out of 15000+600000
- 3938 words of font info for 15 fonts, out of 8000000 for 9000
- 957 hyphenation exceptions out of 8191
- 42i,0n,41p,528b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
-./ps2b.aux:31:  ==> Fatal error occurred, no output PDF file produced!
->>>>>>> 6730811393fcf27339bcbb5eb21d8f895e2845c6
