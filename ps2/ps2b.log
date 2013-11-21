@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 NOV 2013 09:48
+=======
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.9)  21 NOV 2013 10:06
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -307,9 +311,6 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
-
-LaTeX Warning: Reference `fig:a11' on page 1 undefined on input line 47.
-
 <img-p2b-logfatTrend.pdf, id=1, 433.62pt x 289.08pt>
 File: img-p2b-logfatTrend.pdf Graphic file (type pdf)
 
@@ -317,10 +318,21 @@ File: img-p2b-logfatTrend.pdf Graphic file (type pdf)
 Package pdftex.def Info: img-p2b-logfatTrend.pdf used on input line 54.
 (pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
 
+<<<<<<< HEAD
+<img-p2b-logfatTrend.pdf, id=1, 433.62pt x 289.08pt>
+File: img-p2b-logfatTrend.pdf Graphic file (type pdf)
+
+<use img-p2b-logfatTrend.pdf>
+Package pdftex.def Info: img-p2b-logfatTrend.pdf used on input line 54.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+
+=======
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 Overfull \hbox (43.61894pt too wide) in paragraph at lines 54--55
  [] 
  []
 
+<<<<<<< HEAD
 
 LaTeX Warning: Reference `fig:a21' on page 1 undefined on input line 64.
 
@@ -338,6 +350,12 @@ LaTeX Warning: Reference `tab:a22' on page 3 undefined on input line 67.
 LaTeX Warning: Reference `fig:a22' on page 3 undefined on input line 67.
 
 <img-p2b-compareStates.pdf, id=19, 289.08pt x 289.08pt>
+=======
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./img-p2b-logfatTrend.
+pdf>] <img-p2b-compareStates.pdf, id=19, 289.08pt x 289.08pt>
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 File: img-p2b-compareStates.pdf Graphic file (type pdf)
 
 <use img-p2b-compareStates.pdf>
@@ -365,7 +383,11 @@ Overfull \hbox (115.88875pt too wide) in paragraph at lines 84--85
 s.pdf>]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 101.
 
+<<<<<<< HEAD
  (/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
+=======
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
@@ -375,6 +397,7 @@ Overfull \hbox (2.61879pt too wide) in paragraph at lines 111--112
 \OT1/cmr/m/n/12 weight-ing ma-trix. For-mally, that's $[][] []$
  []
 
+<<<<<<< HEAD
 [8] [9]
 
 LaTeX Warning: Reference `fig:c11' on page 10 undefined on input line 138.
@@ -386,17 +409,28 @@ LaTeX Warning: Reference `fig:c12' on page 10 undefined on input line 138.
 File: img-gap-full.pdf Graphic file (type pdf)
  <use img-gap-full.pdf>
 Package pdftex.def Info: img-gap-full.pdf used on input line 145.
+=======
+[8] [9] <img-gap-full.pdf, id=63, 361.35pt x 361.35pt>
+File: img-gap-full.pdf Graphic file (type pdf)
+ <use img-gap-full.pdf>
+Package pdftex.def Info: img-gap-full.pdf used on input line 144.
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
 <img-gap-full1984.pdf, id=64, 361.35pt x 361.35pt>
 File: img-gap-full1984.pdf Graphic file (type pdf)
  <use img-gap-full1984.pdf>
+<<<<<<< HEAD
 Package pdftex.def Info: img-gap-full1984.pdf used on input line 151.
+=======
+Package pdftex.def Info: img-gap-full1984.pdf used on input line 152.
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
 <img-gap-vmt.pdf, id=65, 361.35pt x 361.35pt>
 File: img-gap-vmt.pdf Graphic file (type pdf)
  <use img-gap-vmt.pdf>
+<<<<<<< HEAD
 Package pdftex.def Info: img-gap-vmt.pdf used on input line 157.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
@@ -407,18 +441,32 @@ LaTeX Warning: Float too large for page by 635.34732pt on input line 163.
 File: img-split-full.pdf Graphic file (type pdf)
  <use img-split-full.pdf>
 Package pdftex.def Info: img-split-full.pdf used on input line 169.
+=======
+Package pdftex.def Info: img-gap-vmt.pdf used on input line 160.
+(pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
+
+<img-split-full.pdf, id=66, 361.35pt x 361.35pt>
+File: img-split-full.pdf Graphic file (type pdf)
+ <use img-split-full.pdf>
+Package pdftex.def Info: img-split-full.pdf used on input line 168.
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
 <img-split-full1984.pdf, id=67, 361.35pt x 361.35pt>
 File: img-split-full1984.pdf Graphic file (type pdf)
 
 <use img-split-full1984.pdf>
+<<<<<<< HEAD
 Package pdftex.def Info: img-split-full1984.pdf used on input line 175.
+=======
+Package pdftex.def Info: img-split-full1984.pdf used on input line 176.
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
  <img-split-vmt.pdf, id=68, 361.35pt x 361.35pt>
 File: img-split-vmt.pdf Graphic file (type pdf)
 
 <use img-split-vmt.pdf>
+<<<<<<< HEAD
 Package pdftex.def Info: img-split-vmt.pdf used on input line 181.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
 
@@ -463,4 +511,95 @@ PDF statistics:
  128 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
+=======
+Package pdftex.def Info: img-split-vmt.pdf used on input line 184.
+(pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
+ (./placebo_sensitivity.tex [10] [11 <./img-gap-full.pdf>] [12 <./img-gap-full1
+984.pdf>] [13 <./img-gap-vmt.pdf>] [14 <./img-split-full.pdf>] [15 <./img-split
+-full1984.pdf>] [16 <./img-split-vmt.pdf>]
+<img-placeboTest50.pdf, id=121, 433.62pt x 361.35pt>
+File: img-placeboTest50.pdf Graphic file (type pdf)
+
+<use img-placeboTest50.pdf>
+Package pdftex.def Info: img-placeboTest50.pdf used on input line 5.
+(pdftex.def)             Requested size: 433.61894pt x 361.34912pt.
+
+Overfull \hbox (43.61894pt too wide) in paragraph at lines 5--6
+ [] 
+ []
+
+<img-placeboTest20.pdf, id=122, 433.62pt x 361.35pt>
+File: img-placeboTest20.pdf Graphic file (type pdf)
+
+<use img-placeboTest20.pdf>
+Package pdftex.def Info: img-placeboTest20.pdf used on input line 13.
+(pdftex.def)             Requested size: 433.61894pt x 361.34912pt.
+
+Overfull \hbox (43.61894pt too wide) in paragraph at lines 13--14
+ [] 
+ []
+
+<img-placeboTest10.pdf, id=123, 433.62pt x 361.35pt>
+File: img-placeboTest10.pdf Graphic file (type pdf)
+
+<use img-placeboTest10.pdf>
+Package pdftex.def Info: img-placeboTest10.pdf used on input line 21.
+(pdftex.def)             Requested size: 433.61894pt x 361.34912pt.
+
+Overfull \hbox (43.61894pt too wide) in paragraph at lines 21--22
+ [] 
+ []
+
+<img-placeboTest5.pdf, id=124, 433.62pt x 361.35pt>
+File: img-placeboTest5.pdf Graphic file (type pdf)
+ <use img-placeboTest5.pdf>
+Package pdftex.def Info: img-placeboTest5.pdf used on input line 29.
+(pdftex.def)             Requested size: 433.61894pt x 361.34912pt.
+
+Overfull \hbox (43.61894pt too wide) in paragraph at lines 29--30
+ [] 
+ []
+
+<img-placeboTest2.pdf, id=125, 433.62pt x 361.35pt>
+File: img-placeboTest2.pdf Graphic file (type pdf)
+ <use img-placeboTest2.pdf>
+Package pdftex.def Info: img-placeboTest2.pdf used on input line 37.
+(pdftex.def)             Requested size: 433.61894pt x 361.34912pt.
+
+Overfull \hbox (43.61894pt too wide) in paragraph at lines 37--38
+ [] 
+ []
+
+) [17 <./img-placeboTest50.pdf>] [18 <./img-placeboTest20.pdf>] [19 <./img-plac
+eboTest10.pdf>] [20 <./img-placeboTest5.pdf>] [21 <./img-placeboTest2.pdf>]
+(./ps2b.r [22] [23] [24] [25] [26] [27]) (../util/are213-func.R [28] [29]
+[30] [31]) [32] (./ps2b.aux) ) 
+Here is how much of TeX's memory you used:
+ 5840 strings out of 493307
+ 83523 string characters out of 6139905
+ 482183 words of memory out of 5000000
+ 9198 multiletter control sequences out of 15000+600000
+ 10270 words of font info for 38 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 42i,9n,41p,1265b,2153s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmtt8.pfb>
+Output written on ps2b.pdf (32 pages, 270665 bytes).
+PDF statistics:
+ 252 PDF objects out of 1000 (max. 8388607)
+ 175 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 

@@ -135,10 +135,11 @@ The steps taken in this estimation by the Synth package are as follows:
 \subsection{Gap between TU and synth control}
 %use preferred specification and a few others
 
-We show a series of figures (\ref{fig:c11} \& \ref{fig:c12}) for various specifications (including the preferred specification) below. Both the gaps (Synthetic unit - Treated unit) and the actual values have been plotted here. 
+We show a series of figures (\ref{fig:c11} - \ref{fig:c16}) for various specifications (including the preferred specification) below. Both the gaps (Synthetic unit - Treated unit) and the actual values have been plotted here. These plots appear to show a greater pre-treatment MSPE when only the VMT per capita covariate is used as compared with the full model. Ideally, the difference between the synthetic control unit and the treatment unit should be as close to zero as possible in the pre-treatment period, implying an MSPE approaching zero. For this reason, we select the full model using the aforementioned covariates.
 
 The mean gap is about 0.15 on the log scale, which corresponds to approximately a 15\% reduction in traffic fatalities per capita. 
 
+<<<<<<< HEAD
 \begin{figure}
   \begin{centering}
     \begin{subfigure}[b]{\textwidth}
@@ -160,9 +161,41 @@ The mean gap is about 0.15 on the log scale, which corresponds to approximately 
     \end{subfigure}
     \caption{Plots of gaps between Log(fatalities per capita) for synthetic control unit and treatment unit}\label{fig:c11}
 \endgroup
+=======
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{img-gap-full.pdf}
+\caption{Gap between Treatment Unit and Synthetic Control developed using all previous time periods and all covariates.}
+\label{fig:c11}
+\end{center}
 \end{figure}
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{img-gap-full1984.pdf}
+\caption{Gap between Treatment Unit and Synthetic Control developed using time periods 1981-1984 and all covariates.}
+\label{fig:c12}
+\end{center}
+\end{figure}
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{img-gap-vmt.pdf}
+\caption{Gap between Treatment Unit and Synthetic Control developed using all previous time periods and VMT per capita as a covariate.}
+\label{fig:c13}
+\end{center}
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{img-split-full.pdf}
+\caption{Treatment Unit and Synthetic Control log fatalities per capita developed using all previous time periods and all covariates.}
+\label{fig:c14}
+\end{center}
+\end{figure}
+
+<<<<<<< HEAD
 \begin{figure}
   \begin{centering}
     \begin{subfigure}[b]{\textwidth}
@@ -184,13 +217,29 @@ The mean gap is about 0.15 on the log scale, which corresponds to approximately 
     \end{subfigure}
     \caption{Plots of log(fatalities per capita) in synthetic control unit and treatment unit}\label{fig:c12}
     \endgroup
+=======
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{img-split-full1984.pdf}
+\caption{Treatment Unit and Synthetic Control log fatalities per capita developed using time periods 1981-1984 and all covariates.}
+\label{fig:c15}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{img-split-vmt.pdf}
+\caption{Treatment Unit and Synthetic Control log fatalities per capita developed using all previous time periods and VMT per capita as a covariate.}
+\label{fig:c16}
+\end{center}
+>>>>>>> f8b4edfd1ec7f99a0e90d696dd5aa44285cae90b
 \end{figure}
 
 
 \subsection{Gap between TU \& preferred synth spec. and gap between each control state and its ``placebo'' treatment}
 
 \paragraph{Graphical significance?}
-
+\subfile{placebo_sensitivity.tex}
 
 \subsection{MSPE Ratios}
 
