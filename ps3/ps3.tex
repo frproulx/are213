@@ -1,0 +1,65 @@
+\documentclass[letterpaper, 12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{dcolumn}
+\usepackage{listings}
+\usepackage{subfiles}
+\usepackage{amsmath}
+
+% Code listing commands
+\lstset{language=R,
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\ttfamily,
+numbers=left,
+numberstyle=\footnotesize,
+stepnumber=1,
+numbersep=5pt,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+frame=single,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+breakatwhitespace=false,
+title=\lstname,
+escapeinside={},
+keywordstyle={},
+morekeywords={}
+}
+
+
+\begin{document}
+\title{ARE213 Problem Set \#3}
+\author{Peter Alstone \& Frank Proulx}
+\maketitle
+
+\section{Problem 1: Linear models}
+
+\subsection{Part A: LM results comparison}
+
+\subfile{tab1a.tex}
+
+Using a series of linear models (with heteroskedasticity consistent ``robust" standard errors), we find that for a range of model formulations there is a significant effect on housing price from the presence of hazardous waste cleanup sites, but not in the direction one would expect.  Instead of a reduction in housing value we estimate an increase in the value, which does not seem likely to be true.  The coefficient for the hazardous waste indicator variable (npl2000) takes a wide range of values depending on which additional explanatory variables are included in the model, from 0.04 (i.e., approximately a 4\% increase) for the simple model only including 1980 housing values and npl2000 to estimate 2000 housing values, to 0.09 for a model including both housing and demographic characteristics.  
+
+\paragraph{Requirements for Unbiased Estimates [add to this]:}For our estimates to be unbiased we would need to include all of the potential sources of variation in housing price in a linear model.  A particular challenge is that there are very few sites with NPL2000 status (only 2\% of sites), so while the overall sample size is large there is very little support for estimates related to NPL2000 status compared to other covariates.  
+
+\subsection{Part B: Comparing covariates}
+
+\subfile{tab1b-1.tex}
+
+\section{Problem 2: RDD setup}
+
+\section{Problem 3: RDD First Stage}
+
+\section{Problem 4: RDD Second Stage}
+
+\section{Problem 5: Synthesis}
+
+\section{Appendix: Code Listings}
+
+\lstinputlisting{../util/are213-func.R}
+
+\end{document}
