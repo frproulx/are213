@@ -237,22 +237,22 @@ latex(summary( formula2,
 
 ## Problem 2
 ## Part 2a --------
-# I'm not positive about what to use as the dependent variable here..
-# I think this is getting ahead of the problem...need to establish if RD makes sense in prob 2.
-# rdhrs <- RDestimate(mdvalhs0 ~ hrs_82, data = two.mile, cutpoint = 28.5)
-# 
-# pdf(file = './img/ddplot.pdf', width = 5, height = 5)                         
-# plot(rdhrs)
-# abline(v = 28.5)
-# dev.off()
-
 ## Part 2b -------
-lim.under <- which(two.mile$hrs_82 < 28.5)
-lim.over <- which(two.mile$hrs_82 >= 28.5)
-gg.2b <- ggplot(two.mile, aes(hrs_82))
+## Frank: I believe that what he is going for here is the DCdensity function (i.e. the McCrary specification test, plotted out).
+## I've implmented this below.
 
+## lim.under <- which(two.mile$hrs_82 < 28.5)
+## lim.over <- which(two.mile$hrs_82 >= 28.5)
+## gg.2b <- ggplot(two.mile, aes(hrs_82))
+## # todo: finish histogram with smooth lines on either side of 28.5
+## gg.2b <- gg.2b + geom_histogram(binwidth=5) +
+##   geom_vline(aes(xintercept=28.5), color = 'red')
 
-# todo: finish histogram with smooth lines on either side of 28.5
-gg.2b <- gg.2b + geom_histogram(binwidth=5) +
-  geom_vline(aes(xintercept=28.5), color = 'red') +
-    
+pdf(file = './img/ddplot.pdf', width = 5, height = 5)
+DCdensity(two.mile$hrs_82, cutpoint = 28.5)
+abline(v = 28.5, col = "red")
+title(main = 'Density distribution of HRS', xlab = 'HRS in 1982', ylab = 'Density estimate')
+dev.off()
+
+## Problem 3
+## Part 3a ---
