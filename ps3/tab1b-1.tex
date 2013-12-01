@@ -1,7 +1,7 @@
 % latex.default(cstats, title = title, caption = caption, rowlabel = rowlabel,      col.just = col.just, numeric.dollar = FALSE, insert.bottom = legend,      rowname = lab, dcolumn = dcolumn, extracolheads = extracolheads,      extracolsize = Nsize, ...) 
 %
 \begin{table}[!tbp]
-\scriptsize
+{\scriptsize
 \caption{Contingency table for a range of factors by npl2000 status\label{tab:1b}} 
 \begin{center}
 \begin{tabular}{lrcccc}
@@ -75,5 +75,6 @@ nbr\_dummy~:~0&48245&89\%~{\scriptsize~(41989)}&56\%~{\scriptsize~(~~551)}&88\%~
 \hline
 \end{tabular}
 \end{center}
-\noindent {\scriptsize $a$\ }{$b$\ }{\scriptsize $c$\ } represent the lower quartile $a$, the median $b$, and the upper quartile $c$\ for continuous variables.\\$N$\ is the number of non--missing values.\\Numbers after percents are frequencies.\\\indent Tests used:\\\textsuperscript{\normalfont 1}Pearson test; \textsuperscript{\normalfont 2}Wilcoxon test\end{table}
+\noindent {\scriptsize $a$\ }{$b$\ }{\scriptsize $c$\ } represent the lower quartile $a$, the median $b$, and the upper quartile $c$\ for continuous variables.\\$N$\ is the number of non--missing values.\\Numbers after percents are frequencies.\\\indent Tests used:\\\textsuperscript{\normalfont 1}Pearson test; \textsuperscript{\normalfont 2}Wilcoxon test}
+\end{table}
 

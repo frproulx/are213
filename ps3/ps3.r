@@ -1,5 +1,3 @@
-
-
 ## Frank's wd
 ## setwd("/media/frank/Data/documents/school/berkeley/fall13/are213/are213/ps3")
 ## Peter's wd
@@ -255,5 +253,6 @@ gg.2b <- ggplot(two.mile, aes(hrs_82))
 
 
 # todo: finish histogram with smooth lines on either side of 28.5
-gg.2b + geom_histogram(binwidth=5) +
-  geom_vline(aes(xintercept=28.5)) 
+gg.2b <- gg.2b + geom_histogram(binwidth=5) +
+  geom_vline(aes(xintercept=28.5), color = 'red') +
+    
