@@ -1,0 +1,84 @@
+% latex.default(cstats, title = title, caption = caption, rowlabel = rowlabel,      col.just = col.just, numeric.dollar = FALSE, insert.bottom = legend,      rowname = lab, dcolumn = dcolumn, extracolheads = extracolheads,      extracolsize = Nsize, ...) 
+%
+\begin{table}[!tbp]
+\scriptsize
+\caption{Contingency table for a range of factors by HRS test status (over/under 28.5)\label{tab:1b-2}} 
+\begin{center}
+\begin{tabular}{lrcccc}
+\hline\hline
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{N}&\multicolumn{1}{c}{FALSE}&\multicolumn{1}{c}{TRUE}&\multicolumn{1}{c}{Combined}&\multicolumn{1}{c}{Test Statistic}\tabularnewline
+&&\multicolumn{1}{c}{{\scriptsize $N=181$}}&\multicolumn{1}{c}{{\scriptsize $N=306$}}&\multicolumn{1}{c}{{\scriptsize $N=487$}}&\tabularnewline
+\hline
+hrs\_82&487&{\scriptsize  7.5~}{16.5 }{\scriptsize 23.1} &{\scriptsize 36.3~}{42.3 }{\scriptsize 51.9} &{\scriptsize 20.2~}{34.7 }{\scriptsize 46.0} &$ F_{1,485}=1135 ,~ P<0.001 ^{1} $\tabularnewline
+npl1990~:~0&487&87\%~{\scriptsize~(158)}&~1\%~{\scriptsize~(~~3)}&33\%~{\scriptsize~(161)}&$ \chi^{2}_{1}=383 ,~ P<0.001 ^{2} $\tabularnewline
+~~~~1&&13\%~{\scriptsize~(~23)}&99\%~{\scriptsize~(303)}&67\%~{\scriptsize~(326)}&\tabularnewline
+npl2000~:~0&487&84\%~{\scriptsize~(152)}&~1\%~{\scriptsize~(~~3)}&32\%~{\scriptsize~(155)}&$ \chi^{2}_{1}=361 ,~ P<0.001 ^{2} $\tabularnewline
+~~~~1&&16\%~{\scriptsize~(~29)}&99\%~{\scriptsize~(303)}&68\%~{\scriptsize~(332)}&\tabularnewline
+pop\_den8&487&{\scriptsize  146~}{ 533 }{\scriptsize 1939} &{\scriptsize  146~}{ 483 }{\scriptsize 1415} &{\scriptsize  145~}{ 504 }{\scriptsize 1568} &$ F_{1,485}=0.4 ,~ P=0.53 ^{1} $\tabularnewline
+shrblk8&487&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.06} &{\scriptsize 0.00~}{0.02 }{\scriptsize 0.05} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.05} &$ F_{1,485}=0.45 ,~ P=0.5 ^{1} $\tabularnewline
+shrhsp8&487&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.03} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.03} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.03} &$ F_{1,485}=0.27 ,~ P=0.6 ^{1} $\tabularnewline
+child8&487&{\scriptsize 0.26~}{0.30 }{\scriptsize 0.33} &{\scriptsize 0.27~}{0.30 }{\scriptsize 0.33} &{\scriptsize 0.26~}{0.30 }{\scriptsize 0.33} &$ F_{1,485}=0.01 ,~ P=0.93 ^{1} $\tabularnewline
+shrfor8&487&{\scriptsize 0.01~}{0.03 }{\scriptsize 0.05} &{\scriptsize 0.02~}{0.03 }{\scriptsize 0.06} &{\scriptsize 0.01~}{0.03 }{\scriptsize 0.06} &$ F_{1,485}=4.7 ,~ P=0.03 ^{1} $\tabularnewline
+ffh8&487&{\scriptsize 0.11~}{0.15 }{\scriptsize 0.21} &{\scriptsize 0.08~}{0.13 }{\scriptsize 0.19} &{\scriptsize 0.09~}{0.14 }{\scriptsize 0.20} &$ F_{1,485}=7.4 ,~ P=0.007 ^{1} $\tabularnewline
+smhse8&487&{\scriptsize 0.52~}{0.61 }{\scriptsize 0.68} &{\scriptsize 0.48~}{0.57 }{\scriptsize 0.66} &{\scriptsize 0.50~}{0.59 }{\scriptsize 0.66} &$ F_{1,485}=8.5 ,~ P=0.004 ^{1} $\tabularnewline
+hsdrop8&487&{\scriptsize 0.07~}{0.13 }{\scriptsize 0.20} &{\scriptsize 0.06~}{0.11 }{\scriptsize 0.18} &{\scriptsize 0.07~}{0.12 }{\scriptsize 0.19} &$ F_{1,485}=2.9 ,~ P=0.09 ^{1} $\tabularnewline
+no\_hs\_diploma8&487&{\scriptsize 0.30~}{0.39 }{\scriptsize 0.50} &{\scriptsize 0.24~}{0.34 }{\scriptsize 0.42} &{\scriptsize 0.26~}{0.36 }{\scriptsize 0.46} &$ F_{1,485}=20 ,~ P<0.001 ^{1} $\tabularnewline
+ba\_or\_better8&487&{\scriptsize 0.05~}{0.08 }{\scriptsize 0.13} &{\scriptsize 0.07~}{0.11 }{\scriptsize 0.18} &{\scriptsize 0.06~}{0.10 }{\scriptsize 0.16} &$ F_{1,485}=22 ,~ P<0.001 ^{1} $\tabularnewline
+unemprt8&487&{\scriptsize 0.05~}{0.07 }{\scriptsize 0.10} &{\scriptsize 0.04~}{0.06 }{\scriptsize 0.09} &{\scriptsize 0.05~}{0.07 }{\scriptsize 0.09} &$ F_{1,485}=11 ,~ P<0.001 ^{1} $\tabularnewline
+povrat8&487&{\scriptsize 0.06~}{0.09 }{\scriptsize 0.14} &{\scriptsize 0.05~}{0.07 }{\scriptsize 0.13} &{\scriptsize 0.05~}{0.08 }{\scriptsize 0.13} &$ F_{1,485}=3.9 ,~ P=0.048 ^{1} $\tabularnewline
+welfare8&487&{\scriptsize 0.04~}{0.07 }{\scriptsize 0.09} &{\scriptsize 0.04~}{0.05 }{\scriptsize 0.09} &{\scriptsize 0.04~}{0.06 }{\scriptsize 0.09} &$ F_{1,485}=9.7 ,~ P=0.002 ^{1} $\tabularnewline
+favinc8&487&{\scriptsize 18744~}{21026 }{\scriptsize 24470} &{\scriptsize 19054~}{22301 }{\scriptsize 26440} &{\scriptsize 18906~}{21693 }{\scriptsize 25444} &$ F_{1,485}=4.8 ,~ P=0.029 ^{1} $\tabularnewline
+avhhin8&487&{\scriptsize 16862~}{19578 }{\scriptsize 22230} &{\scriptsize 17198~}{20209 }{\scriptsize 23805} &{\scriptsize 16939~}{19869 }{\scriptsize 23172} &$ F_{1,485}=3.9 ,~ P=0.05 ^{1} $\tabularnewline
+meanrnt80&484&{\scriptsize 208~}{242 }{\scriptsize 284} &{\scriptsize 218~}{256 }{\scriptsize 309} &{\scriptsize 214~}{249 }{\scriptsize 300} &$ F_{1,482}=9.3 ,~ P=0.002 ^{1} $\tabularnewline
+mdvalhs9&487&{\scriptsize  43800~}{ 58300 }{\scriptsize 116100} &{\scriptsize  50335~}{ 73500 }{\scriptsize 131175} &{\scriptsize  46800~}{ 67407 }{\scriptsize 125450} &$ F_{1,485}=8.4 ,~ P=0.004 ^{1} $\tabularnewline
+meanrnt9&487&{\scriptsize 352~}{412 }{\scriptsize 569} &{\scriptsize 380~}{470 }{\scriptsize 629} &{\scriptsize 369~}{449 }{\scriptsize 596} &$ F_{1,485}=13 ,~ P<0.001 ^{1} $\tabularnewline
+mdvalhs0&487&{\scriptsize  73900~}{101000 }{\scriptsize 145400} &{\scriptsize  87850~}{121200 }{\scriptsize 161800} &{\scriptsize  82150~}{114400 }{\scriptsize 156650} &$ F_{1,485}=14 ,~ P<0.001 ^{1} $\tabularnewline
+meanrnt0&485&{\scriptsize 470~}{560 }{\scriptsize 700} &{\scriptsize 520~}{618 }{\scriptsize 824} &{\scriptsize 501~}{594 }{\scriptsize 777} &$ F_{1,483}=18 ,~ P<0.001 ^{1} $\tabularnewline
+tothsun8&487&{\scriptsize  891~}{1273 }{\scriptsize 1677} &{\scriptsize  905~}{1304 }{\scriptsize 1753} &{\scriptsize  902~}{1292 }{\scriptsize 1728} &$ F_{1,485}=0.24 ,~ P=0.63 ^{1} $\tabularnewline
+ownocc8&487&{\scriptsize  571~}{ 832 }{\scriptsize 1157} &{\scriptsize  585~}{ 872 }{\scriptsize 1210} &{\scriptsize  576~}{ 860 }{\scriptsize 1180} &$ F_{1,485}=0.12 ,~ P=0.73 ^{1} $\tabularnewline
+owner\_occupied80&487&{\scriptsize 0.61~}{0.71 }{\scriptsize 0.79} &{\scriptsize 0.61~}{0.72 }{\scriptsize 0.80} &{\scriptsize 0.61~}{0.72 }{\scriptsize 0.80} &$ F_{1,485}=0.32 ,~ P=0.57 ^{1} $\tabularnewline
+bltlast5yrs80&487&{\scriptsize 0.02~}{0.10 }{\scriptsize 0.17} &{\scriptsize 0.05~}{0.12 }{\scriptsize 0.20} &{\scriptsize 0.04~}{0.11 }{\scriptsize 0.19} &$ F_{1,485}=5.8 ,~ P=0.017 ^{1} $\tabularnewline
+bltlast10yrs80&487&{\scriptsize 0.09~}{0.22 }{\scriptsize 0.34} &{\scriptsize 0.14~}{0.25 }{\scriptsize 0.41} &{\scriptsize 0.12~}{0.24 }{\scriptsize 0.38} &$ F_{1,485}=7.5 ,~ P=0.006 ^{1} $\tabularnewline
+firestoveheat80&487&{\scriptsize 0.01~}{0.02 }{\scriptsize 0.07} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.06} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.06} &$ F_{1,485}=0.05 ,~ P=0.82 ^{1} $\tabularnewline
+noaircond80&487&{\scriptsize 0.34~}{0.50 }{\scriptsize 0.70} &{\scriptsize 0.29~}{0.47 }{\scriptsize 0.67} &{\scriptsize 0.31~}{0.48 }{\scriptsize 0.68} &$ F_{1,485}=1.4 ,~ P=0.23 ^{1} $\tabularnewline
+nofullkitchen80&487&{\scriptsize 0.01~}{0.01 }{\scriptsize 0.03} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.02} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.02} &$ F_{1,485}=2.6 ,~ P=0.1 ^{1} $\tabularnewline
+zerofullbath80&487&{\scriptsize 0.01~}{0.02 }{\scriptsize 0.04} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.03} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.03} &$ F_{1,485}=5.3 ,~ P=0.021 ^{1} $\tabularnewline
+northeast~:~0&487&67\%~{\scriptsize~(121)}&52\%~{\scriptsize~(160)}&58\%~{\scriptsize~(281)}&$ \chi^{2}_{1}=9.9 ,~ P=0.002 ^{2} $\tabularnewline
+~~~~1&&33\%~{\scriptsize~(~60)}&48\%~{\scriptsize~(146)}&42\%~{\scriptsize~(206)}&\tabularnewline
+midwest~:~0&487&65\%~{\scriptsize~(118)}&77\%~{\scriptsize~(237)}&73\%~{\scriptsize~(355)}&$ \chi^{2}_{1}=8.7 ,~ P=0.003 ^{2} $\tabularnewline
+~~~~1&&35\%~{\scriptsize~(~63)}&23\%~{\scriptsize~(~69)}&27\%~{\scriptsize~(132)}&\tabularnewline
+south~:~0&487&78\%~{\scriptsize~(142)}&81\%~{\scriptsize~(247)}&80\%~{\scriptsize~(389)}&$ \chi^{2}_{1}=0.36 ,~ P=0.55 ^{2} $\tabularnewline
+~~~~1&&22\%~{\scriptsize~(~39)}&19\%~{\scriptsize~(~59)}&20\%~{\scriptsize~(~98)}&\tabularnewline
+west~:~0&487&90\%~{\scriptsize~(162)}&90\%~{\scriptsize~(274)}&90\%~{\scriptsize~(436)}&$ \chi^{2}_{1}=0 ,~ P=0.99 ^{2} $\tabularnewline
+~~~~1&&10\%~{\scriptsize~(~19)}&10\%~{\scriptsize~(~32)}&10\%~{\scriptsize~(~51)}&\tabularnewline
+meanhs8&487&{\scriptsize 30749~}{41910 }{\scriptsize 55157} &{\scriptsize 37082~}{48084 }{\scriptsize 62641} &{\scriptsize 35536~}{46152 }{\scriptsize 59844} &$ F_{1,485}=16 ,~ P<0.001 ^{1} $\tabularnewline
+bedrms02\_80&487&{\scriptsize 0.37~}{0.46 }{\scriptsize 0.56} &{\scriptsize 0.33~}{0.43 }{\scriptsize 0.54} &{\scriptsize 0.35~}{0.44 }{\scriptsize 0.54} &$ F_{1,485}=4.7 ,~ P=0.031 ^{1} $\tabularnewline
+bedrms34\_80&487&{\scriptsize 0.42~}{0.52 }{\scriptsize 0.61} &{\scriptsize 0.44~}{0.55 }{\scriptsize 0.63} &{\scriptsize 0.43~}{0.54 }{\scriptsize 0.62} &$ F_{1,485}=3.7 ,~ P=0.055 ^{1} $\tabularnewline
+detach80&400&{\scriptsize 0.55~}{0.74 }{\scriptsize 0.84} &{\scriptsize 0.58~}{0.74 }{\scriptsize 0.86} &{\scriptsize 0.57~}{0.74 }{\scriptsize 0.85} &$ F_{1,398}=1.4 ,~ P=0.23 ^{1} $\tabularnewline
+bedrms0\_80occ&487&{\scriptsize 0~}{0 }{\scriptsize 0} &{\scriptsize 0~}{0 }{\scriptsize 0} &{\scriptsize 0~}{0 }{\scriptsize 0} &$ F_{1,485}=0.02 ,~ P=0.88 ^{1} $\tabularnewline
+bedrms1\_80occ&487&{\scriptsize 0.02~}{0.03 }{\scriptsize 0.06} &{\scriptsize 0.02~}{0.03 }{\scriptsize 0.05} &{\scriptsize 0.02~}{0.03 }{\scriptsize 0.05} &$ F_{1,485}=0.44 ,~ P=0.51 ^{1} $\tabularnewline
+bedrms2\_80occ&487&{\scriptsize 0.22~}{0.30 }{\scriptsize 0.40} &{\scriptsize 0.19~}{0.26 }{\scriptsize 0.34} &{\scriptsize 0.20~}{0.28 }{\scriptsize 0.36} &$ F_{1,485}=12 ,~ P<0.001 ^{1} $\tabularnewline
+bedrms3\_80occ&487&{\scriptsize 0.42~}{0.48 }{\scriptsize 0.54} &{\scriptsize 0.44~}{0.50 }{\scriptsize 0.56} &{\scriptsize 0.43~}{0.50 }{\scriptsize 0.55} &$ F_{1,485}=1.7 ,~ P=0.2 ^{1} $\tabularnewline
+bedrms4\_80occ&487&{\scriptsize 0.09~}{0.13 }{\scriptsize 0.17} &{\scriptsize 0.10~}{0.15 }{\scriptsize 0.21} &{\scriptsize 0.09~}{0.14 }{\scriptsize 0.20} &$ F_{1,485}=13 ,~ P<0.001 ^{1} $\tabularnewline
+bedrms5\_80occ&487&{\scriptsize 0.01~}{0.02 }{\scriptsize 0.04} &{\scriptsize 0.01~}{0.03 }{\scriptsize 0.04} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.04} &$ F_{1,485}=7.2 ,~ P=0.008 ^{1} $\tabularnewline
+blt0\_1yrs80occ&487&{\scriptsize 0.00~}{0.02 }{\scriptsize 0.04} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.05} &{\scriptsize 0.00~}{0.02 }{\scriptsize 0.04} &$ F_{1,485}=4.2 ,~ P=0.04 ^{1} $\tabularnewline
+blt2\_5yrs80occ&487&{\scriptsize 0.01~}{0.06 }{\scriptsize 0.13} &{\scriptsize 0.02~}{0.09 }{\scriptsize 0.16} &{\scriptsize 0.02~}{0.08 }{\scriptsize 0.14} &$ F_{1,485}=7.5 ,~ P=0.006 ^{1} $\tabularnewline
+blt6\_10yrs80occ&487&{\scriptsize 0.03~}{0.09 }{\scriptsize 0.16} &{\scriptsize 0.05~}{0.12 }{\scriptsize 0.20} &{\scriptsize 0.04~}{0.11 }{\scriptsize 0.18} &$ F_{1,485}=6.6 ,~ P=0.011 ^{1} $\tabularnewline
+blt10\_20yrs80occ&487&{\scriptsize 0.10~}{0.17 }{\scriptsize 0.23} &{\scriptsize 0.13~}{0.19 }{\scriptsize 0.26} &{\scriptsize 0.12~}{0.18 }{\scriptsize 0.25} &$ F_{1,485}=7.4 ,~ P=0.007 ^{1} $\tabularnewline
+blt20\_30yrs80occ&487&{\scriptsize 0.09~}{0.15 }{\scriptsize 0.25} &{\scriptsize 0.11~}{0.16 }{\scriptsize 0.24} &{\scriptsize 0.10~}{0.16 }{\scriptsize 0.25} &$ F_{1,485}=1.6 ,~ P=0.2 ^{1} $\tabularnewline
+blt30\_40yrs80occ&487&{\scriptsize 0.05~}{0.09 }{\scriptsize 0.16} &{\scriptsize 0.05~}{0.08 }{\scriptsize 0.12} &{\scriptsize 0.05~}{0.08 }{\scriptsize 0.14} &$ F_{1,485}=2.1 ,~ P=0.15 ^{1} $\tabularnewline
+blt40\_yrs80occ&487&{\scriptsize 0.11~}{0.23 }{\scriptsize 0.44} &{\scriptsize 0.08~}{0.17 }{\scriptsize 0.33} &{\scriptsize 0.09~}{0.19 }{\scriptsize 0.36} &$ F_{1,485}=6.8 ,~ P=0.009 ^{1} $\tabularnewline
+detach80occ&487&{\scriptsize 0.84~}{0.91 }{\scriptsize 0.97} &{\scriptsize 0.84~}{0.94 }{\scriptsize 0.99} &{\scriptsize 0.84~}{0.93 }{\scriptsize 0.99} &$ F_{1,485}=2.5 ,~ P=0.12 ^{1} $\tabularnewline
+attach80occ&487&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.02} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.01} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.02} &$ F_{1,485}=0.49 ,~ P=0.49 ^{1} $\tabularnewline
+mobile80occ&487&{\scriptsize 0.00~}{0.04 }{\scriptsize 0.12} &{\scriptsize 0.00~}{0.03 }{\scriptsize 0.12} &{\scriptsize 0.00~}{0.03 }{\scriptsize 0.12} &$ F_{1,485}=0.21 ,~ P=0.65 ^{1} $\tabularnewline
+occupied80&487&{\scriptsize 0.93~}{0.95 }{\scriptsize 0.97} &{\scriptsize 0.92~}{0.95 }{\scriptsize 0.97} &{\scriptsize 0.92~}{0.95 }{\scriptsize 0.97} &$ F_{1,485}=0.03 ,~ P=0.87 ^{1} $\tabularnewline
+bltmore30\_80&487&{\scriptsize 0.24~}{0.38 }{\scriptsize 0.55} &{\scriptsize 0.16~}{0.30 }{\scriptsize 0.46} &{\scriptsize 0.19~}{0.32 }{\scriptsize 0.51} &$ F_{1,485}=10 ,~ P=0.001 ^{1} $\tabularnewline
+og82list~:~1&487&100\%~{\scriptsize~(181)}&100\%~{\scriptsize~(306)}&100\%~{\scriptsize~(487)}&$^{2}$\tabularnewline
+~~~~0&&~~0\%~{\scriptsize~(~~0)}&~~0\%~{\scriptsize~(~~0)}&~~0\%~{\scriptsize~(~~0)}&\tabularnewline
+nbr\_dummy~:~0&487&80\%~{\scriptsize~(144)}&66\%~{\scriptsize~(203)}&71\%~{\scriptsize~(347)}&$ \chi^{2}_{1}=9.7 ,~ P=0.002 ^{2} $\tabularnewline
+~~~~1&&20\%~{\scriptsize~(~37)}&34\%~{\scriptsize~(103)}&29\%~{\scriptsize~(140)}&\tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\noindent {\scriptsize $a$\ }{$b$\ }{\scriptsize $c$\ } represent the lower quartile $a$, the median $b$, and the upper quartile $c$\ for continuous variables.\\$N$\ is the number of non--missing values.\\Numbers after percents are frequencies.\\\indent Tests used:\\\textsuperscript{\normalfont 1}Wilcoxon test; \textsuperscript{\normalfont 2}Pearson test\end{table}
+

@@ -174,29 +174,86 @@ stargazer(reg1a.1.rse, reg1a.2.rse, reg1a.3.rse, reg1a.4.rse,
 ## Part 1b -------
 
 # comparison of all.cov by nbr_dummy
-# TODO: this is basically OK but needs formatting help in summary.  too many digits...too big text, etc.
-all.cov.cov <- head(names(all.cov),-1) #list of all covariates to use
-formula1 <- as.formula(paste("nbr_dummy ~", paste(all.cov.cov, collapse="+")))
+all.cov.cov <- paste("npl1990+", tail(names(all.cov),-2)) #list of all covariates to use
+formula1 <- as.formula(paste("npl2000 ~", paste(all.cov.cov, collapse="+")))
 
 latex(summary( formula1,
                data=all.cov,  
                method="reverse", 
                overall=TRUE, 
                long=TRUE,
-               round = 2
+               test = TRUE
 ),
       title = "tab1b-1",
       label = "tab:1b",
-      caption = "Contingency table for a range of factors by nbr",
+      digits = 2,
+      round = 2,
+      size = "scriptsize",
+      caption = "Contingency table for a range of factors by npl2000 status",
       exclude1=F
 )
 
-## Problem 2
-## Part A
-# I'm not positive about what to use as the dependent variable here..
-rdhrs <- RDestimate(mdvalhs0 ~ hrs_82, data = two.mile, cutpoint = 28.5)
+# over / under 28.5
 
-pdf(file = './img/ddplot.pdf', width = 5, height = 5)                         
-plot(rdhrs)
-abline(v = 28.5)
-dev.off()
+site.cov$over.limit <- site.cov$hrs_82 > 28.5
+
+site.cov.cov <- head(names(site.cov),-1) #list of all covariates to use
+formula2 <- as.formula(paste("over.limit ~", paste(site.cov.cov, collapse="+")))
+
+latex(summary( formula2,
+               data=site.cov,  
+               method="reverse", 
+               overall=TRUE, 
+               long=TRUE,
+               test = TRUE
+),
+      title = "tab1b-2",
+      label = "tab:1b-2",
+      digits = 2,
+      round = 2,
+      size = "scriptsize",
+      caption = "Contingency table by HRS test status (over/under 28.5)",
+      exclude1=F
+)
+
+# narrow in on tighter window.
+
+near.limit <- which(site.cov$hrs_82 > 16.5 & site.cov$hrs_82 < 40.5)
+
+latex(summary( formula2,
+               data=site.cov[near.limit,],  
+               method="reverse", 
+               overall=TRUE, 
+               long=TRUE,
+               test = TRUE
+),
+      title = "tab1b-3",
+      label = "tab:1b-3",
+      digits = 2,
+      round = 2,
+      size = "scriptsize",
+      caption = "Contingency table by HRS test status (JUST over/under 28.5)",
+      exclude1=F
+)
+
+
+## Problem 2
+## Part 2a --------
+# I'm not positive about what to use as the dependent variable here..
+# I think this is getting ahead of the problem...need to establish if RD makes sense in prob 2.
+# rdhrs <- RDestimate(mdvalhs0 ~ hrs_82, data = two.mile, cutpoint = 28.5)
+# 
+# pdf(file = './img/ddplot.pdf', width = 5, height = 5)                         
+# plot(rdhrs)
+# abline(v = 28.5)
+# dev.off()
+
+## Part 2b -------
+lim.under <- which(two.mile$hrs_82 < 28.5)
+lim.over <- which(two.mile$hrs_82 >= 28.5)
+gg.2b <- ggplot(two.mile, aes(hrs_82))
+
+
+# todo: finish histogram with smooth lines on either side of 28.5
+gg.2b + geom_histogram(binwidth=5) +
+  geom_vline(aes(xintercept=28.5)) 

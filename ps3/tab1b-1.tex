@@ -1,78 +1,79 @@
 % latex.default(cstats, title = title, caption = caption, rowlabel = rowlabel,      col.just = col.just, numeric.dollar = FALSE, insert.bottom = legend,      rowname = lab, dcolumn = dcolumn, extracolheads = extracolheads,      extracolsize = Nsize, ...) 
 %
 \begin{table}[!tbp]
-\caption{Contingency table for a range of factors by nbr\label{tab:1b}} 
+\scriptsize
+\caption{Contingency table for a range of factors by npl2000 status\label{tab:1b}} 
 \begin{center}
-\begin{tabular}{lrccc}
+\begin{tabular}{lrcccc}
 \hline\hline
-\multicolumn{1}{l}{}&\multicolumn{1}{c}{N}&\multicolumn{1}{c}{0}&\multicolumn{1}{c}{1}&\multicolumn{1}{c}{Combined}\tabularnewline
-&&\multicolumn{1}{c}{{\scriptsize $N=42540$}}&\multicolumn{1}{c}{{\scriptsize $N=5705$}}&\multicolumn{1}{c}{{\scriptsize $N=48245$}}\tabularnewline
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{N}&\multicolumn{1}{c}{0}&\multicolumn{1}{c}{1}&\multicolumn{1}{c}{Combined}&\multicolumn{1}{c}{Test Statistic}\tabularnewline
+&&\multicolumn{1}{c}{{\scriptsize $N=47260$}}&\multicolumn{1}{c}{{\scriptsize $N=985$}}&\multicolumn{1}{c}{{\scriptsize $N=48245$}}&\tabularnewline
 \hline
-npl1990~:~0&48245&99\%~{\scriptsize~(42137)}&94\%~{\scriptsize~(~5362)}&98\%~{\scriptsize~(47499)}\tabularnewline
-~~~~1&&~1\%~{\scriptsize~(~~403)}&~6\%~{\scriptsize~(~~343)}&~2\%~{\scriptsize~(~~746)}\tabularnewline
-npl2000~:~0&48245&99\%~{\scriptsize~(41989)}&92\%~{\scriptsize~(~5271)}&98\%~{\scriptsize~(47260)}\tabularnewline
-~~~~1&&~1\%~{\scriptsize~(~~551)}&~8\%~{\scriptsize~(~~434)}&~2\%~{\scriptsize~(~~985)}\tabularnewline
-pop\_den8&48245&{\scriptsize  674.4158~}{2887.1943 }{\scriptsize 6473.8845} &{\scriptsize  194.1788~}{ 961.2832 }{\scriptsize 3344.8530} &{\scriptsize  547.8842~}{2604.6785 }{\scriptsize 6080.0000} \tabularnewline
-shrblk8&48245&{\scriptsize 0.002638~}{0.015964 }{\scriptsize 0.082081} &{\scriptsize 0.001940~}{0.011711 }{\scriptsize 0.058053} &{\scriptsize 0.002553~}{0.015429 }{\scriptsize 0.078416} \tabularnewline
-shrhsp8&48245&{\scriptsize 0.0064900~}{0.0185855 }{\scriptsize 0.0634445} &{\scriptsize 0.0049900~}{0.0131040 }{\scriptsize 0.0369590} &{\scriptsize 0.0063020~}{0.0177860 }{\scriptsize 0.0601950} \tabularnewline
-child8&48245&{\scriptsize 0.2328310~}{0.2846455 }{\scriptsize 0.3289673} &{\scriptsize 0.2587950~}{0.2974520 }{\scriptsize 0.3323570} &{\scriptsize 0.2358570~}{0.2863940 }{\scriptsize 0.3293990} \tabularnewline
-shrfor8&48245&{\scriptsize 0.01912050~}{0.04256600 }{\scriptsize 0.08668875} &{\scriptsize 0.01689000~}{0.03570600 }{\scriptsize 0.06528300} &{\scriptsize 0.01881200~}{0.04153300 }{\scriptsize 0.08379400} \tabularnewline
-ffh8&48245&{\scriptsize 0.09759375~}{0.15094300 }{\scriptsize 0.24082675} &{\scriptsize 0.08582000~}{0.12909600 }{\scriptsize 0.19591101} &{\scriptsize 0.09595900~}{0.14792900 }{\scriptsize 0.23529400} \tabularnewline
-smhse8&48245&{\scriptsize 0.4122337~}{0.5306680 }{\scriptsize 0.6283828} &{\scriptsize 0.4513610~}{0.5558160 }{\scriptsize 0.6362780} &{\scriptsize 0.4165400~}{0.5339420 }{\scriptsize 0.6295130} \tabularnewline
-hsdrop8&48245&{\scriptsize 0.054545~}{0.111739 }{\scriptsize 0.192307} &{\scriptsize 0.056338~}{0.107438 }{\scriptsize 0.182572} &{\scriptsize 0.054736~}{0.111111 }{\scriptsize 0.191111} \tabularnewline
-no\_hs\_diploma8&48245&{\scriptsize 0.1816847~}{0.2916233 }{\scriptsize 0.4290175} &{\scriptsize 0.2093909~}{0.3010590 }{\scriptsize 0.4139572} &{\scriptsize 0.1851852~}{0.2928870 }{\scriptsize 0.4271766} \tabularnewline
-ba\_or\_better8&48245&{\scriptsize 0.07740766~}{0.13831653 }{\scriptsize 0.24082869} &{\scriptsize 0.07717157~}{0.12516019 }{\scriptsize 0.20234250} &{\scriptsize 0.07738662~}{0.13656884 }{\scriptsize 0.23621103} \tabularnewline
-unemprt8&48245&{\scriptsize 0.03652375~}{0.05492750 }{\scriptsize 0.08234525} &{\scriptsize 0.04026800~}{0.05844100 }{\scriptsize 0.08421600} &{\scriptsize 0.03696000~}{0.05538400 }{\scriptsize 0.08258300} \tabularnewline
-povrat8&48245&{\scriptsize 0.0452915~}{0.0800220 }{\scriptsize 0.1442960} &{\scriptsize 0.0455540~}{0.0744300 }{\scriptsize 0.1235710} &{\scriptsize 0.0453400~}{0.0792960 }{\scriptsize 0.1413040} \tabularnewline
-welfare8&48245&{\scriptsize 0.0286895~}{0.0510035 }{\scriptsize 0.0952380} &{\scriptsize 0.0317910~}{0.0513860 }{\scriptsize 0.0844040} &{\scriptsize 0.0291020~}{0.0510770 }{\scriptsize 0.0938580} \tabularnewline
-favinc8&48245&{\scriptsize 18678.15~}{22858.37 }{\scriptsize 27771.77} &{\scriptsize 19537.96~}{22877.64 }{\scriptsize 26884.79} &{\scriptsize 18788.70~}{22862.76 }{\scriptsize 27660.42} \tabularnewline
-avhhin8&48245&{\scriptsize 16223.85~}{20316.22 }{\scriptsize 25271.48} &{\scriptsize 17278.15~}{20688.77 }{\scriptsize 24637.19} &{\scriptsize 16357.58~}{20370.62 }{\scriptsize 25165.66} \tabularnewline
-meanrnt80&48115&{\scriptsize 222.7207~}{268.2003 }{\scriptsize 324.8214} &{\scriptsize 224.3905~}{264.1910 }{\scriptsize 313.5771} &{\scriptsize 222.9100~}{267.6261 }{\scriptsize 323.3178} \tabularnewline
-mdvalhs9&48245&{\scriptsize  43600~}{ 69000 }{\scriptsize 125600} &{\scriptsize  47300~}{ 72200 }{\scriptsize 126112} &{\scriptsize  44000~}{ 69400 }{\scriptsize 125600} \tabularnewline
-meanrnt9&48190&{\scriptsize 389.6826~}{491.0426 }{\scriptsize 635.9742} &{\scriptsize 387.5005~}{487.7268 }{\scriptsize 628.6454} &{\scriptsize 389.4195~}{490.6461 }{\scriptsize 635.1455} \tabularnewline
-mdvalhs0&48245&{\scriptsize  81900~}{120300 }{\scriptsize 179700} &{\scriptsize  87000~}{123100 }{\scriptsize 167700} &{\scriptsize  82600~}{120700 }{\scriptsize 177800} \tabularnewline
-meanrnt0&48127&{\scriptsize 520.2832~}{645.7830 }{\scriptsize 823.5361} &{\scriptsize 520.2703~}{638.1877 }{\scriptsize 800.3922} &{\scriptsize 520.2791~}{644.9871 }{\scriptsize 821.1647} \tabularnewline
-tothsun8&48245&{\scriptsize  873~}{1280 }{\scriptsize 1739} &{\scriptsize  891~}{1278 }{\scriptsize 1718} &{\scriptsize  875~}{1280 }{\scriptsize 1737} \tabularnewline
-ownocc8&48245&{\scriptsize  438~}{ 740 }{\scriptsize 1080} &{\scriptsize  544~}{ 831 }{\scriptsize 1156} &{\scriptsize  450~}{ 751 }{\scriptsize 1091} \tabularnewline
-owner\_occupied80&48245&{\scriptsize 0.4729324~}{0.6618154 }{\scriptsize 0.7839525} &{\scriptsize 0.5725154~}{0.7147436 }{\scriptsize 0.8039216} &{\scriptsize 0.4853933~}{0.6693307 }{\scriptsize 0.7869388} \tabularnewline
-bltlast5yrs80&48245&{\scriptsize 0.01945995~}{0.08701160 }{\scriptsize 0.22249195} &{\scriptsize 0.04517272~}{0.11816839 }{\scriptsize 0.22092116} &{\scriptsize 0.02132353~}{0.09212121 }{\scriptsize 0.22227488} \tabularnewline
-bltlast10yrs80&48245&{\scriptsize 0.06065490~}{0.21716790 }{\scriptsize 0.45006267} &{\scriptsize 0.12627292~}{0.26502535 }{\scriptsize 0.42857143} &{\scriptsize 0.06630381~}{0.22454484 }{\scriptsize 0.44625574} \tabularnewline
-firestoveheat80&48245&{\scriptsize 0.002498829~}{0.011919458 }{\scriptsize 0.042651323} &{\scriptsize 0.005777961~}{0.021126760 }{\scriptsize 0.060995184} &{\scriptsize 0.002840909~}{0.012877663 }{\scriptsize 0.045180723} \tabularnewline
-noaircond80&48245&{\scriptsize 0.1612903~}{0.3921197 }{\scriptsize 0.6600715} &{\scriptsize 0.2464638~}{0.4505289 }{\scriptsize 0.6935139} &{\scriptsize 0.1717011~}{0.4003759 }{\scriptsize 0.6644951} \tabularnewline
-nofullkitchen80&48245&{\scriptsize 0.004088785~}{0.009900990 }{\scriptsize 0.020574207} &{\scriptsize 0.004839685~}{0.010771993 }{\scriptsize 0.020997375} &{\scriptsize 0.004172462~}{0.010009099 }{\scriptsize 0.020610686} \tabularnewline
-zerofullbath80&48245&{\scriptsize 0.004034873~}{0.011940299 }{\scriptsize 0.028044170} &{\scriptsize 0.005586592~}{0.013818182 }{\scriptsize 0.029411765} &{\scriptsize 0.004216867~}{0.012188044 }{\scriptsize 0.028203860} \tabularnewline
-northeast~:~0&48245&79\%~{\scriptsize~(33483)}&66\%~{\scriptsize~(~3779)}&77\%~{\scriptsize~(37262)}\tabularnewline
-~~~~1&&21\%~{\scriptsize~(~9057)}&34\%~{\scriptsize~(~1926)}&23\%~{\scriptsize~(10983)}\tabularnewline
-midwest~:~0&48245&77\%~{\scriptsize~(32659)}&78\%~{\scriptsize~(~4449)}&77\%~{\scriptsize~(37108)}\tabularnewline
-~~~~1&&23\%~{\scriptsize~(~9881)}&22\%~{\scriptsize~(~1256)}&23\%~{\scriptsize~(11137)}\tabularnewline
-south~:~0&48245&68\%~{\scriptsize~(28851)}&76\%~{\scriptsize~(~4327)}&69\%~{\scriptsize~(33178)}\tabularnewline
-~~~~1&&32\%~{\scriptsize~(13689)}&24\%~{\scriptsize~(~1378)}&31\%~{\scriptsize~(15067)}\tabularnewline
-west~:~0&48245&77\%~{\scriptsize~(32627)}&80\%~{\scriptsize~(~4560)}&77\%~{\scriptsize~(37187)}\tabularnewline
-~~~~1&&23\%~{\scriptsize~(~9913)}&20\%~{\scriptsize~(~1145)}&23\%~{\scriptsize~(11058)}\tabularnewline
-meanhs8&48245&{\scriptsize 38085.35~}{52747.71 }{\scriptsize 73819.23} &{\scriptsize 39674.16~}{51561.65 }{\scriptsize 67212.53} &{\scriptsize 38268.98~}{52575.82 }{\scriptsize 72906.25} \tabularnewline
-bedrms02\_80&48245&{\scriptsize 0.3171999~}{0.4607490 }{\scriptsize 0.6280496} &{\scriptsize 0.3137255~}{0.4211663 }{\scriptsize 0.5499420} &{\scriptsize 0.3166667~}{0.4543478 }{\scriptsize 0.6187879} \tabularnewline
-bedrms34\_80&48245&{\scriptsize 0.3546556~}{0.5158325 }{\scriptsize 0.6485300} &{\scriptsize 0.4294086~}{0.5533937 }{\scriptsize 0.6498973} &{\scriptsize 0.3637902~}{0.5210748 }{\scriptsize 0.6489837} \tabularnewline
-detach80&43074&{\scriptsize 0.4374238~}{0.6877737 }{\scriptsize 0.8348315} &{\scriptsize 0.5806475~}{0.7430153 }{\scriptsize 0.8531315} &{\scriptsize 0.4559935~}{0.6960492 }{\scriptsize 0.8376295} \tabularnewline
-bedrms0\_80occ&48245&{\scriptsize 0.0000000000~}{0.0000000000 }{\scriptsize 0.0009442871} &{\scriptsize 0.0000000000~}{0.0000000000 }{\scriptsize 0.0018001801} &{\scriptsize 0.0000000000~}{0.0000000000 }{\scriptsize 0.0010834236} \tabularnewline
-bedrms1\_80occ&48245&{\scriptsize 0.01328904~}{0.03000000 }{\scriptsize 0.05882353} &{\scriptsize 0.01687764~}{0.03189066 }{\scriptsize 0.05389798} &{\scriptsize 0.01369863~}{0.03030303 }{\scriptsize 0.05802469} \tabularnewline
-bedrms2\_80occ&48245&{\scriptsize 0.1533710~}{0.2531993 }{\scriptsize 0.3601745} &{\scriptsize 0.1689189~}{0.2490170 }{\scriptsize 0.3353808} &{\scriptsize 0.1556632~}{0.2525313 }{\scriptsize 0.3571429} \tabularnewline
-bedrms3\_80occ&48245&{\scriptsize 0.3905726~}{0.4835448 }{\scriptsize 0.5698674} &{\scriptsize 0.4233333~}{0.4928717 }{\scriptsize 0.5603448} &{\scriptsize 0.3946759~}{0.4848485 }{\scriptsize 0.5687251} \tabularnewline
-bedrms4\_80occ&48245&{\scriptsize 0.08701794~}{0.14285715 }{\scriptsize 0.22142532} &{\scriptsize 0.10181818~}{0.15526803 }{\scriptsize 0.21775417} &{\scriptsize 0.08860759~}{0.14432989 }{\scriptsize 0.22101842} \tabularnewline
-bedrms5\_80occ&48245&{\scriptsize 0.009174312~}{0.023185484 }{\scriptsize 0.047562424} &{\scriptsize 0.012453300~}{0.026938776 }{\scriptsize 0.047186933} &{\scriptsize 0.009523810~}{0.023622047 }{\scriptsize 0.047489822} \tabularnewline
-blt0\_1yrs80occ&48245&{\scriptsize 0.000000000~}{0.012503909 }{\scriptsize 0.048026290} &{\scriptsize 0.004295533~}{0.022500001 }{\scriptsize 0.050545093} &{\scriptsize 0.000000000~}{0.013864818 }{\scriptsize 0.048438497} \tabularnewline
-blt2\_5yrs80occ&48245&{\scriptsize 0.005223297~}{0.051482059 }{\scriptsize 0.164544851} &{\scriptsize 0.022598870~}{0.087671235 }{\scriptsize 0.171614766} &{\scriptsize 0.006637168~}{0.056774195 }{\scriptsize 0.165970773} \tabularnewline
-blt6\_10yrs80occ&48245&{\scriptsize 0.01255230~}{0.08000000 }{\scriptsize 0.18750000} &{\scriptsize 0.04108723~}{0.11782946 }{\scriptsize 0.19311377} &{\scriptsize 0.01443299~}{0.08571429 }{\scriptsize 0.18825302} \tabularnewline
-blt10\_20yrs80occ&48245&{\scriptsize 0.06076782~}{0.15760091 }{\scriptsize 0.26004021} &{\scriptsize 0.11020408~}{0.18126889 }{\scriptsize 0.25784755} &{\scriptsize 0.06625767~}{0.16163266 }{\scriptsize 0.25979680} \tabularnewline
-blt20\_30yrs80occ&48245&{\scriptsize 0.06132678~}{0.13869797 }{\scriptsize 0.26233593} &{\scriptsize 0.08860759~}{0.15306123 }{\scriptsize 0.24671052} &{\scriptsize 0.06504065~}{0.14088821 }{\scriptsize 0.25999999} \tabularnewline
-blt30\_40yrs80occ&48245&{\scriptsize 0.02685374~}{0.07299270 }{\scriptsize 0.14673913} &{\scriptsize 0.03830645~}{0.07284173 }{\scriptsize 0.12636505} &{\scriptsize 0.02835052~}{0.07299270 }{\scriptsize 0.14387557} \tabularnewline
-blt40\_yrs80occ&48245&{\scriptsize 0.02737762~}{0.13922404 }{\scriptsize 0.44112197} &{\scriptsize 0.05152225~}{0.15639098 }{\scriptsize 0.33525679} &{\scriptsize 0.03020134~}{0.14188267 }{\scriptsize 0.42173913} \tabularnewline
-detach80occ&48245&{\scriptsize 0.8585858~}{0.9578144 }{\scriptsize 0.9914126} &{\scriptsize 0.8568773~}{0.9476268 }{\scriptsize 0.9889590} &{\scriptsize 0.8584229~}{0.9566327 }{\scriptsize 0.9911616} \tabularnewline
-attach80occ&48245&{\scriptsize 0.000000000~}{0.009317883 }{\scriptsize 0.038596492} &{\scriptsize 0.000000000~}{0.006877579 }{\scriptsize 0.021978023} &{\scriptsize 0.000000000~}{0.008960574 }{\scriptsize 0.035989717} \tabularnewline
-mobile80occ&48245&{\scriptsize 0.00000000~}{0.00000000 }{\scriptsize 0.05384615} &{\scriptsize 0.00000000~}{0.01336898 }{\scriptsize 0.09831182} &{\scriptsize 0.00000000~}{0.00000000 }{\scriptsize 0.06060606} \tabularnewline
-occupied80&48245&{\scriptsize 0.9175692~}{0.9483415 }{\scriptsize 0.9689091} &{\scriptsize 0.9247911~}{0.9502890 }{\scriptsize 0.9682875} &{\scriptsize 0.9186047~}{0.9486442 }{\scriptsize 0.9688231} \tabularnewline
-bltmore30\_80&48245&{\scriptsize 0.07703225~}{0.27465534 }{\scriptsize 0.56817067} &{\scriptsize 0.12472160~}{0.28138527 }{\scriptsize 0.46758819} &{\scriptsize 0.08257373~}{0.27554178 }{\scriptsize 0.55365473} \tabularnewline
+npl1990~:~0&48245&100\%~{\scriptsize~(47260)}&~24\%~{\scriptsize~(~~239)}&~98\%~{\scriptsize~(47499)}&$ \chi^{2}_{1}=36355 ,~ P<0.001 ^{1} $\tabularnewline
+~~~~1&&~~0\%~{\scriptsize~(~~~~0)}&~76\%~{\scriptsize~(~~746)}&~~2\%~{\scriptsize~(~~746)}&\tabularnewline
+pop\_den8&48245&{\scriptsize  580~}{2677 }{\scriptsize 6178} &{\scriptsize  147~}{ 522 }{\scriptsize 1701} &{\scriptsize  548~}{2605 }{\scriptsize 6080} &$ F_{1,48243}=525 ,~ P<0.001 ^{2} $\tabularnewline
+shrblk8&48245&{\scriptsize 0.00~}{0.02 }{\scriptsize 0.08} &{\scriptsize 0.00~}{0.02 }{\scriptsize 0.07} &{\scriptsize 0.00~}{0.02 }{\scriptsize 0.08} &$ F_{1,48243}=0.35 ,~ P=0.55 ^{2} $\tabularnewline
+shrhsp8&48245&{\scriptsize 0.01~}{0.02 }{\scriptsize 0.06} &{\scriptsize 0.01~}{0.01 }{\scriptsize 0.03} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.06} &$ F_{1,48243}=39 ,~ P<0.001 ^{2} $\tabularnewline
+child8&48245&{\scriptsize 0.24~}{0.29 }{\scriptsize 0.33} &{\scriptsize 0.26~}{0.30 }{\scriptsize 0.33} &{\scriptsize 0.24~}{0.29 }{\scriptsize 0.33} &$ F_{1,48243}=35 ,~ P<0.001 ^{2} $\tabularnewline
+shrfor8&48245&{\scriptsize 0.02~}{0.04 }{\scriptsize 0.08} &{\scriptsize 0.02~}{0.03 }{\scriptsize 0.06} &{\scriptsize 0.02~}{0.04 }{\scriptsize 0.08} &$ F_{1,48243}=44 ,~ P<0.001 ^{2} $\tabularnewline
+ffh8&48245&{\scriptsize 0.10~}{0.15 }{\scriptsize 0.24} &{\scriptsize 0.09~}{0.13 }{\scriptsize 0.20} &{\scriptsize 0.10~}{0.15 }{\scriptsize 0.24} &$ F_{1,48243}=40 ,~ P<0.001 ^{2} $\tabularnewline
+smhse8&48245&{\scriptsize 0.42~}{0.53 }{\scriptsize 0.63} &{\scriptsize 0.47~}{0.56 }{\scriptsize 0.64} &{\scriptsize 0.42~}{0.53 }{\scriptsize 0.63} &$ F_{1,48243}=34 ,~ P<0.001 ^{2} $\tabularnewline
+hsdrop8&48245&{\scriptsize 0.05~}{0.11 }{\scriptsize 0.19} &{\scriptsize 0.06~}{0.12 }{\scriptsize 0.19} &{\scriptsize 0.05~}{0.11 }{\scriptsize 0.19} &$ F_{1,48243}=3.8 ,~ P=0.051 ^{2} $\tabularnewline
+no\_hs\_diploma8&48245&{\scriptsize 0.18~}{0.29 }{\scriptsize 0.43} &{\scriptsize 0.23~}{0.33 }{\scriptsize 0.43} &{\scriptsize 0.19~}{0.29 }{\scriptsize 0.43} &$ F_{1,48243}=42 ,~ P<0.001 ^{2} $\tabularnewline
+ba\_or\_better8&48245&{\scriptsize 0.08~}{0.14 }{\scriptsize 0.24} &{\scriptsize 0.07~}{0.11 }{\scriptsize 0.18} &{\scriptsize 0.08~}{0.14 }{\scriptsize 0.24} &$ F_{1,48243}=52 ,~ P<0.001 ^{2} $\tabularnewline
+unemprt8&48245&{\scriptsize 0.04~}{0.06 }{\scriptsize 0.08} &{\scriptsize 0.04~}{0.06 }{\scriptsize 0.08} &{\scriptsize 0.04~}{0.06 }{\scriptsize 0.08} &$ F_{1,48243}=22 ,~ P<0.001 ^{2} $\tabularnewline
+povrat8&48245&{\scriptsize 0.05~}{0.08 }{\scriptsize 0.14} &{\scriptsize 0.05~}{0.08 }{\scriptsize 0.13} &{\scriptsize 0.05~}{0.08 }{\scriptsize 0.14} &$ F_{1,48243}=0.02 ,~ P=0.9 ^{2} $\tabularnewline
+welfare8&48245&{\scriptsize 0.03~}{0.05 }{\scriptsize 0.09} &{\scriptsize 0.03~}{0.05 }{\scriptsize 0.09} &{\scriptsize 0.03~}{0.05 }{\scriptsize 0.09} &$ F_{1,48243}=4.2 ,~ P=0.041 ^{2} $\tabularnewline
+favinc8&48245&{\scriptsize 18786~}{22882 }{\scriptsize 27697} &{\scriptsize 18943~}{22085 }{\scriptsize 25676} &{\scriptsize 18789~}{22863 }{\scriptsize 27660} &$ F_{1,48243}=15 ,~ P<0.001 ^{2} $\tabularnewline
+avhhin8&48245&{\scriptsize 16349~}{20383 }{\scriptsize 25211} &{\scriptsize 16766~}{19957 }{\scriptsize 23589} &{\scriptsize 16358~}{20371 }{\scriptsize 25166} &$ F_{1,48243}=5.7 ,~ P=0.017 ^{2} $\tabularnewline
+meanrnt80&48115&{\scriptsize 223~}{268 }{\scriptsize 324} &{\scriptsize 217~}{256 }{\scriptsize 303} &{\scriptsize 223~}{268 }{\scriptsize 323} &$ F_{1,48113}=27 ,~ P<0.001 ^{2} $\tabularnewline
+mdvalhs9&48245&{\scriptsize  43929~}{ 69394 }{\scriptsize 125500} &{\scriptsize  48500~}{ 72700 }{\scriptsize 130600} &{\scriptsize  44000~}{ 69400 }{\scriptsize 125600} &$ F_{1,48243}=6.1 ,~ P=0.014 ^{2} $\tabularnewline
+meanrnt9&48190&{\scriptsize 390~}{491 }{\scriptsize 636} &{\scriptsize 378~}{471 }{\scriptsize 620} &{\scriptsize 389~}{491 }{\scriptsize 635} &$ F_{1,48188}=6.3 ,~ P=0.012 ^{2} $\tabularnewline
+mdvalhs0&48245&{\scriptsize  82500~}{120700 }{\scriptsize 178000} &{\scriptsize  85400~}{120400 }{\scriptsize 166200} &{\scriptsize  82600~}{120700 }{\scriptsize 177800} &$ F_{1,48243}=0.28 ,~ P=0.6 ^{2} $\tabularnewline
+meanrnt0&48127&{\scriptsize 520~}{646 }{\scriptsize 822} &{\scriptsize 515~}{621 }{\scriptsize 800} &{\scriptsize 520~}{645 }{\scriptsize 821} &$ F_{1,48125}=5 ,~ P=0.025 ^{2} $\tabularnewline
+tothsun8&48245&{\scriptsize  874~}{1278 }{\scriptsize 1735} &{\scriptsize  937~}{1343 }{\scriptsize 1807} &{\scriptsize  875~}{1280 }{\scriptsize 1737} &$ F_{1,48243}=9 ,~ P=0.003 ^{2} $\tabularnewline
+ownocc8&48245&{\scriptsize  448~}{ 748 }{\scriptsize 1089} &{\scriptsize  566~}{ 878 }{\scriptsize 1212} &{\scriptsize  450~}{ 751 }{\scriptsize 1091} &$ F_{1,48243}=60 ,~ P<0.001 ^{2} $\tabularnewline
+owner\_occupied80&48245&{\scriptsize 0.48~}{0.67 }{\scriptsize 0.79} &{\scriptsize 0.58~}{0.71 }{\scriptsize 0.80} &{\scriptsize 0.49~}{0.67 }{\scriptsize 0.79} &$ F_{1,48243}=38 ,~ P<0.001 ^{2} $\tabularnewline
+bltlast5yrs80&48245&{\scriptsize 0.02~}{0.09 }{\scriptsize 0.22} &{\scriptsize 0.05~}{0.12 }{\scriptsize 0.20} &{\scriptsize 0.02~}{0.09 }{\scriptsize 0.22} &$ F_{1,48243}=24 ,~ P<0.001 ^{2} $\tabularnewline
+bltlast10yrs80&48245&{\scriptsize 0.07~}{0.22 }{\scriptsize 0.45} &{\scriptsize 0.13~}{0.26 }{\scriptsize 0.40} &{\scriptsize 0.07~}{0.22 }{\scriptsize 0.45} &$ F_{1,48243}=14 ,~ P<0.001 ^{2} $\tabularnewline
+firestoveheat80&48245&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.04} &{\scriptsize 0.01~}{0.03 }{\scriptsize 0.07} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.05} &$ F_{1,48243}=132 ,~ P<0.001 ^{2} $\tabularnewline
+noaircond80&48245&{\scriptsize 0.17~}{0.40 }{\scriptsize 0.66} &{\scriptsize 0.30~}{0.47 }{\scriptsize 0.68} &{\scriptsize 0.17~}{0.40 }{\scriptsize 0.66} &$ F_{1,48243}=58 ,~ P<0.001 ^{2} $\tabularnewline
+nofullkitchen80&48245&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.02} &{\scriptsize 0.01~}{0.01 }{\scriptsize 0.02} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.02} &$ F_{1,48243}=20 ,~ P<0.001 ^{2} $\tabularnewline
+zerofullbath80&48245&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.03} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.03} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.03} &$ F_{1,48243}=48 ,~ P<0.001 ^{2} $\tabularnewline
+northeast~:~0&48245&78\%~{\scriptsize~(36651)}&62\%~{\scriptsize~(~~611)}&77\%~{\scriptsize~(37262)}&$ \chi^{2}_{1}=132 ,~ P<0.001 ^{1} $\tabularnewline
+~~~~1&&22\%~{\scriptsize~(10609)}&38\%~{\scriptsize~(~~374)}&23\%~{\scriptsize~(10983)}&\tabularnewline
+midwest~:~0&48245&77\%~{\scriptsize~(36338)}&78\%~{\scriptsize~(~~770)}&77\%~{\scriptsize~(37108)}&$ \chi^{2}_{1}=0.89 ,~ P=0.34 ^{1} $\tabularnewline
+~~~~1&&23\%~{\scriptsize~(10922)}&22\%~{\scriptsize~(~~215)}&23\%~{\scriptsize~(11137)}&\tabularnewline
+south~:~0&48245&69\%~{\scriptsize~(32425)}&76\%~{\scriptsize~(~~753)}&69\%~{\scriptsize~(33178)}&$ \chi^{2}_{1}=28 ,~ P<0.001 ^{1} $\tabularnewline
+~~~~1&&31\%~{\scriptsize~(14835)}&24\%~{\scriptsize~(~~232)}&31\%~{\scriptsize~(15067)}&\tabularnewline
+west~:~0&48245&77\%~{\scriptsize~(36366)}&83\%~{\scriptsize~(~~821)}&77\%~{\scriptsize~(37187)}&$ \chi^{2}_{1}=22 ,~ P<0.001 ^{1} $\tabularnewline
+~~~~1&&23\%~{\scriptsize~(10894)}&17\%~{\scriptsize~(~~164)}&23\%~{\scriptsize~(11058)}&\tabularnewline
+meanhs8&48245&{\scriptsize 38270~}{52659 }{\scriptsize 73074} &{\scriptsize 38213~}{49126 }{\scriptsize 64321} &{\scriptsize 38269~}{52576 }{\scriptsize 72906} &$ F_{1,48243}=20 ,~ P<0.001 ^{2} $\tabularnewline
+bedrms02\_80&48245&{\scriptsize 0.32~}{0.46 }{\scriptsize 0.62} &{\scriptsize 0.33~}{0.43 }{\scriptsize 0.55} &{\scriptsize 0.32~}{0.45 }{\scriptsize 0.62} &$ F_{1,48243}=10 ,~ P=0.001 ^{2} $\tabularnewline
+bedrms34\_80&48245&{\scriptsize 0.36~}{0.52 }{\scriptsize 0.65} &{\scriptsize 0.43~}{0.55 }{\scriptsize 0.63} &{\scriptsize 0.36~}{0.52 }{\scriptsize 0.65} &$ F_{1,48243}=9.7 ,~ P=0.002 ^{2} $\tabularnewline
+detach80&43074&{\scriptsize 0.45~}{0.70 }{\scriptsize 0.84} &{\scriptsize 0.57~}{0.73 }{\scriptsize 0.83} &{\scriptsize 0.46~}{0.70 }{\scriptsize 0.84} &$ F_{1,43072}=16 ,~ P<0.001 ^{2} $\tabularnewline
+bedrms0\_80occ&48245&{\scriptsize 0~}{0 }{\scriptsize 0} &{\scriptsize 0~}{0 }{\scriptsize 0} &{\scriptsize 0~}{0 }{\scriptsize 0} &$ F_{1,48243}=0.22 ,~ P=0.64 ^{2} $\tabularnewline
+bedrms1\_80occ&48245&{\scriptsize 0.01~}{0.03 }{\scriptsize 0.06} &{\scriptsize 0.02~}{0.03 }{\scriptsize 0.06} &{\scriptsize 0.01~}{0.03 }{\scriptsize 0.06} &$ F_{1,48243}=7.4 ,~ P=0.007 ^{2} $\tabularnewline
+bedrms2\_80occ&48245&{\scriptsize 0.15~}{0.25 }{\scriptsize 0.36} &{\scriptsize 0.19~}{0.27 }{\scriptsize 0.35} &{\scriptsize 0.16~}{0.25 }{\scriptsize 0.36} &$ F_{1,48243}=16 ,~ P<0.001 ^{2} $\tabularnewline
+bedrms3\_80occ&48245&{\scriptsize 0.39~}{0.48 }{\scriptsize 0.57} &{\scriptsize 0.43~}{0.49 }{\scriptsize 0.55} &{\scriptsize 0.39~}{0.48 }{\scriptsize 0.57} &$ F_{1,48243}=1.2 ,~ P=0.27 ^{2} $\tabularnewline
+bedrms4\_80occ&48245&{\scriptsize 0.09~}{0.14 }{\scriptsize 0.22} &{\scriptsize 0.10~}{0.15 }{\scriptsize 0.21} &{\scriptsize 0.09~}{0.14 }{\scriptsize 0.22} &$ F_{1,48243}=0.27 ,~ P=0.61 ^{2} $\tabularnewline
+bedrms5\_80occ&48245&{\scriptsize 0.01~}{0.02 }{\scriptsize 0.05} &{\scriptsize 0.01~}{0.03 }{\scriptsize 0.04} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.05} &$ F_{1,48243}=1.5 ,~ P=0.22 ^{2} $\tabularnewline
+blt0\_1yrs80occ&48245&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.05} &{\scriptsize 0.01~}{0.02 }{\scriptsize 0.05} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.05} &$ F_{1,48243}=44 ,~ P<0.001 ^{2} $\tabularnewline
+blt2\_5yrs80occ&48245&{\scriptsize 0.01~}{0.06 }{\scriptsize 0.17} &{\scriptsize 0.02~}{0.09 }{\scriptsize 0.16} &{\scriptsize 0.01~}{0.06 }{\scriptsize 0.17} &$ F_{1,48243}=42 ,~ P<0.001 ^{2} $\tabularnewline
+blt6\_10yrs80occ&48245&{\scriptsize 0.01~}{0.08 }{\scriptsize 0.19} &{\scriptsize 0.05~}{0.12 }{\scriptsize 0.19} &{\scriptsize 0.01~}{0.09 }{\scriptsize 0.19} &$ F_{1,48243}=52 ,~ P<0.001 ^{2} $\tabularnewline
+blt10\_20yrs80occ&48245&{\scriptsize 0.07~}{0.16 }{\scriptsize 0.26} &{\scriptsize 0.12~}{0.18 }{\scriptsize 0.25} &{\scriptsize 0.07~}{0.16 }{\scriptsize 0.26} &$ F_{1,48243}=29 ,~ P<0.001 ^{2} $\tabularnewline
+blt20\_30yrs80occ&48245&{\scriptsize 0.06~}{0.14 }{\scriptsize 0.26} &{\scriptsize 0.10~}{0.16 }{\scriptsize 0.24} &{\scriptsize 0.07~}{0.14 }{\scriptsize 0.26} &$ F_{1,48243}=31 ,~ P<0.001 ^{2} $\tabularnewline
+blt30\_40yrs80occ&48245&{\scriptsize 0.03~}{0.07 }{\scriptsize 0.14} &{\scriptsize 0.05~}{0.08 }{\scriptsize 0.13} &{\scriptsize 0.03~}{0.07 }{\scriptsize 0.14} &$ F_{1,48243}=21 ,~ P<0.001 ^{2} $\tabularnewline
+blt40\_yrs80occ&48245&{\scriptsize 0.03~}{0.14 }{\scriptsize 0.43} &{\scriptsize 0.07~}{0.18 }{\scriptsize 0.32} &{\scriptsize 0.03~}{0.14 }{\scriptsize 0.42} &$ F_{1,48243}=11 ,~ P=0.001 ^{2} $\tabularnewline
+detach80occ&48245&{\scriptsize 0.86~}{0.96 }{\scriptsize 0.99} &{\scriptsize 0.83~}{0.93 }{\scriptsize 0.98} &{\scriptsize 0.86~}{0.96 }{\scriptsize 0.99} &$ F_{1,48243}=40 ,~ P<0.001 ^{2} $\tabularnewline
+attach80occ&48245&{\scriptsize 0.00~}{0.01 }{\scriptsize 0.04} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.02} &{\scriptsize 0.00~}{0.01 }{\scriptsize 0.04} &$ F_{1,48243}=40 ,~ P<0.001 ^{2} $\tabularnewline
+mobile80occ&48245&{\scriptsize 0.00~}{0.00 }{\scriptsize 0.06} &{\scriptsize 0.00~}{0.04 }{\scriptsize 0.13} &{\scriptsize 0.00~}{0.00 }{\scriptsize 0.06} &$ F_{1,48243}=238 ,~ P<0.001 ^{2} $\tabularnewline
+occupied80&48245&{\scriptsize 0.92~}{0.95 }{\scriptsize 0.97} &{\scriptsize 0.93~}{0.95 }{\scriptsize 0.97} &{\scriptsize 0.92~}{0.95 }{\scriptsize 0.97} &$ F_{1,48243}=3.4 ,~ P=0.066 ^{2} $\tabularnewline
+bltmore30\_80&48245&{\scriptsize 0.08~}{0.27 }{\scriptsize 0.56} &{\scriptsize 0.17~}{0.31 }{\scriptsize 0.46} &{\scriptsize 0.08~}{0.28 }{\scriptsize 0.55} &$ F_{1,48243}=8.8 ,~ P=0.003 ^{2} $\tabularnewline
+nbr\_dummy~:~0&48245&89\%~{\scriptsize~(41989)}&56\%~{\scriptsize~(~~551)}&88\%~{\scriptsize~(42540)}&$ \chi^{2}_{1}=1002 ,~ P<0.001 ^{1} $\tabularnewline
+~~~~1&&11\%~{\scriptsize~(~5271)}&44\%~{\scriptsize~(~~434)}&12\%~{\scriptsize~(~5705)}&\tabularnewline
 \hline
 \end{tabular}
 \end{center}
-\noindent {\scriptsize $a$\ }{$b$\ }{\scriptsize $c$\ } represent the lower quartile $a$, the median $b$, and the upper quartile $c$\ for continuous variables.\\$N$\ is the number of non--missing values.\\Numbers after percents are frequencies.\end{table}
+\noindent {\scriptsize $a$\ }{$b$\ }{\scriptsize $c$\ } represent the lower quartile $a$, the median $b$, and the upper quartile $c$\ for continuous variables.\\$N$\ is the number of non--missing values.\\Numbers after percents are frequencies.\\\indent Tests used:\\\textsuperscript{\normalfont 1}Pearson test; \textsuperscript{\normalfont 2}Wilcoxon test\end{table}
 

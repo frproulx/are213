@@ -7,6 +7,7 @@
 \usepackage{listings}
 \usepackage{subfiles}
 \usepackage{amsmath}
+\usepackage[margin=0.5in]{geometry} % for more room on the pages :)
 
 % Code listing commands
 \lstset{language=R,
@@ -36,7 +37,7 @@ morekeywords={}
 \author{Peter Alstone \& Frank Proulx}
 \maketitle
 
-\section{Problem 1: Linear models}
+\section{Problem 1: Linear models to motivate RD}
 
 \subsection{Part A: LM results comparison}
 
@@ -44,13 +45,21 @@ morekeywords={}
 
 Using a series of linear models (with heteroskedasticity consistent ``robust" standard errors), we find that for a range of model formulations there is a significant effect on housing price from the presence of hazardous waste cleanup sites, but not in the direction one would expect.  Instead of a reduction in housing value we estimate an increase in the value, which does not seem likely to be true.  The coefficient for the hazardous waste indicator variable (npl2000) takes a wide range of values depending on which additional explanatory variables are included in the model, from 0.04 (i.e., approximately a 4\% increase) for the simple model only including 1980 housing values and npl2000 to estimate 2000 housing values, to 0.09 for a model including both housing and demographic characteristics.  
 
-\paragraph{Requirements for Unbiased Estimates [add to this]:}For our estimates to be unbiased we would need to include all of the potential sources of variation in housing price in a linear model.  A particular challenge is that there are very few sites with NPL2000 status (only 2\% of sites), so while the overall sample size is large there is very little support for estimates related to NPL2000 status compared to other covariates.  
+\paragraph{Requirements for Unbiased Estimates [add to this]:}For our estimates to be unbiased we would need to include all of the potential sources of variation in housing price in a linear model.  A particular challenge is that there are very few sites with NPL2000 status (only 2\% of sites), so while the overall sample size is large there is very little support for estimates related to NPL2000 status compared to other covariates.  Critically, the overlap assumption must hold for the regression to be successful.  
 
 \subsection{Part B: Comparing covariates}
 
+We compare the covariates between census tracts and sites in a series of contingency tables and find that there are wide disparities between census tracts with and without NPL2000 status.  This erodes confidence that there is support in the data to use tract-level linear regression models, since the overlap assumption may be violated from wide differences in the other characteristics on the tract level.  On the site level, simply comparing over / under the trigger limit for the national priorities list (HRS score of 28.5) seems to solve some but not all the problems with overlap.  While many covariates cannot be said to come from different distributions there are still some that have significant differences.  Narrowing into a window from 16.5 - 40.5 (with the 28.5 dividing line) results in comparisons for which the hypothesis that the covariates are from the same distribution is not rejected.  Overall, these comparisons motivate the regression discontinuity design.  By narrowing in on a region where overlap in distribution for the covariates holds we have a fighting chance to identify a treatment effect, albeit with difficulty in establishing external validity.  
+
 \subfile{tab1b-1.tex}
+\subfile{tab1b-2.tex}
+\subfile{tab1b-3.tex}
 
 \section{Problem 2: RDD setup}
+
+NOTES: The way they picked is good, it means that 28.5 is not some magic number above which things get demonstrably worse but is as good as random.  So any discontinuity is due to the vagaries of program design and not endogenous variation.
+
+The histogram (will) shows that there is no discontinuity in the distribution around 28.5 as well.  
 
 \section{Problem 3: RDD First Stage}
 
