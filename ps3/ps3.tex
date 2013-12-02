@@ -33,6 +33,8 @@ morekeywords={}
 
 \renewcommand\thesection{Part \Alph{section}:}
 \renewcommand\thesubsection{(\roman{subsection})}
+\newcommand{\ind}[1]{\textbf{1}\{#1\}}
+
 \graphicspath{{img/}}
 
 \begin{document}
@@ -72,7 +74,7 @@ Based on the plot of the density distribution (Figure \ref{fig:ddplot}) using de
 NOTES: The way they picked is good, it means that 28.5 is not some magic number above which things get demonstrably worse but is as good as random.  So any discontinuity is due to the vagaries of program design and not endogenous variation.
 
 \section{RDD First Stage}
-
+The first stage equation is $\ind{NPL_{2000}}=\gamma_1HRS_{82}+x_i\gamma_2+u_i$.
 
 \section{RDD Second Stage}
 

@@ -256,3 +256,35 @@ dev.off()
 
 ## Problem 3
 ## Part 3a ---
+#instrument is whether there is a site scoring above 28.5 on the 1982 HRS
+# We want to regress on npl2000
+two.mile.cov <- head(names(two.mile), -9)
+                                        #Decided to axe the FIPS variable- any ideas how to include this and not break anything?
+formula3 <- as.formula(paste("npl2000 ~ ", "npl1990 + ", paste(two.mile.cov, collapse = "+"), "- blt40_yrs80occ_nbr"))
+stage1.1 <- lm(formula3,
+               data = two.mile)
+
+stage1.2 <- lm(formula3,
+               data = two.mile,
+               subset = (two.mile$hrs_82 > 16.5 &
+                         two.mile$hrs_82 < 40.5)
+               )
+
+
+
+## Part 3b --
+HRSNPL.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = npl2000))
+HRSNPL.plot <- HRSNPL.plot +
+    geom_point() # There is undoubtedly a better geometry to use here.
+HRSNPL.plot
+
+
+## Part 3c ---
+HRS80val.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = meanhs8))
+HRS80val.plot <- HRS80val.plot +
+    geom_point() +
+    labs(title = "1980 housing value versus 1982 HRS score", x = "1982 HRS score", y = "1980 Mean Housing Price")
+HRS80val.plot
+
+
+## Problem 4 ---
