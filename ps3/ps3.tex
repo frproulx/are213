@@ -31,6 +31,7 @@ keywordstyle={},
 morekeywords={}
 }
 
+%TODO: change format so sections are numbered (1,2,3...) and subsections are Alpha (A,B,C....)
 \renewcommand\thesection{Part \Alph{section}:}
 \renewcommand\thesubsection{(\roman{subsection})}
 \newcommand{\ind}[1]{\textbf{1}\{#1\}}
@@ -48,9 +49,9 @@ morekeywords={}
 
 \subfile{tab1a.tex}
 
-Using a series of linear models (with heteroskedasticity consistent ``robust" standard errors), we find that for a range of model formulations there is a significant effect on housing price from the presence of hazardous waste cleanup sites, but not in the direction one would expect.  Instead of a reduction in housing value we estimate an increase in the value, which does not seem likely to be true.  The coefficient for the hazardous waste indicator variable (npl2000) takes a wide range of values depending on which additional explanatory variables are included in the model, from 0.04 (i.e., approximately a 4\% increase) for the simple model only including 1980 housing values and npl2000 to estimate 2000 housing values, to 0.09 for a model including both housing and demographic characteristics.  
+Using a series of linear models (with heteroskedasticity consistent ``robust" standard errors), we find that for a range of model formulations there is a significant effect on housing price from the presence of hazardous waste cleanup sites with increased housing values in places with cleanup.  The coefficient for the hazardous waste cleanup indicator variable (npl2000) takes a wide range of values depending on which additional explanatory variables are included in the model, from 0.04 (i.e., approximately a 4\% increase) for the simple model only including 1980 housing values and npl2000 to estimate 2000 housing values, to 0.09 for a model including both housing and demographic characteristics.  
 
-\paragraph{Requirements for Unbiased Estimates [add to this]:}For our estimates to be unbiased we would need to include all of the potential sources of variation in housing price in a linear model.  A particular challenge is that there are very few sites with NPL2000 status (only 2\% of sites), so while the overall sample size is large there is very little support for estimates related to NPL2000 status compared to other covariates.  Critically, the overlap assumption must hold for the regression to be successful.  
+\paragraph{Requirements for Unbiased Estimates [add to this]:}For our estimates to be unbiased we would need to include all of the potential sources of variation in housing price in a linear model.  A particular challenge is that there are very few sites with NPL2000 status (only 2\% of sites), so while the overall sample size is large there is very little support for estimates related to NPL2000 status compared to other covariates.  The overlap assumption must hold for the regression to be successful.  
 
 \subsection{Comparing covariates}
 
@@ -61,7 +62,14 @@ We compare the covariates between census tracts and sites in a series of conting
 \subfile{tab1b-3.tex}
 
 \section{RDD setup}
-Based on the plot of the density distribution (Figure \ref{fig:ddplot}) using default values for bandwidth and bin width ($h \approx 12.6$, $b \approx 1.6$), it does not appear that there is a significant discontinuity in the neighborhood of HRS=28.5. The estimated value lines appear to nearly match with each other, and more importantly the upperbound 95\% C.I. for values below HRS=28.5 and the estimated value above HRS=28.5 overlap, and vice versa for the lowerbound 95\% C.I. for values above HRS = 28.5. This has us convinced that the Regression Discontinuity Design is not appropriate around this value. In addition, this lack of discontinuity appears to be consistent across various bandwidth values (tested with values $h = \{4, 8, 16, 20\}$).
+
+\subsection{HRS as running variable?}
+To be a running variable HRS need to be continuous and not subject to manipulation around the boundary value.  If the variable is as good as random around the cutoff (which is based soley on its value) we can use a sharp RDD.  The ``facts" presented in the assignment tend to support the choice.  HRS was selected in rather capricious ways (``the 28.5 cutoff was selected...(for) a manageable number of sites"), was expected to be unknown to the people who generated the data, and is an imprecise (``imperfect") scoring indicator. 
+
+
+\subsection{McCrary Test}
+% NOTE: I flipped the interpretation here...we want continuity here and discontinuity when we plot HRS by the outcome (price).  
+It does not appear that any manipulation occured around the threshold for listing on the NPL.  Based on the plot of the density distribution (Figure \ref{fig:ddplot}) using default values for bandwidth and bin width ($h \approx 12.6$, $b \approx 1.6$), there is no significant discontinuity in the neighborhood of HRS=28.5. The estimated value lines appear to nearly match with each other, and more importantly the upperbound 95\% C.I. for values below HRS=28.5 and the estimated value above HRS=28.5 overlap, and vice versa for the lowerbound 95\% C.I. for values above HRS = 28.5. This indicates the choice of HRS as a running variable in the RDD is appropriate. This lack of discontinuity appears to be consistent across various bandwidth values (tested with values $h = \{4, 8, 16, 20\}$).  
 
 \begin{figure}[htbp]
 \begin{center}
@@ -71,10 +79,37 @@ Based on the plot of the density distribution (Figure \ref{fig:ddplot}) using de
 \end{center}
 \end{figure}
 
-NOTES: The way they picked is good, it means that 28.5 is not some magic number above which things get demonstrably worse but is as good as random.  So any discontinuity is due to the vagaries of program design and not endogenous variation.
 
 \section{RDD First Stage}
+
+
+\subsection{2SLS first stage specification}
 The first stage equation is $\ind{NPL_{2000}}=\gamma_1HRS_{82}+x_i\gamma_2+u_i$.
+
+\subsection{Graphic: NPL and HRS scores}
+
+Figure \ref{fig:3b} shows how presence on the NPL by 2000 depends very strongly, nearly ``sharply" on the value of the HRS score in 1982.  Only a handful of sites do not follow the strict cutoff rule.  As one would expect there are many more (but not exclusively) non-compliers with the strict boundary for cleanup on the low side of the cutoff, i.e., sites where the HRS score should not have resulted in listing.  Either a revised HRS score later than 1982 or some other change (including manipulation of the process, etc.) is responsible for these cases.  
+
+\begin{figure}[htbp!]
+\begin{center}
+\includegraphics{fig-3b.pdf}
+\caption{HRS score and status on NPL in 2000.  The points are jittered to indicate density.}
+\label{fig:3b}
+\end{center}
+\end{figure}
+
+\subsection{Placebo Test}
+
+Figure \ref{fig:3c}
+
+\begin{figure}[htbp!]
+\begin{center}
+\includegraphics{fig-3c.pdf}
+\caption{HRS score and 1980 mean property values.  There are local fit regressions on either side of the 28.5 cutoff in HRS.}
+\label{fig:3c}
+\end{center}
+\end{figure}
+
 
 \section{RDD Second Stage}
 

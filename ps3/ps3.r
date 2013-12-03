@@ -255,36 +255,73 @@ title(main = 'Density distribution of HRS', xlab = 'HRS in 1982', ylab = 'Densit
 dev.off()
 
 ## Problem 3
-## Part 3a ---
+## Part 3a ------
 #instrument is whether there is a site scoring above 28.5 on the 1982 HRS
 # We want to regress on npl2000
-two.mile.cov <- head(names(two.mile), -9)
-                                        #Decided to axe the FIPS variable- any ideas how to include this and not break anything?
-formula3 <- as.formula(paste("npl2000 ~ ", "npl1990 + ", paste(two.mile.cov, collapse = "+"), "- blt40_yrs80occ_nbr"))
-stage1.1 <- lm(formula3,
+two.mile.cov <- head(names(two.mile), -10)
+#Decided to axe the FIPS variable- any ideas how to include this and not break anything?
+# Did you try fixed effects for the states?
+
+two.mile$diff.cutoff <- two.mile$hrs_82 - 28.5
+
+# I took out npl1990 as a predictor for 2000...it basically washes out all the variation that hrs shoudl explain.
+
+# I think this is the correct form for the formula (see RD class notes page 15 for fuzzy RD)
+formula3.stage1 <- as.formula(paste("npl2000 ~ ",  "I(hrs_82 >= 28.5) + diff.cutoff + diff.cutoff:I(hrs_82 >= 28.5) +", paste(two.mile.cov, collapse = "+"), "- blt40_yrs80occ_nbr"))
+
+stage1.1 <- lm(formula3.stage1,
                data = two.mile)
 
-stage1.2 <- lm(formula3,
+stage1.2 <- lm(formula3.stage1,
                data = two.mile,
                subset = (two.mile$hrs_82 > 16.5 &
                          two.mile$hrs_82 < 40.5)
                )
 
+stage2.1 <- lm()
 
 
-## Part 3b --
+
+
+# Function to make "local average" plots
+localAverageRD <- function(data, x.var, y.var, x.cutoff, binwidth){
+  out <- data.frame(x = data$x.var)
+  xmax <- max(data$x.var)
+  xmin <- min(data$x.var)
+  
+  
+}
+
+
+## Part 3b ------
+pdf("fig-3b.pdf", width = 6, height = 4)
 HRSNPL.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = npl2000))
 HRSNPL.plot <- HRSNPL.plot +
-    geom_point() # There is undoubtedly a better geometry to use here.
+    geom_jitter(aes(color=npl2000)) +
+  geom_vline(aes(xintercept=28.5))
 HRSNPL.plot
+dev.off()
 
-
-## Part 3c ---
+## Part 3c ------- Placebo test
+pdf("fig-3c.pdf", width = 6, height = 4)
 HRS80val.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = meanhs8))
 HRS80val.plot <- HRS80val.plot +
     geom_point() +
+  stat_smooth(data = subset(two.mile, hrs_82 < 28.5 & hrs_82 > 16.5)) +
+  stat_smooth(data = subset(two.mile, hrs_82 >= 28.5 & hrs_82 < 40.5), color = "red") +
     labs(title = "1980 housing value versus 1982 HRS score", x = "1982 HRS score", y = "1980 Mean Housing Price")
 HRS80val.plot
+dev.off()
 
 
 ## Problem 4 ---
+
+pdf("fig-4.pdf", width = 6, height = 4)
+HRS0val.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = lnmdvalhs0_nbr))
+HRS0val.plot <- HRS0val.plot +
+  geom_point() +
+  stat_smooth(data = subset(two.mile, hrs_82 < 28.5 & hrs_82 > 16.5)) +
+  stat_smooth(data = subset(two.mile, hrs_82 >= 28.5 & hrs_82 < 40.5), color = "red") +
+  labs(title = "2000 housing value versus 1982 HRS score", x = "1982 HRS score", y = "ln 2000 median housing value")
+HRS0val.plot
+dev.off()
