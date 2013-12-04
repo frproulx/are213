@@ -1,0 +1,73 @@
+\documentclass{article}
+
+\begin{document}
+
+% Table created by stargazer v.4.5.1 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Dec 03, 2013 - 14:19:59
+\begin{table}[!htbp] \centering 
+  \caption{2SLS RDD of HRS@28.5 threshold vs. 2000 Housing value (constrained 16.5 $<$ HRS $<$ 40.5} 
+  \label{} 
+\scriptsize 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\\[-1.8ex] & npl2000 & lnmdvalhs0\_nbr \\ 
+ & First Stage & Reduced Form \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ I(hrs\_82 \textgreater = 28.5) & 0.626$^{***}$ (0.085) & 0.056 (0.066) \\ 
+  diff.cutoff & 0.017$^{*}$ (0.009) & $-$0.002 (0.007) \\ 
+  tothsun8\_nbr & $-$0.00001 (0.00001) & $-$0.00000 (0.00001) \\ 
+  occupied80\_nbr & $-$1.461 (0.993) & 3.176$^{***}$ (0.775) \\ 
+  pop\_den8\_nbr & 0.00000 (0.00002) & 0.00001 (0.00002) \\ 
+  no\_hs\_diploma8\_nbr & $-$0.502 (0.512) & $-$0.371 (0.399) \\ 
+  ba\_or\_better8\_nbr & $-$0.238 (0.653) & $-$0.037 (0.510) \\ 
+  shrblk8\_nbr & $-$0.101 (0.318) & $-$0.061 (0.248) \\ 
+  shrhsp8\_nbr & 0.295 (0.429) & 0.445 (0.335) \\ 
+  child8\_nbr & $-$1.396 (0.934) & $-$1.810$^{**}$ (0.728) \\ 
+  old8\_nbr & $-$1.106 (0.825) & $-$1.138$^{*}$ (0.644) \\ 
+  shrfor8\_nbr & $-$0.219 (0.950) & 1.775$^{**}$ (0.741) \\ 
+  ffh8\_nbr & 1.018 (0.786) & $-$0.621 (0.613) \\ 
+  smhse8\_nbr & 1.160$^{***}$ (0.440) & $-$0.013 (0.344) \\ 
+  hsdrop8\_nbr & $-$0.282 (0.475) & 0.004 (0.371) \\ 
+  unemprt8\_nbr & 0.461 (0.956) & $-$1.928$^{**}$ (0.746) \\ 
+  povrat8\_nbr & 1.000 (0.986) & 0.250 (0.769) \\ 
+  welfare8\_nbr & 0.128 (1.232) & 2.251$^{**}$ (0.961) \\ 
+  avhhin8\_nbr & 0.00001 (0.00001) & 0.00004$^{***}$ (0.00001) \\ 
+  zerofullbath80\_nbr & 0.019 (2.640) & $-$0.600 (2.059) \\ 
+  firestoveheat80\_nbr & 0.137 (0.531) & 0.461 (0.414) \\ 
+  nofullkitchen80\_nbr & $-$3.906 (2.900) & 1.247 (2.262) \\ 
+  noaircond80\_nbr & 0.210$^{*}$ (0.119) & 0.223$^{**}$ (0.093) \\ 
+  ownocc8\_nbr & 0.00001 (0.00002) & 0.00000 (0.00001) \\ 
+  bedrms0\_80occ\_nbr & $-$348,599.100 (1,074,601.000) & 784,093.800 (838,107.300) \\ 
+  bedrms1\_80occ\_nbr & $-$348,594.600 (1,074,601.000) & 784,108.900 (838,107.300) \\ 
+  bedrms2\_80occ\_nbr & $-$348,593.600 (1,074,601.000) & 784,106.200 (838,107.300) \\ 
+  bedrms3\_80occ\_nbr & $-$348,594.100 (1,074,601.000) & 784,106.300 (838,107.300) \\ 
+  bedrms4\_80occ\_nbr & $-$348,594.600 (1,074,601.000) & 784,106.300 (838,107.300) \\ 
+  bedrms5\_80occ\_nbr & $-$348,593.900 (1,074,601.000) & 784,109.100 (838,107.300) \\ 
+  detach80occ\_nbr & 146,018.100 (1,126,725.000) & $-$497,201.500 (878,759.800) \\ 
+  attach80occ\_nbr & 146,017.700 (1,126,725.000) & $-$497,201.900 (878,759.800) \\ 
+  mobile80occ\_nbr & 146,017.600 (1,126,725.000) & $-$497,201.200 (878,759.800) \\ 
+  blt0\_1yrs80occ\_nbr & $-$1.275 (1.513) & 0.799 (1.180) \\ 
+  blt2\_5yrs80occ\_nbr & 1.498$^{**}$ (0.718) & 0.500 (0.560) \\ 
+  blt6\_10yrs80occ\_nbr & 0.262 (0.562) & 0.314 (0.438) \\ 
+  blt10\_20yrs80occ\_nbr & 0.339 (0.400) & 0.055 (0.312) \\ 
+  blt20\_30yrs80occ\_nbr & $-$0.251 (0.322) & 0.079 (0.251) \\ 
+  blt30\_40yrs80occ\_nbr & $-$0.285 (0.622) & $-$1.121$^{**}$ (0.485) \\ 
+  I(hrs\_82 \textgreater = 28.5)TRUE:diff.cutoff & $-$0.017 (0.012) & $-$0.004 (0.009) \\ 
+  Constant & 202,577.200 (1,611,035.000) & $-$286,896.600 (1,256,485.000) \\ 
+ \textit{N} & 226 & 226 \\ 
+R$^{2}$ & 0.661 & 0.759 \\ 
+Adjusted R$^{2}$ & 0.588 & 0.707 \\ 
+Residual Std. Error (df = 185) & 0.294 & 0.229 \\ 
+F Statistic (df = 40; 185) & 9.029$^{***}$ & 14.563$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Notes:} & \multicolumn{2}{r}{$^{***}$Significant at the 1 percent level.} \\ 
+ & \multicolumn{2}{r}{$^{**}$Significant at the 5 percent level.} \\ 
+ & \multicolumn{2}{r}{$^{*}$Significant at the 10 percent level.} \\ 
+\normalsize 
+\end{tabular} 
+\end{table} 
+\end{document}
+

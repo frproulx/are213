@@ -84,7 +84,11 @@ It does not appear that any manipulation occured around the threshold for listin
 
 
 \subsection{2SLS first stage specification}
-The first stage equation is $\ind{NPL_{2000}}=\gamma_1HRS_{82}+x_i\gamma_2+u_i$.
+The first stage equation is:
+
+ $NPL_{2000}=\gamma_1\ind{HRS_{82} > 28.5} +\gamma_2(HRS_{82}-c) + \gamma_3(HRS_{82}-c)*\ind{HRS_{82} > 28.5}+x_i\gamma_4+u_i$.
+ 
+ We use the full set of covariates ($x_i$) but not state level fixed effects in the analyses below.  Both the full dataset and a constrained linear regression around the threshold (plus or minus 12 points) show a statistically significant first stage.  Combined with the graphical analysis below we are confident that the first stage is useful for a fuzzy RD design.  
 
 \subsection{Graphic: NPL and HRS scores}
 
@@ -93,19 +97,19 @@ Figure \ref{fig:3b} shows how presence on the NPL by 2000 depends very strongly,
 \begin{figure}[htbp!]
 \begin{center}
 \includegraphics{fig-3b.pdf}
-\caption{HRS score and status on NPL in 2000.  The points are jittered to indicate density.}
+\caption{HRS score and status on NPL in 2000.  The points are jittered to indicate density; note that the actual values are either 1 or 0.}
 \label{fig:3b}
 \end{center}
 \end{figure}
 
 \subsection{Placebo Test}
 
-Figure \ref{fig:3c}
+Figure \ref{fig:3c} shows the influence of HRS on household values in 1980.  We would not expect any discontinuous jumps in this function because there was no cleanup initiated at that time.  This placebo test indicates there are not endogenous discontinuities in the value of households along the HRS scale.  
 
 \begin{figure}[htbp!]
 \begin{center}
 \includegraphics{fig-3c.pdf}
-\caption{HRS score and 1980 mean property values.  There are local fit regressions on either side of the 28.5 cutoff in HRS.}
+\caption{HRS score and 1980 mean property values.  There are local fit linear regressions on either side of the 28.5 cutoff in HRS.}
 \label{fig:3c}
 \end{center}
 \end{figure}
@@ -113,10 +117,39 @@ Figure \ref{fig:3c}
 
 \section{RDD Second Stage}
 
+We use the reduced form for the second stage of IV estimation.  In this case, it is given by: 
+
+$lnmdhsval0_{nbr}=\gamma_1\ind{HRS_{82} > 28.5} +\gamma_2(HRS_{82}-c) + \gamma_3(HRS_{82}-c)*\ind{HRS_{82} > 28.5}+x_i\gamma_4+u_i$.
+
+For the IV to be valid there are two assumptions that need to be met: 1) the instrument needs to be correlated with treatment, which was shown to be true in the first stage equations above, and 2) the instrument should not be correlated with the error term, which is a reasonable assumption in this case based on the placebo test analysis above.  
+
+While the first stage IV specification indicates a significant relationship between crossing the threshold and treatment status (both graphically and in the linear model formulation), the reduced form fails to show a relationship. We also used a plot more like the ones described in the notes (with local average values in evenly spaced bins and linear fits on either side of the threshold).  This is shown in figure \ref{fig:4b} below.  The result is the same as the plot with the full dataset, that there is not a discernible discontinuity in the data around the threshold.  The second stage fails to show any causal link between hazardous waste cleanup and housing values in the surrounding area, in spite of good specification of an instrument and a very strong first stage.  
+
+\begin{figure}[htbp!]
+\begin{center}
+\includegraphics{fig-4.pdf}
+\caption{HRS score and 2000 median property values.  There are local fit linear regressions on either side of the 28.5 cutoff in HRS.}
+\label{fig:4}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp!]
+\begin{center}
+\includegraphics{fig-locavg-2000.pdf}
+\caption{HRS score and 2000 median property values reported as the average in evenly spaced bins.  There are local fit linear regressions on either side of the 28.5 cutoff in HRS.}
+\label{fig:4b}
+\end{center}
+\end{figure}
+
+\subfile{tab3a.tex}
+
 \section{Synthesis}
+
+Key points: the OLS seems to show there is a positive relationship.  A well-structured RDD shows there is no relationship.  We trust the RDD more in this case because it is more robust in the face of error from unobserved housing characteristics.  In other words, we confirm the non-results from the Greenstone paper.
 
 \section{Appendix: Code Listings}
 
+\lstinputlisting{ps3.R}
 \lstinputlisting{../util/are213-func.R}
 
 \end{document}

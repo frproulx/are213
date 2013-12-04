@@ -258,7 +258,7 @@ dev.off()
 ## Part 3a ------
 #instrument is whether there is a site scoring above 28.5 on the 1982 HRS
 # We want to regress on npl2000
-two.mile.cov <- head(names(two.mile), -10)
+two.mile.cov <- head(names(two.mile), -14)
 #Decided to axe the FIPS variable- any ideas how to include this and not break anything?
 # Did you try fixed effects for the states?
 
@@ -267,7 +267,9 @@ two.mile$diff.cutoff <- two.mile$hrs_82 - 28.5
 # I took out npl1990 as a predictor for 2000...it basically washes out all the variation that hrs shoudl explain.
 
 # I think this is the correct form for the formula (see RD class notes page 15 for fuzzy RD)
-formula3.stage1 <- as.formula(paste("npl2000 ~ ",  "I(hrs_82 >= 28.5) + diff.cutoff + diff.cutoff:I(hrs_82 >= 28.5) +", paste(two.mile.cov, collapse = "+"), "- blt40_yrs80occ_nbr"))
+formula3.stage1 <- as.formula(paste("npl2000 ~ I(hrs_82 >= 28.5) + diff.cutoff + diff.cutoff:I(hrs_82 >= 28.5) +", paste(two.mile.cov, collapse = "+"), "- blt40_yrs80occ_nbr"))
+
+formula3.stageRF <- as.formula(paste("lnmdvalhs0_nbr ~ I(hrs_82 >= 28.5) + diff.cutoff + diff.cutoff:I(hrs_82 >= 28.5) +", paste(two.mile.cov, collapse = "+"), "- blt40_yrs80occ_nbr"))
 
 stage1.1 <- lm(formula3.stage1,
                data = two.mile)
@@ -278,19 +280,67 @@ stage1.2 <- lm(formula3.stage1,
                          two.mile$hrs_82 < 40.5)
                )
 
-stage2.1 <- lm()
+stage2.1 <- lm(formula3.stageRF, 
+               data = two.mile)
+
+stage2.2 <- lm(formula3.stageRF,
+               data = two.mile,
+               subset = (two.mile$hrs_82 > 16.5 &
+                           two.mile$hrs_82 < 40.5)
+)
+
+stargazer(stage1.2, stage2.2, 
+          title = "2SLS RDD of HRS@28.5 threshold vs. 2000 Housing value (constrained 16.5 $<$ HRS $<$ 40.5",
+          column.labels = c("First Stage", "Reduced Form"),
+          out = "tab3a.tex",
+          type = "latex", 
+          style = "qje",
+          no.space = TRUE, 
+          font.size = "scriptsize", 
+          single.row = TRUE,
+          omit = 45:100) #omit all past first 45 vars.
 
 
 
-
-# Function to make "local average" plots
+# Function to make "local average" plots.
 localAverageRD <- function(data, x.var, y.var, x.cutoff, binwidth){
-  out <- data.frame(x = data$x.var)
-  xmax <- max(data$x.var)
-  xmin <- min(data$x.var)
+  out <- data.frame(x = data[[x.var]])
+  xmax <- max(data[[x.var]])
+  xmin <- min(data[[x.var]])
+  min.space <- x.cutoff - xmin
+  max.space <- xmax - x.cutoff
+  min.bins <- floor(min.space / binwidth)+1
+  max.bins <- floor(max.space / binwidth)+1
+  bin.breaks <- seq((x.cutoff-min.bins*binwidth),(x.cutoff+max.bins*binwidth), binwidth)
+  bin.labels <- data.frame(begin = bin.breaks[1:length(bin.breaks)-1], end = bin.breaks[2:length(bin.breaks)])
+  bin.labels$label <- seq(1, (min.bins + max.bins), 1)
+  bin.labels$middle <- (bin.labels$begin + bin.labels$end) / 2
+  for(i in 1:length(out$x)){
+    binrow <- which(bin.labels$begin < out$x[i] & bin.labels$end > out$x[i])
+    out$bin[i] <- bin.labels$middle[binrow]
+  }
+  out$y <- data[[y.var]]
+  out.condensed <- ddply(out, .(bin), summarize, 
+                         mean.y = mean(y))
+  out.condensed$above.cutoff <- I(out.condensed$bin > x.cutoff)
   
-  
+  return(out.condensed)
 }
+
+pdf("fig-locavg-2000.pdf", width = 6, height = 5)
+
+test.locAvg <- localAverageRD(two.mile, "hrs_82", "lnmdvalhs0_nbr", 28.5, 12)
+ggplot(test.locAvg, aes(bin, mean.y))+
+  geom_point() +
+  geom_vline(aes(xintercept = 28.5)) +
+  stat_smooth(method = "lm", aes(factor = as.factor(above.cutoff))) +
+  theme_bw() +
+  xlab("Middle of bin for HRS Score") + 
+  ylab("Mean of the natural log median housing value (2000)")
+dev.off()
+
+
+
 
 
 ## Part 3b ------
@@ -304,12 +354,13 @@ dev.off()
 
 ## Part 3c ------- Placebo test
 pdf("fig-3c.pdf", width = 6, height = 4)
-HRS80val.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = meanhs8))
+HRS80val.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = lnmeanhs8_nbr))
 HRS80val.plot <- HRS80val.plot +
     geom_point() +
-  stat_smooth(data = subset(two.mile, hrs_82 < 28.5 & hrs_82 > 16.5)) +
-  stat_smooth(data = subset(two.mile, hrs_82 >= 28.5 & hrs_82 < 40.5), color = "red") +
-    labs(title = "1980 housing value versus 1982 HRS score", x = "1982 HRS score", y = "1980 Mean Housing Price")
+  theme_bw()+
+  stat_smooth(method = "lm", data = subset(two.mile, hrs_82 < 28.5 & hrs_82 > 16.5)) +
+  stat_smooth(method = "lm", data = subset(two.mile, hrs_82 >= 28.5 & hrs_82 < 40.5), color = "red") +
+    labs(title = "1980 housing value versus 1982 HRS score", x = "1982 HRS score", y = "ln 1980 Mean Housing Price")
 HRS80val.plot
 dev.off()
 
@@ -320,8 +371,18 @@ pdf("fig-4.pdf", width = 6, height = 4)
 HRS0val.plot <- ggplot(data = two.mile, aes(x = hrs_82, y = lnmdvalhs0_nbr))
 HRS0val.plot <- HRS0val.plot +
   geom_point() +
-  stat_smooth(data = subset(two.mile, hrs_82 < 28.5 & hrs_82 > 16.5)) +
-  stat_smooth(data = subset(two.mile, hrs_82 >= 28.5 & hrs_82 < 40.5), color = "red") +
+  theme_bw() +
+  stat_smooth(method = "lm", data = subset(two.mile, hrs_82 < 28.5 & hrs_82 > 16.5)) +
+  stat_smooth(method = "lm", data = subset(two.mile, hrs_82 >= 28.5 & hrs_82 < 40.5), color = "red") +
   labs(title = "2000 housing value versus 1982 HRS score", x = "1982 HRS score", y = "ln 2000 median housing value")
 HRS0val.plot
 dev.off()
+
+# Attempt with canned function -------
+k <- 1
+i <- 20
+formulaCAN.stageRF <- as.formula(paste("lnmdvalhs0_nbr ~ ", "hrs_82+ npl2000 | ", paste(two.mile.cov[k:i], collapse = "+")))
+rd.subset <- two.mile$hrs_82 > 16.5 & two.mile$hrs_82 < 40.5
+# doesn't seem to work with full set of covariates breaks after...why?
+my.rdd <- RDestimate(formulaCAN.stageRF, data = two.mile, subset = rd.subset, cutpoint = 28.5, se.type = "HC1")
+plot(my.rdd)
