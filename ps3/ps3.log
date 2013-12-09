@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  3 DEC 2013 16:37
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  9 DEC 2013 15:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -342,7 +342,7 @@ LaTeX Warning: Float too large for page by 43.41145pt on input line 83.
 
 ) (./tab1b-3.tex
 
-LaTeX Warning: Float too large for page by 63.41145pt on input line 84.
+LaTeX Warning: Float too large for page by 43.41145pt on input line 83.
 
 ) [1
 
@@ -387,19 +387,19 @@ LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <8> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 18.
 )
 [8 <./fig-3c.pdf>] [9] (./ps3.R [10 <./fig-4.pdf>] [11 <./fig-locavg-2000.pdf>]
-[12] [13] [14] [15]) (../util/are213-func.R [16] [17] [18]) [19] (./ps3.aux)
+[12] [13] [14] [15] [16]) (../util/are213-func.R [17] [18]) [19] (./ps3.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 5156 strings out of 493315
- 69431 string characters out of 6137904
- 560583 words of memory out of 5000000
- 8512 multiletter control sequences out of 15000+600000
+ 5157 strings out of 493315
+ 69443 string characters out of 6137904
+ 527583 words of memory out of 5000000
+ 8513 multiletter control sequences out of 15000+600000
  11470 words of font info for 42 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,10n,41p,1191b,2159s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,10n,41p,1648b,2153s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></
@@ -414,7 +414,7 @@ ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive
 /2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local/texlive/201
 3/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ps3.pdf (19 pages, 266954 bytes).
+Output written on ps3.pdf (19 pages, 268842 bytes).
 PDF statistics:
  170 PDF objects out of 1000 (max. 8388607)
  122 compressed objects within 2 object streams

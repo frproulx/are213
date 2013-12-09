@@ -328,7 +328,7 @@ localAverageRD <- function(data, x.var, y.var, x.cutoff, binwidth){
 }
 
 pdf("fig-locavg-2000.pdf", width = 6, height = 5)
-binwidth <- 4
+binwidth <- 2
 test.locAvg <- localAverageRD(two.mile, "hrs_82", "lnmdvalhs0_nbr", 28.5, binwidth)
 ggplot(test.locAvg, aes(bin, mean.y))+
   geom_point() +
