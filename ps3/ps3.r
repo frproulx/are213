@@ -316,7 +316,7 @@ localAverageRD <- function(data, x.var, y.var, x.cutoff, binwidth){
   bin.labels$label <- seq(1, (min.bins + max.bins), 1)
   bin.labels$middle <- (bin.labels$begin + bin.labels$end) / 2
   for(i in 1:length(out$x)){
-    binrow <- which(bin.labels$begin < out$x[i] & bin.labels$end > out$x[i])
+    binrow <- which(bin.labels$begin <= out$x[i] & bin.labels$end >= out$x[i])
     out$bin[i] <- bin.labels$middle[binrow]
   }
   out$y <- data[[y.var]]
@@ -328,15 +328,16 @@ localAverageRD <- function(data, x.var, y.var, x.cutoff, binwidth){
 }
 
 pdf("fig-locavg-2000.pdf", width = 6, height = 5)
-
-test.locAvg <- localAverageRD(two.mile, "hrs_82", "lnmdvalhs0_nbr", 28.5, 12)
+binwidth <- 4
+test.locAvg <- localAverageRD(two.mile, "hrs_82", "lnmdvalhs0_nbr", 28.5, binwidth)
 ggplot(test.locAvg, aes(bin, mean.y))+
   geom_point() +
   geom_vline(aes(xintercept = 28.5)) +
-  stat_smooth(method = "lm", aes(factor = as.factor(above.cutoff))) +
+  stat_smooth(data = subset(test.locAvg, bin >= 16.5 & bin <= 40.5), method = "lm", aes(factor = as.factor(above.cutoff))) +
   theme_bw() +
   xlab("Middle of bin for HRS Score") + 
-  ylab("Mean of the natural log median housing value (2000)")
+  ylab("Mean of the natural log median housing value (2000)") +
+  ggtitle(paste("RD reduced form plot with bin width =",binwidth, "\n and linear fits on either side of the break point"))
 dev.off()
 
 
